@@ -1,7 +1,30 @@
 .main {
-  height: 15%;
-  padding: 16px;
-  background: #403558;
+  position: relative;
+  min-height: 4em;
+  padding: 8px;
+  background: #484848;
   color: #e8e8e8;
-  font-size: 2.5em;
+  overflow: hidden;
+}
+
+.title {
+  position: absolute;
+  top: -5px;
+  left: 50px;
+  color: #606060;
+  font-size: 5em;
+  white-space: nowrap;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.link {
+  font-size: 1.5em;
+  margin: 0 8px;
+  z-index: 1;
 }

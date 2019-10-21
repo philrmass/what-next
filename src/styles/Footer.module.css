@@ -1,6 +1,21 @@
 .main {
-  height: 10%;
-  padding: 16px;
-  background: #403558;
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+  background: #484848;
   color: #e8e8e8;
+}
+
+.updateButton {
+  align-self: start;
+  height: .8em;
+  width: .8em;
+  border-radius: 50%;
+  margin: 0 .3em;
+  background: #ff4810;
+  font-size: .8em;
+}
+
+.version {
+  color: #a8a8a8;
 }
