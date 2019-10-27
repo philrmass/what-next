@@ -1,6 +1,6 @@
 .main {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 8px;
   background: #484848;
   color: #e8e8e8;

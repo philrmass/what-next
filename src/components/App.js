@@ -1,16 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocalStorage } from '../utilities/storage';
 import Footer from './Footer';
 import Events from './Events';
 import Header from './Header';
+import Menu from './Menu';
 import Notes from './Notes';
 import styles from '../styles/App.module.css';
 
 function App() {
   const [events, setEvents] = useLocalStorage('whatNextEvents', []);
   const [notes, setNotes] = useLocalStorage('whatNextNotes', []);
-  const [showNotes, setShowNotes] = useLocalStorage('whatNextShowNotes', false);
+  const [notesShown, setNotesShown] = useLocalStorage('whatNextNotesShown', false);
+  const [menuShown, setShowMenu] = useState(false);
+  const [message, setMessage] = useState('');
   const version = '0.0.1';
+
+  function showMessage(text) {
+    setMessage(text);
+    setTimeout(() => setMessage(''), 2000);
+  }
+
+  function addItem() {
+    if (notesShown) {
+      showMessage('add note');
+    } else {
+      showMessage('add event');
+    }
+  }
+
+  function showMenu(shown) {
+    setShowMenu(shown);
+  }
 
   function addEvent(event) {
     setEvents((events) => [...events, event]);
@@ -20,30 +40,48 @@ function App() {
     setNotes((notes) => [...notes, note]);
   }
 
+  function saveBackup() {
+    showMessage('save');
+  }
+
+  function loadBackup() {
+    showMessage('load');
+  }
+
   function update() {
-    console.log('UPDATE');
+    showMessage('update');
   }
 
   return (
     <div className={styles.page}>
       <Header
-        setShowNotes={setShowNotes}
+        setNotesShown={setNotesShown}
+        addItem={addItem}
+        showMenu={() => showMenu(true)}
       />
       <section className={styles.main}>
-        { !showNotes &&
+        { !notesShown &&
           <Events
             events={events}
             addEvent={addEvent}
           />
         }
-        { showNotes &&
+        { notesShown &&
           <Notes
             notes={notes}
             addNotes={addNote}
           />
         }
+        { menuShown &&
+          <Menu
+            saveBackup={saveBackup}
+            loadBackup={loadBackup}
+            close={() => showMenu(false)}
+          />
+        }
       </section>
       <Footer
+        message={message}
         version={version}
         update={update}
       />
