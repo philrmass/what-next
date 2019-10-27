@@ -13,7 +13,7 @@ function App() {
   const [notes, setNotes] = useLocalStorage('whatNextNotes', []);
   const [notesShown, setNotesShown] = useLocalStorage('whatNextNotesShown', false);
   const [menuShown, setShowMenu] = useState(false);
-  const [modalShown, setModalShown] = useState('');
+  const [modalShown, setModalShown] = useState('noteModal');
   const [message, setMessage] = useState('');
   const version = '0.0.1';
 
@@ -56,6 +56,19 @@ function App() {
     showMessage('update');
   }
 
+  function buildModal(name) {
+    if (name.length === 0) {
+      return null;
+    }
+    return (
+      <Modal
+        close={() => setModalShown('')}
+      >
+        {`Stuff in the modal: ${name}`}
+      </Modal>
+    );
+  }
+
   return (
     <div className={styles.page}>
       <Header
@@ -89,12 +102,7 @@ function App() {
         version={version}
         update={update}
       />
-      { modalShown &&
-        <Modal
-          shown={modalShown}
-          close={() => setModalShown('')}
-        />
-      }
+      {buildModal(modalShown)}
     </div>
   );
 }

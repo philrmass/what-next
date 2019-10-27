@@ -2,16 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/Modal.module.css';
 
-function Modal({ close }) {
+function Modal({ close, children }) {
   return (
     <div className={styles.main}>
-      <div className={styles.content}>
+      <div className={styles.modal}>
+        <div className={styles.content}>
+          { children }
+        </div>
         <div className={styles.buttonContainer}>
           <button
             className={styles.button}
             onClick={close}
           >
-            +
+            Save
+          </button>
+          <button
+            className={styles.button}
+            onClick={close}
+          >
+            Cancel
           </button>
         </div>
       </div>
@@ -20,7 +29,6 @@ function Modal({ close }) {
 }
 
 Modal.propTypes = {
-  shown: PropTypes.string,
   close: PropTypes.func,
 };
 
