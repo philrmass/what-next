@@ -40,12 +40,14 @@
   margin: 0 8px;
   background: #1090ff;
   font-size: 0.8em;
+  user-select: none;
 }
 
 .link {
   font-size: 1.5em;
   margin: 0 8px;
   text-shadow: #0080ff80 0 0 8px;
+  user-select: none;
 }
 
 .infoButton {
@@ -56,4 +58,5 @@
   background: #ffffffc0;
   color: #484848;
   font-size: 1.8em;
+  user-select: none;
 }

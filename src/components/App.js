@@ -4,6 +4,7 @@ import Footer from './Footer';
 import Events from './Events';
 import Header from './Header';
 import Menu from './Menu';
+import Modal from './Modal';
 import Notes from './Notes';
 import styles from '../styles/App.module.css';
 
@@ -12,6 +13,7 @@ function App() {
   const [notes, setNotes] = useLocalStorage('whatNextNotes', []);
   const [notesShown, setNotesShown] = useLocalStorage('whatNextNotesShown', false);
   const [menuShown, setShowMenu] = useState(false);
+  const [modalShown, setModalShown] = useState('');
   const [message, setMessage] = useState('');
   const version = '0.0.1';
 
@@ -23,8 +25,10 @@ function App() {
   function addItem() {
     if (notesShown) {
       showMessage('add note');
+      setModalShown('noteModal');
     } else {
       showMessage('add event');
+      setModalShown('eventModal');
     }
   }
 
@@ -85,6 +89,12 @@ function App() {
         version={version}
         update={update}
       />
+      { modalShown &&
+        <Modal
+          shown={modalShown}
+          close={() => setModalShown('')}
+        />
+      }
     </div>
   );
 }
