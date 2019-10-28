@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
+import uuidv4 from 'uuid/v4';
 import styles from '../styles/Notes.module.css';
 import Modal from './Modal';
 
@@ -19,7 +20,7 @@ function Notes({
   function save() {
     const note = {
       text,
-      guid: 'yo',
+      guid: uuidv4(),
       colorCode: 0,
     };
     updateNotes([...notes, note]);
@@ -49,12 +50,25 @@ function Notes({
     );
   }
 
+  function buildNotes() {
+    return notes.map((note) => (
+      <li
+        key={note.guid}
+        className={`${styles.note} color${note.colorCode}`}
+      >
+        <div className={styles.text}>
+          {note.text}
+        </div>
+      </li>
+    ));
+  }
+
   return (
     <Fragment>
       <section className={styles.main}>
-        <div>
-          {JSON.stringify(notes)}
-        </div>
+        <ul>
+          {buildNotes()}
+        </ul>
       </section>
       { buildModal() }
     </Fragment>
