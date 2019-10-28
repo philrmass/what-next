@@ -4,7 +4,6 @@ import Footer from './Footer';
 import Events from './Events';
 import Header from './Header';
 import Menu from './Menu';
-import Modal from './Modal';
 import Notes from './Notes';
 import styles from '../styles/App.module.css';
 
@@ -12,8 +11,7 @@ function App() {
   const [events, setEvents] = useLocalStorage('whatNextEvents', []);
   const [notes, setNotes] = useLocalStorage('whatNextNotes', []);
   const [notesShown, setNotesShown] = useLocalStorage('whatNextNotesShown', false);
-  const [menuShown, setShowMenu] = useState(false);
-  const [modalShown, setModalShown] = useState('noteModal');
+  const [overlayShown, setOverlayShown] = useState('');
   const [message, setMessage] = useState('');
   const version = '0.0.1';
 
@@ -22,26 +20,38 @@ function App() {
     setTimeout(() => setMessage(''), 2000);
   }
 
+  function toggleOverlayShown(name) {
+    setOverlayShown((shown) => {
+      if (name === shown) {
+        return '';
+      }
+      return name;
+    });
+  }
+
+  function clearOverlayShown(name) {
+    setOverlayShown((shown) => {
+      if (name === shown) {
+        return '';
+      }
+      return shown;
+    });
+  }
+
   function addItem() {
     if (notesShown) {
-      showMessage('add note');
-      setModalShown('noteModal');
+      setOverlayShown('noteModal');
     } else {
-      showMessage('add event');
-      setModalShown('eventModal');
+      setOverlayShown('eventModal');
     }
   }
 
-  function showMenu(shown) {
-    setShowMenu(shown);
-  }
-
-  function addEvent(event) {
+  function updateEvents(event) {
     setEvents((events) => [...events, event]);
   }
 
-  function addNote(note) {
-    setNotes((notes) => [...notes, note]);
+  function updateNotes(notes) {
+    setNotes(notes);
   }
 
   function saveBackup() {
@@ -56,44 +66,37 @@ function App() {
     showMessage('update');
   }
 
-  function buildModal(name) {
-    if (name.length === 0) {
-      return null;
-    }
-    return (
-      <Modal
-        close={() => setModalShown('')}
-      >
-        {`Stuff in the modal: ${name}`}
-      </Modal>
-    );
-  }
-
   return (
     <div className={styles.page}>
       <Header
         setNotesShown={setNotesShown}
         addItem={addItem}
-        showMenu={() => showMenu(true)}
+        showMenu={() => toggleOverlayShown('menu')}
       />
       <section className={styles.main}>
         { !notesShown &&
           <Events
             events={events}
-            addEvent={addEvent}
+            updateEvents={updateEvents}
+            isModalShown={overlayShown === 'eventModal'}
+            showModal={() => setOverlayShown('eventModal')}
+            closeModal={() => clearOverlayShown('eventModal')}
           />
         }
         { notesShown &&
           <Notes
             notes={notes}
-            addNotes={addNote}
+            updateNotes={updateNotes}
+            isModalShown={overlayShown === 'noteModal'}
+            showModal={() => setOverlayShown('noteModal')}
+            closeModal={() => clearOverlayShown('noteModal')}
           />
         }
-        { menuShown &&
+        { overlayShown === 'menu' &&
           <Menu
             saveBackup={saveBackup}
             loadBackup={loadBackup}
-            close={() => showMenu(false)}
+            close={() => clearOverlayShown('menu')}
           />
         }
       </section>
@@ -102,7 +105,6 @@ function App() {
         version={version}
         update={update}
       />
-      {buildModal(modalShown)}
     </div>
   );
 }

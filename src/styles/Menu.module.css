@@ -9,6 +9,7 @@
   border-left: 1px solid #989898;
   border-bottom: 1px solid #989898;
   border-right: 1px solid #989898;
+  border-radius: 0 0 2px 2px;
 }
 
 .linkContainer {

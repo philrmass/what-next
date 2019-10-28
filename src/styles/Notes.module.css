@@ -2,3 +2,14 @@
   height: 100%;
   background: #ffffff;
 }
+
+.textInput {
+  padding: 4px;
+  border: 1px solid #e0e0e0;
+  background: #f0f0f0;
+}
+
+.textInput:focus {
+  border: 1px solid #1090ff;
+  outline: none;
+}
