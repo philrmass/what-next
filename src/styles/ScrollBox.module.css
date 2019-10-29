@@ -1,0 +1,11 @@
+.container {
+  height: 10em;
+  background: #ffff80;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  top: 0px;
+  background: #80ffff;
+}

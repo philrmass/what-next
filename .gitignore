@@ -11,3 +11,6 @@ dist/*
 
 # vim
 *.swp
+
+# temp
+_*.txt
