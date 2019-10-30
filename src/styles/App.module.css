@@ -8,6 +8,7 @@
 .main {
   position: relative;
   flex-grow: 1;
+  height: calc(50em - 20em);
   background: #f8f8f8;
   color: #282828;
 }

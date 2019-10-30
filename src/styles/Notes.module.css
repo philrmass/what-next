@@ -1,5 +1,5 @@
 .main {
-  height: calc(50em - 20em);
+  height: inherit;
   background: #ffffff;
 }
 

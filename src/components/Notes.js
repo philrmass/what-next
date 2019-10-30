@@ -41,7 +41,7 @@ function Notes({
       >
         <textarea
           rows='3'
-          cols='45'
+          cols='30'
           autoFocus={true}
           className={styles.textInput}
           value={text}
