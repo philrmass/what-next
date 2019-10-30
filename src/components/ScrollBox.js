@@ -6,45 +6,31 @@ function ScrollBox({
   children,
 }) {
   const [top, setTop] = useState(0);
-  //const [start, setStart] = useState(null);
+  const [startY, setStartY] = useState(null);
   const [lastY, setLastY] = useState(null);
 
   function handleStart(e) {
-    //const yOffsetMin = box.clientHeight - box.scrollHeight;
-    //console.log('d', Math.round(e.touches[0].clientX), Math.round(e.touches[0].clientY));
-    //console.log('DE', e.currentTarget.clientHeight, e.currentTarget.scrollHeight);
-    //const pos = [e.touches[0].clientX, e.touches[0].clientY];
-    //setStart(pos);
-    setLastY(getY(e));
+    const y = getY(e);
+    setStartY(y);
+    setLastY(y);
   }
 
   function handleEnd() {
-    //console.log('u');
-    //setTop(0);
   }
 
   function handleMove(e) {
-    //const pos = [e.touches[0].clientX, e.touches[0].clientY];
+    console.log(`END total=${(getY(e) - startY).toFixed(1)}`);
     setOffset(e);
-
-    /*
-    const diffY = pos[1] - last[1];
-    setTop((top) => {
-      const val = top + diffY;
-      if (val > 0) {
-        return 0;
-      }
-      return val;
-    });
-    */
-    //console.log('m', Math.round(top));
-    //const p = e.currentTarget.parentNode;
-    //console.log('e', e.currentTarget.offsetHeight, e.currentTarget.clientHeight, e.currentTarget.scrollHeight);
-    //console.log('p', p.offsetHeight, p.clientHeight, p.scrollHeight);
-    //console.log(`m (${Math.round(pos[0] - start[0])}, ${Math.round(pos[1] - start[1])}) <${Math.round(pos[0] - last[0])}, ${Math.round(pos[1] - last[1])}>`);
     setLastY(getY(e));
   }
 
+  /*
+  function clearY() {
+    setStartY(null);
+    setLastY(null);
+  }
+
+  */
   function getY(event) {
     return event.touches[0].clientY;
   }
@@ -66,8 +52,7 @@ function ScrollBox({
     const deltaY = getDeltaY(event);
     const yMin = getYMin(event);
     const yMax = 0;
-    //??? remove
-    console.log('OFF delta', deltaY.toFixed(1), 'min', yMin, 'top', top.toFixed(1));
+    console.log(' OFF delta', deltaY.toFixed(1), 'min', yMin, 'top', top.toFixed(1));
 
     setTop((top) => {
       const value = top + deltaY;
