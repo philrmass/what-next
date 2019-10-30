@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import styles from '../styles/Notes.module.css';
 import Modal from './Modal';
+import ScrollBox from './ScrollBox';
 
 function Notes({
   notes,
@@ -54,6 +55,7 @@ function Notes({
     return notes.map((note) => (
       <li
         key={note.guid}
+        id={note.guid}
         className={`${styles.note} color${note.colorCode}`}
       >
         <div className={styles.text}>
@@ -66,9 +68,11 @@ function Notes({
   return (
     <Fragment>
       <section className={styles.main}>
-        <ul>
-          {buildNotes()}
-        </ul>
+        <ScrollBox>
+          <ul>
+            {buildNotes()}
+          </ul>
+        </ScrollBox>
       </section>
       { buildModal() }
     </Fragment>

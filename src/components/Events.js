@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/Events.module.css';
 import Modal from './Modal';
+import ScrollBox from './ScrollBox';
 
 function Events({
   events,
@@ -27,9 +28,11 @@ function Events({
   return (
     <Fragment>
       <section className={styles.main}>
-        <div>
-          {JSON.stringify(events)}
-        </div>
+        <ScrollBox>
+          <ul>
+            <li>{JSON.stringify(events)}</li>
+          </ul>
+        </ScrollBox>
       </section>
       { buildModal() }
     </Fragment>

@@ -8,29 +8,41 @@ function ScrollBox({
   const [top, setTop] = useState(0);
   const [startY, setStartY] = useState(null);
   const [lastY, setLastY] = useState(null);
+  const [pressTimer, setPressTimer] = useState(null);
 
   function handleStart(e) {
     const y = getY(e);
     setStartY(y);
     setLastY(y);
+
+    const id = e.target.id;
+    const longPressMs = 750;
+    setPressTimer(setTimeout(() => selectElement(id), longPressMs));
   }
 
   function handleEnd() {
+    clearTimer();
+    clearY();
   }
 
   function handleMove(e) {
-    console.log(`END total=${(getY(e) - startY).toFixed(1)}`);
     setOffset(e);
     setLastY(getY(e));
   }
 
-  /*
+  function clearTimer(totalY = Infinity) {
+    const totalMax = 10;
+    if (pressTimer && totalY > totalMax) {
+      clearTimeout(pressTimer);
+      setPressTimer(null);
+    }
+  }
+
   function clearY() {
     setStartY(null);
     setLastY(null);
   }
 
-  */
   function getY(event) {
     return event.touches[0].clientY;
   }
@@ -39,6 +51,14 @@ function ScrollBox({
     const y = getY(event);
     if (lastY) {
       return y - lastY;
+    }
+    return 0;
+  }
+
+  function getTotalY(event) {
+    const y = getY(event);
+    if (startY) {
+      return y - startY;
     }
     return 0;
   }
@@ -52,8 +72,6 @@ function ScrollBox({
     const deltaY = getDeltaY(event);
     const yMin = getYMin(event);
     const yMax = 0;
-    console.log(' OFF delta', deltaY.toFixed(1), 'min', yMin, 'top', top.toFixed(1));
-
     setTop((top) => {
       const value = top + deltaY;
       if (value > yMax) {
@@ -63,6 +81,12 @@ function ScrollBox({
       }
       return value;
     });
+
+    clearTimer(getTotalY(event));
+  }
+
+  function selectElement(id) {
+    console.log('SELECT', id);
   }
 
   return (

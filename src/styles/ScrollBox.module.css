@@ -1,11 +1,9 @@
 .container {
-  height: 10em;
-  background: #ffff80;
+  height: inherit;
   overflow: hidden;
 }
 
 .content {
   position: relative;
   top: 0px;
-  background: #80ffff;
 }
