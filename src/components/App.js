@@ -6,6 +6,7 @@ import Header from './Header';
 import Menu from './Menu';
 import Notes from './Notes';
 import styles from '../styles/App.module.css';
+import { version } from '../version';
 
 function App() {
   const [events, setEvents] = useLocalStorage('whatNextEvents', []);
@@ -13,7 +14,6 @@ function App() {
   const [notesShown, setNotesShown] = useLocalStorage('whatNextNotesShown', false);
   const [overlayShown, setOverlayShown] = useState('');
   const [message, setMessage] = useState('');
-  const version = '0.0.2';
 
   function showMessage(text) {
     setMessage(text);
