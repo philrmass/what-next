@@ -1,15 +1,20 @@
 # Tasks
+## Bugs
+- fix height of notes/events, calc
+- fix scroll offset on delete, allow out of limit offsets
+- search parents to find valid id on select findElementId(e) in handleStart
 
 ## General
 - get terminal shortcuts working
 - create logger utility, with console controls
 
 ## UI
+- add momentum for scrolling
+- add delete button for note modal
+- create color selector
+- save note in color order
 - create water strider logo
-- Add three dots for menu button
-
-## Components
-- add modal
+- add three dots for menu button
 
 ## Data
 - implement save (name and date/time)

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from '../styles/ScrollBox.module.css';
 
 function ScrollBox({
+  selectElement,
   children,
 }) {
   const [top, setTop] = useState(0);
@@ -32,7 +33,7 @@ function ScrollBox({
 
   function clearTimer(totalY = Infinity) {
     const totalMax = 10;
-    if (pressTimer && totalY > totalMax) {
+    if (pressTimer && Math.abs(totalY) > totalMax) {
       clearTimeout(pressTimer);
       setPressTimer(null);
     }
@@ -85,10 +86,6 @@ function ScrollBox({
     clearTimer(getTotalY(event));
   }
 
-  function selectElement(id) {
-    console.log('SELECT', id);
-  }
-
   return (
     <section className={styles.container}>
       <div
@@ -105,6 +102,7 @@ function ScrollBox({
 }
 
 ScrollBox.propTypes = {
+  selectElement: PropTypes.func,
   children: PropTypes.object,
 };
 

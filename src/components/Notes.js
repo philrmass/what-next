@@ -9,24 +9,68 @@ function Notes({
   notes,
   updateNotes,
   isModalShown,
-  //showModal,
+  showModal,
   closeModal,
 }) {
-  const [text, setText] = useState('');
+  const [activeNote, setActiveNote] = useState(createDefaultNote());
 
-  function handleTextChange(event) {
-    setText(event.target.value);
+  function handleTextChange(text) {
+    setActiveNote((note) => ({
+      ...note,
+      text,
+    }));
   }
 
   function save() {
-    const note = {
-      text,
-      guid: uuidv4(),
+    const i = notes.findIndex((note) => note.guid === activeNote.guid);
+    if (i >= 0) {
+      updateNotes([...notes.slice(0, i), activeNote, ...notes.slice(i + 1)]);
+    } else {
+      const note = { ...activeNote, guid: uuidv4() };
+      updateNotes([...notes, note]);
+    }
+    setActiveNote(createDefaultNote());
+    closeModal();
+  }
+
+  function edit(guid) {
+    const note = notes.find((note) => note.guid === guid);
+    setActiveNote({ ...note });
+    showModal();
+  }
+
+  function remove() {
+    const i = notes.findIndex((note) => note.guid === activeNote.guid);
+    if (i >= 0) {
+      updateNotes([...notes.slice(0, i), ...notes.slice(i + 1)]);
+    }
+    setActiveNote(createDefaultNote());
+    closeModal();
+  }
+
+  function cancel() {
+    setActiveNote(createDefaultNote());
+    closeModal();
+  }
+
+  function createDefaultNote() {
+    return {
+      text: '',
+      guid: null,
       colorCode: 0,
     };
-    updateNotes([...notes, note]);
-    closeModal();
-    setText('');
+  }
+
+  function buildModalButtons() {
+    const isEditing = Boolean(activeNote.guid);
+    return (
+      <Fragment>
+        { isEditing && (
+          <button onClick={remove}>Delete</button>
+        )}
+        <button onClick={save}>Save</button>
+      </Fragment>
+    );
   }
 
   function buildModal() {
@@ -36,16 +80,16 @@ function Notes({
 
     return (
       <Modal
-        button={<button onClick={save}>Save</button>}
-        close={closeModal}
+        buttons={buildModalButtons()}
+        close={cancel}
       >
         <textarea
           rows='3'
           cols='30'
           autoFocus={true}
           className={styles.textInput}
-          value={text}
-          onChange={handleTextChange}
+          value={activeNote.text}
+          onChange={(e) => handleTextChange(e.target.value)}
         />
       </Modal>
     );
@@ -68,7 +112,9 @@ function Notes({
   return (
     <Fragment>
       <section className={styles.main}>
-        <ScrollBox>
+        <ScrollBox
+          selectElement={edit}
+        >
           <ul>
             {buildNotes()}
           </ul>
