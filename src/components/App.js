@@ -68,11 +68,13 @@ function App() {
 
   return (
     <div className={styles.page}>
-      <Header
-        setNotesShown={setNotesShown}
-        addItem={addItem}
-        showMenu={() => toggleOverlayShown('menu')}
-      />
+      <header className={styles.header}>
+        <Header
+          setNotesShown={setNotesShown}
+          addItem={addItem}
+          showMenu={() => toggleOverlayShown('menu')}
+        />
+      </header>
       <section className={styles.main}>
         { !notesShown &&
           <Events
@@ -100,11 +102,13 @@ function App() {
           />
         }
       </section>
-      <Footer
-        message={message}
-        version={version}
-        update={update}
-      />
+      <footer className={styles.footer}>
+        <Footer
+          message={message}
+          version={version}
+          update={update}
+        />
+      </footer>
     </div>
   );
 }

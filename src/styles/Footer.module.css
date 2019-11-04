@@ -1,6 +1,8 @@
 .main {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: inherit;
   padding: 8px;
   background: #484848;
   color: #e8e8e8;

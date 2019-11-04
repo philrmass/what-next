@@ -1,6 +1,6 @@
 .main {
   position: relative;
-  min-height: 4em;
+  height: inherit;
   padding: 8px;
   background: #484848;
   color: #e8e8e8;

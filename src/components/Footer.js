@@ -4,7 +4,7 @@ import styles from '../styles/Footer.module.css';
 
 function Footer({ message, version, update }) {
   return (
-    <footer className={styles.main}>
+    <main className={styles.main}>
       <div>{message}</div>
       <div>
         <button
@@ -14,7 +14,7 @@ function Footer({ message, version, update }) {
         </button>
         <span className={styles.version}>version {version}</span>
       </div>
-    </footer>
+    </main>
   );
 }
 

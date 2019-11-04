@@ -4,7 +4,7 @@ import styles from '../styles/Header.module.css';
 
 function Header({ setNotesShown, addItem, showMenu }) {
   return (
-    <header className={styles.main}>
+    <main className={styles.main}>
       {/*
       <div className={styles.title}>
         What Next
@@ -43,7 +43,7 @@ function Header({ setNotesShown, addItem, showMenu }) {
           </button>
         </div>
       </div>
-    </header>
+    </main>
   );
 }
 
