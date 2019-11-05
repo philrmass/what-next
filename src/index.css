@@ -19,6 +19,19 @@ body {
   font-family: "Helvetica", sans-serif;
 }
 
+.touch {
+  width: 100%;
+  height: 100%;
+}
+
 .color0 {
-  background: #ff4808;
+  background: #ff5838;
+}
+
+.color1 {
+  background: #ff7828;
+}
+
+.color2 {
+  background: #ffff98;
 }

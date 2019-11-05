@@ -1,24 +1,22 @@
 # Tasks
 ## Bugs
-- fix scroll offset on delete, allow out of limit offsets
-- search parents to find valid id on select findElementId(e) in handleStart, detect drag area
-
-## General
-- get terminal shortcuts working
-- create logger utility, with console controls
-
 ## UI
 - create color selector
 - save note in color order
 - add momentum for scrolling
-- add delete button for note modal
 - create water strider logo
 - add three dots for menu button
+- transition on delete
+- transition on modal show/hide
 
 ## Data
 - implement save (name and date/time)
 - if data missing ask whether to restore
 - implement load (select file)
+
+## General
+- get terminal shortcuts working
+- create logger utility, with console controls
 
 ## Testing
 - add mocha

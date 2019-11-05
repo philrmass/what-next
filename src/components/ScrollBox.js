@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/ScrollBox.module.css';
 
@@ -6,19 +6,47 @@ function ScrollBox({
   selectElement,
   children,
 }) {
+  const container = useRef(null);
   const [top, setTop] = useState(0);
   const [startY, setStartY] = useState(null);
   const [lastY, setLastY] = useState(null);
   const [pressTimer, setPressTimer] = useState(null);
+
+  useEffect(() => {
+    const yMin = container.current.clientHeight - container.current.scrollHeight;
+    if (top < yMin) {
+      setTop(yMin);
+    }
+  }, [children]);
 
   function handleStart(e) {
     const y = getY(e);
     setStartY(y);
     setLastY(y);
 
-    const id = e.target.id;
-    const longPressMs = 750;
-    setPressTimer(setTimeout(() => selectElement(id), longPressMs));
+    const { id, touch } = findElementId(e);
+    if (touch) {
+      console.log('TOUCH', id);
+    } else {
+      const longPressMs = 750;
+      setPressTimer(setTimeout(() => selectElement(id), longPressMs));
+    }
+  }
+
+  function findElementId(e) {
+    let element = e.target;
+    let id;
+    let touch = false;
+    do {
+      id = element.id;
+      touch = touch || element.className === 'touch';
+      element = element.parentNode;
+    } while (!id && element);
+
+    return {
+      id,
+      touch,
+    };
   }
 
   function handleEnd() {
@@ -87,7 +115,10 @@ function ScrollBox({
   }
 
   return (
-    <section className={styles.container}>
+    <section
+      className={styles.container}
+      ref={container}
+    >
       <div
         className={styles.content}
         style={{ top }}

@@ -105,6 +105,10 @@ function Notes({
         <div className={styles.text}>
           {note.text}
         </div>
+        <div className={styles.touch}>
+          <div className={'touch'}>
+          </div>
+        </div>
       </li>
     ));
   }
