@@ -11,20 +11,21 @@ function ScrollBox({
   const [startY, setStartY] = useState(null);
   const [lastY, setLastY] = useState(null);
   const [pressTimer, setPressTimer] = useState(null);
+  const [momentumInterval, setMomentumInterval] = useState(null);
 
   useEffect(() => {
-    const yMin = container.current.clientHeight - container.current.scrollHeight;
+    const yMin = getYMin();
     if (top < yMin) {
       setTop(yMin);
     }
   }, [children]);
 
-  function handleStart(e) {
-    const y = getY(e);
+  function handleStart(event) {
+    const y = getY(event);
     setStartY(y);
     setLastY(y);
 
-    const { id, touch } = findElementId(e);
+    const { id, touch } = findElementId(event);
     if (touch) {
       console.log('TOUCH', id);
     } else {
@@ -33,8 +34,24 @@ function ScrollBox({
     }
   }
 
-  function findElementId(e) {
-    let element = e.target;
+  function handleEnd() {
+    clearTimer();
+    clearY();
+  }
+
+  function handleMove(event) {
+    const y = getY(event);
+    const deltaY = getDeltaY(y);
+    const deltaT = getDeltaT();
+
+    setOffsetY(deltaY);
+
+    clearTimer(getTotalY(y));
+    setLastY(y);
+  }
+
+  function findElementId(event) {
+    let element = event.target;
     let id;
     let touch = false;
     do {
@@ -49,14 +66,8 @@ function ScrollBox({
     };
   }
 
-  function handleEnd() {
-    clearTimer();
-    clearY();
-  }
-
-  function handleMove(e) {
-    setOffset(e);
-    setLastY(getY(e));
+  function getY(event) {
+    return event.touches[0].clientY;
   }
 
   function clearTimer(totalY = Infinity) {
@@ -67,39 +78,38 @@ function ScrollBox({
     }
   }
 
+  function getYMin() {
+    if (container.current) {
+      return container.current.clientHeight - container.current.scrollHeight;
+    }
+    return 0;
+  }
+
   function clearY() {
     setStartY(null);
     setLastY(null);
   }
 
-  function getY(event) {
-    return event.touches[0].clientY;
-  }
-
-  function getDeltaY(event) {
-    const y = getY(event);
+  function getDeltaY(y) {
     if (lastY) {
       return y - lastY;
     }
     return 0;
   }
 
-  function getTotalY(event) {
-    const y = getY(event);
+  function getTotalY(y) {
     if (startY) {
       return y - startY;
     }
     return 0;
   }
 
-  function getYMin(event) {
-    const parent = event.currentTarget.parentNode;
-    return parent.clientHeight - parent.scrollHeight;
+  function getDeltaT() {
+    return 0;
   }
 
-  function setOffset(event) {
-    const deltaY = getDeltaY(event);
-    const yMin = getYMin(event);
+  function setOffsetY(deltaY) {
+    const yMin = getYMin();
     const yMax = 0;
     setTop((top) => {
       const value = top + deltaY;
@@ -110,8 +120,6 @@ function ScrollBox({
       }
       return value;
     });
-
-    clearTimer(getTotalY(event));
   }
 
   return (
