@@ -6,10 +6,13 @@ function ScrollBox({
   selectElement,
   children,
 }) {
+  const intervalMs = 33;
   const container = useRef(null);
   const [top, setTop] = useState(0);
   const [startY, setStartY] = useState(null);
   const [lastY, setLastY] = useState(null);
+  const [lastT, setLastT] = useState(null);
+  const [velocityY, setVelocityY] = useState(0);
   const [pressTimer, setPressTimer] = useState(null);
   const [momentumInterval, setMomentumInterval] = useState(null);
 
@@ -27,11 +30,16 @@ function ScrollBox({
 
     const { id, touch } = findElementId(event);
     if (touch) {
-      console.log('TOUCH', id);
+      //??? add drag and drop
     } else {
       const longPressMs = 750;
       setPressTimer(setTimeout(() => selectElement(id), longPressMs));
     }
+
+    setMomentumInterval((interval) => {
+      clearInterval(interval);
+      return setInterval(applyVelocity, intervalMs);
+    });
   }
 
   function handleEnd() {
@@ -41,13 +49,16 @@ function ScrollBox({
 
   function handleMove(event) {
     const y = getY(event);
+    const t = Date.now();
     const deltaY = getDeltaY(y);
-    const deltaT = getDeltaT();
+    const deltaT = getDeltaT(t);
 
     setOffsetY(deltaY);
+    updateVelocity(deltaY, deltaT);
 
     clearTimer(getTotalY(y));
     setLastY(y);
+    setLastT(t);
   }
 
   function findElementId(event) {
@@ -104,8 +115,11 @@ function ScrollBox({
     return 0;
   }
 
-  function getDeltaT() {
-    return 0;
+  function getDeltaT(t) {
+    if (lastT) {
+      return t - lastT;
+    }
+    return 1;
   }
 
   function setOffsetY(deltaY) {
@@ -119,6 +133,28 @@ function ScrollBox({
         return yMin;
       }
       return value;
+    });
+  }
+
+  function updateVelocity(deltaY, deltaT) {
+    const fraction = 0.5;
+    const velocity = deltaY / deltaT;
+    setVelocityY((vy) => fraction * velocity + (1.0 - fraction) * vy);
+  }
+
+  function applyVelocity() {
+    const ratio = 0.95;
+    const epsilon = 0.01;
+    const off = -velocityY * intervalMs;
+    setOffsetY(off);
+    setVelocityY((vy) => {
+      if (Math.abs(vy) < epsilon) {
+        setMomentumInterval((interval) => {
+          clearInterval(interval);
+          return null;
+        });
+      }
+      return ratio * vy;
     });
   }
 
