@@ -3,8 +3,8 @@
 ## UI
 - create color selector
 - save note in color order
-- add momentum for scrolling
 - create water strider logo
+- change momentum to use animation frames
 - add three dots for menu button
 - transition on delete
 - transition on modal show/hide

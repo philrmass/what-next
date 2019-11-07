@@ -6,15 +6,15 @@ function ScrollBox({
   selectElement,
   children,
 }) {
-  const intervalMs = 33;
+  const intervalMs = 20;
   const container = useRef(null);
   const [top, setTop] = useState(0);
   const [startY, setStartY] = useState(null);
+  const [startT, setStartT] = useState(null);
   const [lastY, setLastY] = useState(null);
   const [lastT, setLastT] = useState(null);
-  const [velocityY, setVelocityY] = useState(0);
   const [pressTimer, setPressTimer] = useState(null);
-  const [momentumInterval, setMomentumInterval] = useState(null);
+  const [, setMomentumInterval] = useState(null);
 
   useEffect(() => {
     const yMin = getYMin();
@@ -25,8 +25,11 @@ function ScrollBox({
 
   function handleStart(event) {
     const y = getY(event);
+    const t = Date.now();
     setStartY(y);
+    setStartT(t);
     setLastY(y);
+    setLastT(t);
 
     const { id, touch } = findElementId(event);
     if (touch) {
@@ -35,14 +38,16 @@ function ScrollBox({
       const longPressMs = 750;
       setPressTimer(setTimeout(() => selectElement(id), longPressMs));
     }
-
-    setMomentumInterval((interval) => {
-      clearInterval(interval);
-      return setInterval(applyVelocity, intervalMs);
-    });
   }
 
   function handleEnd() {
+    const totalY = getTotalY(lastY);
+    const totalT = getTotalT(lastT);
+    if (totalT > 0) {
+      const velocity = totalY / totalT;
+      startMomentum(velocity);
+    }
+
     clearTimer();
     clearY();
   }
@@ -51,11 +56,8 @@ function ScrollBox({
     const y = getY(event);
     const t = Date.now();
     const deltaY = getDeltaY(y);
-    const deltaT = getDeltaT(t);
 
     setOffsetY(deltaY);
-    updateVelocity(deltaY, deltaT);
-
     clearTimer(getTotalY(y));
     setLastY(y);
     setLastT(t);
@@ -89,6 +91,31 @@ function ScrollBox({
     }
   }
 
+  function startMomentum(velocity) {
+    const ratio = 0.92;
+    const epsilon = 0.01;
+
+    setMomentumInterval((interval) => {
+      clearInterval(interval);
+      return setInterval(() => {
+        if (Math.abs(velocity) > epsilon) {
+          const offset = velocity * intervalMs;
+          setOffsetY(offset);
+        } else {
+          stopMomentum();
+        }
+        velocity = ratio * velocity;
+      }, intervalMs);
+    });
+  }
+
+  function stopMomentum() {
+    setMomentumInterval((interval) => {
+      clearInterval(interval);
+      return null;
+    });
+  }
+
   function getYMin() {
     if (container.current) {
       return container.current.clientHeight - container.current.scrollHeight;
@@ -115,11 +142,11 @@ function ScrollBox({
     return 0;
   }
 
-  function getDeltaT(t) {
-    if (lastT) {
-      return t - lastT;
+  function getTotalT(t) {
+    if (startT) {
+      return t - startT;
     }
-    return 1;
+    return 0;
   }
 
   function setOffsetY(deltaY) {
@@ -133,28 +160,6 @@ function ScrollBox({
         return yMin;
       }
       return value;
-    });
-  }
-
-  function updateVelocity(deltaY, deltaT) {
-    const fraction = 0.5;
-    const velocity = deltaY / deltaT;
-    setVelocityY((vy) => fraction * velocity + (1.0 - fraction) * vy);
-  }
-
-  function applyVelocity() {
-    const ratio = 0.95;
-    const epsilon = 0.01;
-    const off = -velocityY * intervalMs;
-    setOffsetY(off);
-    setVelocityY((vy) => {
-      if (Math.abs(vy) < epsilon) {
-        setMomentumInterval((interval) => {
-          clearInterval(interval);
-          return null;
-        });
-      }
-      return ratio * vy;
     });
   }
 
