@@ -6,7 +6,6 @@ function ScrollBox({
   selectElement,
   children,
 }) {
-  //const intervalMs = 20;
   const container = useRef(null);
   const [top, setTop] = useState(0);
   const [startY, setStartY] = useState(null);
@@ -14,7 +13,6 @@ function ScrollBox({
   const [lastY, setLastY] = useState(null);
   const [lastT, setLastT] = useState(null);
   const [pressTimer, setPressTimer] = useState(null);
-  //const [, setMomentumInterval] = useState(null);
 
   useEffect(() => {
     const yMin = getYMin();
@@ -92,10 +90,10 @@ function ScrollBox({
   }
 
   function startMomentum(velocity) {
-    const ratio = 0.92;
+    const decayMs = 0.997;
     const epsilon = 0.005;
-    let remainder = 0;
     let lastTimestamp;
+    let remainder = 0;
 
     function updateMomentum(timestamp) {
       let interval = 0;
@@ -106,15 +104,16 @@ function ScrollBox({
 
       if (Math.abs(velocity) > epsilon) {
         const offset = velocity * interval + remainder;
-        remainder = 0;
-        velocity = ratio * velocity;
         const applied = Math.round(offset);
-        remainder += offset - applied;
+        remainder = offset - applied;
         setOffsetY(applied);
+
+        const decay = Math.pow(decayMs, interval);
+        velocity = decay * velocity;
+
         window.requestAnimationFrame(updateMomentum);
       }
     }
-
     window.requestAnimationFrame(updateMomentum);
   }
 
