@@ -4,9 +4,12 @@
 }
 
 .textInput {
+  height: calc(3em + 8px);
   padding: 4px;
   border: 1px solid #e0e0e0;
-  background: #f0f0f0;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-size: 1.3rem;
 }
 
 .textInput:focus {
@@ -20,9 +23,8 @@
   align-items: center;
   height: calc(3em + 8px);
   padding: 8px 16px;
-  border-top: 1px solid #c0c0c0;
-  border-bottom: 1px solid #c0c0c0;
-  font-size: 1.3em;
+  border-bottom: 1px solid #ffffff;
+  font-size: 1.3rem;
   white-space: pre;
 }
 

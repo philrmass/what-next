@@ -1,6 +1,4 @@
-//??? remove
 import React, { useState } from 'react';
-//import React, { useEffect, useState } from 'react';
 import { useLocalStorage } from '../utilities/storage';
 import Footer from './Footer';
 import Events from './Events';
@@ -17,13 +15,6 @@ function App() {
   const [overlayShown, setOverlayShown] = useState('');
   const [message, setMessage] = useState('');
 
-  //??? remove
-  /*
-  useEffect(() => {
-    setOverlayShown('noteModal');
-  }, []);
-
-  */
   function showMessage(text) {
     setMessage(text);
     setTimeout(() => setMessage(''), 2000);

@@ -25,37 +25,49 @@ body {
 }
 
 .color0 {
-  background: #ff5838;
+  background: #fd9696;
 }
 
 .color1 {
-  background: #ff7828;
+  background: #ffb793;
 }
 
 .color2 {
-  background: #ffff98;
+  background: #fed17d;
 }
 
 .color3 {
-  background: #00ff00;
+  background: #e6fe94;
 }
 
 .color4 {
-  background: #0000ff;
+  background: #a7fc9a;
 }
 
 .color5 {
-  background: #8000ff;
+  background: #b8e1f1;
 }
 
 .color6 {
-  background: #ffffff;
+  background: #b9bbf0;
 }
 
 .color7 {
-  background: #808080;
+  background: #d7b8f0;
 }
 
 .color8 {
-  background: #101010;
+  background: #d9cebf;
+}
+
+.color9 {
+  background: #e6e7cd;
+}
+
+.color10 {
+  background: #e2e2e2;
+}
+
+.color11 {
+  background: #c5c5c5;
 }

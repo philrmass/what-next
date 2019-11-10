@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styles from '../styles/ColorSelector.module.css';
 
 function ColorSelector({
-  color,
   setColor,
 }) {
   const colorCount = 12;
@@ -25,7 +24,6 @@ function ColorSelector({
 }
 
 ColorSelector.propTypes = {
-  color: PropTypes.number,
   setColor: PropTypes.func,
 };
 

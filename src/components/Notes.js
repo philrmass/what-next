@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useLocalStorage } from '../utilities/storage';
 import uuidv4 from 'uuid/v4';
 import styles from '../styles/Notes.module.css';
 import ColorSelector from './ColorSelector';
@@ -13,6 +14,7 @@ function Notes({
   showModal,
   closeModal,
 }) {
+  const [lastColor, setLastColor] = useLocalStorage('whatNextLastColor', 0);
   const [activeNote, setActiveNote] = useState(createDefaultNote());
 
   function handleTextChange(text) {
@@ -23,7 +25,7 @@ function Notes({
   }
 
   function handleColorChange(colorCode) {
-    console.log('COLOR', colorCode);
+    setLastColor(colorCode);
     setActiveNote((note) => ({
       ...note,
       colorCode,
@@ -66,7 +68,7 @@ function Notes({
     return {
       text: '',
       guid: null,
-      colorCode: 0,
+      colorCode: lastColor,
     };
   }
 
@@ -99,9 +101,9 @@ function Notes({
           />
           <textarea
             rows='3'
-            cols='30'
+            cols='24'
             autoFocus={true}
-            className={styles.textInput}
+            className={`${styles.textInput} color${activeNote.colorCode}`}
             value={activeNote.text}
             onChange={(e) => handleTextChange(e.target.value)}
           />
