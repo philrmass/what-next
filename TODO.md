@@ -1,9 +1,9 @@
 # Tasks
 ## Bugs
 ## UI
-- add current selection to color selector
-- save note in color order
-- make note modal full width and same height as note, plus centering
+- add touch side swipe
+- select events or notes with side swipe
+- add event add & default event
 - create water strider logo
 - add three dots for menu button
 - transition on delete

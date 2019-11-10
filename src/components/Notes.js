@@ -37,8 +37,13 @@ function Notes({
     if (i >= 0) {
       updateNotes([...notes.slice(0, i), activeNote, ...notes.slice(i + 1)]);
     } else {
+      const i = notes.findIndex((note) => activeNote.colorCode <= note.colorCode);
       const note = { ...activeNote, guid: uuidv4() };
-      updateNotes([...notes, note]);
+      if (i >= 0) {
+        updateNotes([...notes.slice(0, i), note, ...notes.slice(i)]);
+      } else {
+        updateNotes([...notes, note]);
+      }
     }
     setActiveNote(createDefaultNote());
     closeModal();
