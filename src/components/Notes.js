@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import styles from '../styles/Notes.module.css';
+import ColorSelector from './ColorSelector';
 import Modal from './Modal';
 import ScrollBox from './ScrollBox';
 
@@ -18,6 +19,14 @@ function Notes({
     setActiveNote((note) => ({
       ...note,
       text,
+    }));
+  }
+
+  function handleColorChange(colorCode) {
+    console.log('COLOR', colorCode);
+    setActiveNote((note) => ({
+      ...note,
+      colorCode,
     }));
   }
 
@@ -83,14 +92,20 @@ function Notes({
         buttons={buildModalButtons()}
         close={cancel}
       >
-        <textarea
-          rows='3'
-          cols='30'
-          autoFocus={true}
-          className={styles.textInput}
-          value={activeNote.text}
-          onChange={(e) => handleTextChange(e.target.value)}
-        />
+        <Fragment>
+          <ColorSelector
+            color={activeNote.colorCode}
+            setColor={(code) => handleColorChange(code)}
+          />
+          <textarea
+            rows='3'
+            cols='30'
+            autoFocus={true}
+            className={styles.textInput}
+            value={activeNote.text}
+            onChange={(e) => handleTextChange(e.target.value)}
+          />
+        </Fragment>
       </Modal>
     );
   }

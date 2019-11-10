@@ -1,0 +1,15 @@
+.main {
+  margin-bottom: 16px;
+}
+
+.colors {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 8px;
+}
+
+.color {
+  width: 100%;
+  padding-top: 100%;
+  border: 1px solid #707070;
+}

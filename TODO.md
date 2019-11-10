@@ -1,8 +1,9 @@
 # Tasks
 ## Bugs
 ## UI
-- create color selector
+- add current selection to color selector
 - save note in color order
+- make note modal full width and same height as note, plus centering
 - create water strider logo
 - add three dots for menu button
 - transition on delete
