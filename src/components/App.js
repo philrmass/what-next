@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { saveData, getDateString } from '../utilities/file';
 import { useLocalStorage } from '../utilities/storage';
 import Footer from './Footer';
 import Events from './Events';
@@ -55,7 +56,8 @@ function App() {
   }
 
   function saveBackup() {
-    showMessage('save');
+    const name = `whatNextData_${Date.now()}.json`;
+    saveData({ events, notes}, name);
   }
 
   function loadBackup() {

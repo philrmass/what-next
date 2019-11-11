@@ -1,6 +1,6 @@
 .main {
   height: inherit;
-  background: #ffffff;
+  background: #e0e0e0;
 }
 
 .textInput {
@@ -23,7 +23,7 @@
   align-items: center;
   height: calc(3em + 8px);
   padding: 8px 16px;
-  border-bottom: 1px solid #ffffff;
+  margin-bottom: 2px;
   font-size: 1.3rem;
   white-space: pre;
 }

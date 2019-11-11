@@ -1,6 +1,7 @@
 # Tasks
 ## Bugs
 ## UI
+- add drag and drop with notes
 - add touch side swipe
 - select events or notes with side swipe
 - add event add & default event
@@ -10,7 +11,6 @@
 - transition on modal show/hide
 
 ## Data
-- implement save (name and date/time)
 - if data missing ask whether to restore
 - implement load (select file)
 
