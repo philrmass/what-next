@@ -37,3 +37,11 @@
   margin-right: 12px;
   background: #ffffff30;
 }
+
+.start {
+  opacity: 0.4;
+}
+
+.over {
+  margin-top: 24px;
+}

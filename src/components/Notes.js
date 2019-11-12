@@ -37,7 +37,6 @@ function Notes({
 
   function handleDragStart(guid) {
     setDragStart(guid);
-    console.log('START', guid); // eslint-disable-line no-console
   }
 
   function handleDragOver(x, y) {
@@ -45,40 +44,46 @@ function Notes({
       if (!guid) {
         guid = dragStart;
       }
-      //console.log('OVER cont', container.current.childNodes[0].getBoundingClientRect());
-      //console.log('OVER', x.toFixed(2), y.toFixed(2), '\n ', guid); // eslint-disable-line no-console
       return findElementId(container.current, guid, x, y);
     });
   }
 
   function handleDragStop() {
-    console.log('STOP'); // eslint-disable-line no-console
+    const children = [...container.current.childNodes];
+    const from = children.findIndex((child) => child.id === dragStart);
+    const to = children.findIndex((child) => child.id === dragOver);
+
+    if (from >= 0 && to >= 0) {
+      const moved = notes[from];
+      if (from < to) {
+        updateNotes([...notes.slice(0, from), ...notes.slice(from + 1, to), moved, ...notes.slice(to)]);
+      } else {
+        updateNotes([...notes.slice(0, to), moved, ...notes.slice(to, from), ...notes.slice(from + 1)]);
+      }
+    }
+
+    setDragStart(null);
+    setDragOver(null);
   }
 
   function findElementId(parent, id, x, y) {
     const children = [...parent.childNodes];
-    //console.log('FIND', parent.childNodes.length, '\n ', id);
     let index = children.findIndex((child) => child.id === id);
     const child = children[index];
     const last = children[index - 1];
     const next = children[index + 1];
     if (elementContains(child, x, y)) {
-      console.log('SAME', child.id.slice(0, 4));
       return child.id;
     } else if (elementContains(last, x, y)) {
-      console.log('MINUS', last.id.slice(0, 4));
       return last.id;
     } else if (elementContains(next, x, y)) {
-      console.log('PLUS', next.id.slice(0, 4));
       return next.id;
     }
     for (const child of children) {
       if (elementContains(child, x, y)) {
-        console.log('FOUND', child.id.slice(0, 4));
         return child.id;
       }
     }
-    console.log('OTHER', id.slice(0, 4));
     return id;
   }
 
@@ -179,22 +184,28 @@ function Notes({
   }
 
   function buildNotes() {
-    return notes.map((note) => (
-      <li
-        key={note.guid}
-        id={note.guid}
-        className={`${styles.note} color${note.colorCode}`}
-        draggable='true'
-      >
-        <div className={styles.text}>
-          {note.text}
-        </div>
-        <div className={styles.touch}>
-          <div className={'touch'}>
+    return notes.map((note) => {
+      const start = note.guid === dragStart;
+      const over = !start && note.guid === dragOver;
+      const noteStyles = `${start ? styles.start : ''} ${over ? styles.over : ''}`;
+
+      return (
+        <li
+          key={note.guid}
+          id={note.guid}
+          className={`${styles.note} color${note.colorCode} ${noteStyles}`}
+          draggable='true'
+        >
+          <div className={styles.text}>
+            {note.text}
           </div>
-        </div>
-      </li>
-    ));
+          <div className={styles.touch}>
+            <div className={'touch'}>
+            </div>
+          </div>
+        </li>
+      );
+    });
   }
 
   return (

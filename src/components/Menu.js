@@ -9,7 +9,10 @@ function Menu({ saveBackup, loadBackup, close }) {
         <div>
           <button
             className={styles.link}
-            onClick={saveBackup}
+            onClick={() => {
+              close();
+              saveBackup();
+            }}
           >
             Save Backup
           </button>
@@ -17,7 +20,10 @@ function Menu({ saveBackup, loadBackup, close }) {
         <div>
           <button
             className={styles.link}
-            onClick={loadBackup}
+            onClick={() => {
+              close();
+              loadBackup();
+            }}
           >
             Load Backup
           </button>
