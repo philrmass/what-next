@@ -4,6 +4,9 @@ import styles from '../styles/ScrollBox.module.css';
 
 function ScrollBox({
   selectElement,
+  onDragStart,
+  onDragOver,
+  onDragStop,
   children,
 }) {
   const container = useRef(null);
@@ -13,6 +16,7 @@ function ScrollBox({
   const [lastY, setLastY] = useState(null);
   const [lastT, setLastT] = useState(null);
   const [pressTimer, setPressTimer] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     const yMin = getYMin();
@@ -29,9 +33,10 @@ function ScrollBox({
     setLastY(y);
     setLastT(t);
 
-    const { id, touch } = findElementId(event);
+    const { id, touch } = findElementId(event.target);
     if (touch) {
-      //??? add drag and drop
+      onDragStart(id);
+      setIsDragging(true);
     } else {
       const longPressMs = 750;
       setPressTimer(setTimeout(() => selectElement(id), longPressMs));
@@ -39,30 +44,39 @@ function ScrollBox({
   }
 
   function handleEnd() {
-    const totalY = getTotalY(lastY);
-    const totalT = getTotalT(lastT);
-    if (totalT > 0) {
-      const velocity = totalY / totalT;
-      startMomentum(velocity);
-    }
+    if (isDragging) {
+      onDragStop();
+      setIsDragging(false);
+    } else {
+      const totalY = getTotalY(lastY);
+      const totalT = getTotalT(lastT);
+      if (totalT > 0) {
+        const velocity = totalY / totalT;
+        startMomentum(velocity);
+      }
 
-    clearTimer();
-    clearY();
+      clearTimer();
+      clearY();
+    }
   }
 
   function handleMove(event) {
-    const y = getY(event);
-    const t = Date.now();
-    const deltaY = getDeltaY(y);
+    if (isDragging) {
+      const touch = event.touches[0];
+      onDragOver(touch.clientX, touch.clientY);
+    } else {
+      const y = getY(event);
+      const t = Date.now();
+      const deltaY = getDeltaY(y);
 
-    setOffsetY(deltaY);
-    clearTimer(getTotalY(y));
-    setLastY(y);
-    setLastT(t);
+      setOffsetY(deltaY);
+      clearTimer(getTotalY(y));
+      setLastY(y);
+      setLastT(t);
+    }
   }
 
-  function findElementId(event) {
-    let element = event.target;
+  function findElementId(element) {
     let id;
     let touch = false;
     do {
@@ -184,6 +198,9 @@ function ScrollBox({
 
 ScrollBox.propTypes = {
   selectElement: PropTypes.func,
+  onDragStart: PropTypes.func,
+  onDragOver: PropTypes.func,
+  onDragStop: PropTypes.func,
   children: PropTypes.object,
 };
 
