@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { saveData, getDateString } from '../utilities/file';
+import { saveData } from '../utilities/file';
 import { useLocalStorage } from '../utilities/storage';
 import Footer from './Footer';
 import Events from './Events';

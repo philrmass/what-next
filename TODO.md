@@ -1,10 +1,10 @@
 # Tasks
 ## Bugs
 ## UI
-- add drag and drop with notes
+- add event add & default event
+- make colors lighter
 - add touch side swipe
 - select events or notes with side swipe
-- add event add & default event
 - create water strider logo
 - add three dots for menu button
 - transition on delete

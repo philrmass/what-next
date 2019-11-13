@@ -1,5 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
+//import uuidv4 from 'uuid/v4';
+//import { eventToDisplay, displayToEvent } from '../utilities/events';
 import styles from '../styles/Events.module.css';
 import Modal from './Modal';
 import ScrollBox from './ScrollBox';
@@ -11,6 +13,18 @@ function Events({
   //showModal,
   closeModal,
 }) {
+  const [activeEvent, setActiveEvent] = useState(createDefaultEvent());
+
+  function createDefaultEvent() {
+    const now = Date.now();
+
+    return {
+      text: '',
+      start: now,
+      end: now,
+    };
+  }
+
   function buildModal() {
     if (!isModalShown) {
       return null;
@@ -25,12 +39,29 @@ function Events({
     );
   }
 
+  function buildEvents() {
+    return events.map((event) => {
+      //const display = eventToDisplay(event);
+
+      return (
+        <li
+          key={event.guid}
+          id={event.guid}
+          className={styles.event}
+        >
+          {event.text}
+        </li>
+      );
+    });
+  }
+
   return (
     <Fragment>
       <section className={styles.main}>
         <ScrollBox>
           <ul>
             <li>{JSON.stringify(events)}</li>
+            {buildEvents()}
           </ul>
         </ScrollBox>
       </section>

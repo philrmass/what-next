@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useLocalStorage } from '../utilities/storage';
 import uuidv4 from 'uuid/v4';
+import { useLocalStorage } from '../utilities/storage';
 import styles from '../styles/Notes.module.css';
 import ColorSelector from './ColorSelector';
 import Modal from './Modal';
@@ -194,7 +194,6 @@ function Notes({
           key={note.guid}
           id={note.guid}
           className={`${styles.note} color${note.colorCode} ${noteStyles}`}
-          draggable='true'
         >
           <div className={styles.text}>
             {note.text}
