@@ -1,19 +1,20 @@
 export function eventToDisplay(event, now = Date.now()) {
   const date = getDate(event.start);
+  //??? remove start logic in event display
   //??? only if end
   const start = getTime(event.start);
   let end = null;
   if (event.end && event.end !== event.start) {
     end = getTime(event.end);
   }
-  const until = getUntil(now, event.start);
+  const { until, code } = getUntil(now, event.start);
 
   return {
     date,
     start,
     end,
     until,
-    code: 0,
+    code,
   };
 }
 
@@ -36,8 +37,10 @@ function getTime(time) {
 
 function getUntil(from, to) {
   const times = getUntilTimes(from, to);
-  const untilCode = getUntilCode(times);
-  return '2 wks';
+  const code = getUntilCode(times);
+  const until = getUntilText(times);
+
+  return { until, code };
 }
 
 function getUntilTimes(from, to) {
@@ -50,6 +53,10 @@ function getUntilTimes(from, to) {
 function getUntilCode(times) {
   //??? calculate color code based on times
   return 0;
+}
+
+function getUntilText(times) {
+  return '2w 5d';
 }
 
 export function displayToEvent(display) {
