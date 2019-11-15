@@ -1,28 +1,71 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-//import uuidv4 from 'uuid/v4';
-//import { eventToDisplay, displayToEvent } from '../utilities/events';
+import uuidv4 from 'uuid/v4';
+import { eventToDisplay } from '../utilities/events';
 import styles from '../styles/Events.module.css';
 import Modal from './Modal';
 import ScrollBox from './ScrollBox';
 
 function Events({
   events,
-  //updateEvents,
+  updateEvents,
   isModalShown,
   //showModal,
   closeModal,
 }) {
   const [activeEvent, setActiveEvent] = useState(createDefaultEvent());
+  //??? set default event when modal shown
+
+  useEffect(() => {
+    if (isModalShown) {
+      setActiveEvent(createDefaultEvent);
+      console.log('MODAL');
+    }
+  }, [isModalShown]);
 
   function createDefaultEvent() {
     const now = Date.now();
 
     return {
-      text: '',
+      text: 'yo',
       start: now,
-      end: now,
+      end: now + 3600000,
     };
+  }
+
+  function remove() {
+    console.log('REMOVE');
+  }
+
+  function save() {
+    const i = events.findIndex((event) => event.guid === activeEvent.guid);
+    if (i >= 0) {
+      updateEvents([...events.slice(0, i), activeEvent, ...events.slice(i + 1)]);
+    } else {
+      const i = events.findIndex((event) => event.start > activeEvent.start);
+      const event = { ...activeEvent, guid: uuidv4() };
+      console.log('SAVE es', events);
+      console.log('index', i);
+      console.log('SAVE e', event);
+      if (i >= 0) {
+        updateEvents([...events.slice(0, i), event, ...events.slice(i)]);
+      } else {
+        updateEvents([...events, event]);
+      }
+    }
+    closeModal();
+  }
+
+  function buildModalButtons() {
+    const isEditing = false;
+    return (
+      <Fragment>
+        { isEditing && (
+          <button onClick={remove}>Delete</button>
+        )}
+        <button onClick={save}>Save</button>
+      </Fragment>
+    );
   }
 
   function buildModal() {
@@ -32,16 +75,21 @@ function Events({
 
     return (
       <Modal
+        buttons={buildModalButtons()}
         close={closeModal}
       >
-        {'Stuff in the events modal'}
+        <Fragment>
+          <div>
+            {'Event Controls Here'}
+          </div>
+        </Fragment>
       </Modal>
     );
   }
 
   function buildEvents() {
     return events.map((event) => {
-      //const display = eventToDisplay(event);
+      const { date, start, end, until } = eventToDisplay(event);
 
       return (
         <li
@@ -49,7 +97,12 @@ function Events({
           id={event.guid}
           className={styles.event}
         >
-          {event.text}
+          <div className={styles.text}>
+            {event.text}
+          </div>
+          <div className={styles.dateTime}>
+            {start}
+          </div>
         </li>
       );
     });
@@ -60,7 +113,6 @@ function Events({
       <section className={styles.main}>
         <ScrollBox>
           <ul>
-            <li>{JSON.stringify(events)}</li>
             {buildEvents()}
           </ul>
         </ScrollBox>

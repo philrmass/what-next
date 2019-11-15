@@ -47,8 +47,8 @@ function App() {
     }
   }
 
-  function updateEvents(event) {
-    setEvents((events) => [...events, event]);
+  function updateEvents(events) {
+    setEvents(events);
   }
 
   function updateNotes(notes) {
