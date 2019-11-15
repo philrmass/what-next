@@ -1,20 +1,68 @@
 .main {
   height: inherit;
-  background: #ffffc0;
+  background: #e0e0e0;
 }
 
 .event {
+  --event-height: calc(4.5em + 8px);
+  --until-width: 1.5em;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: calc(3em + 8px);
-  padding: 8px 16px;
+  height: var(--event-height);
   margin-bottom: 2px;
-  font-size: 1.3rem;
-  white-space: pre;
-  background: #888;
+}
+
+.until {
+  background: #ffffff64;
+  width: var(--until-width);
+}
+
+.untilText {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  height: var(--until-width);
+  width: var(--event-height);
+  transform-origin: 100% 0%;
+  transform: translateX(-100%) rotate(-90deg);
+  color: #404040;
+}
+
+.eventContent {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
 }
 
 .dateTime {
-  background: #ffffff20;
+  flex-grow: 1;
+}
+
+.dateText {
+  font-size: 1.2rem;
+  color: #303030;
+}
+
+.timeText {
+  margin-top: 0.2em;
+  color: #181818;
+}
+
+.textBox {
+  flex-grow: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  color: #101010;
+  font-size: 1.3rem;
+  white-space: pre;
+}
+
+.temp {
+  font-size: 0.6em;
+  color: #484848;
 }

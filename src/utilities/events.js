@@ -13,6 +13,7 @@ export function eventToDisplay(event, now = Date.now()) {
     start,
     end,
     until,
+    code: 0,
   };
 }
 
