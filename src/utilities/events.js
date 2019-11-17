@@ -1,10 +1,8 @@
 export function eventToDisplay(event, now = Date.now()) {
   const date = getDate(event.start);
-  //??? remove start logic in event display
-  //??? only if end
   const start = getTime(event.start);
   let end = null;
-  if (event.end && event.end !== event.start) {
+  if (event.end && (event.end !== event.start)) {
     end = getTime(event.end);
   }
   const { until, code } = getUntil(now, event.start);
@@ -36,6 +34,9 @@ function getTime(time) {
 }
 
 function getUntil(from, to) {
+  if (!to) {
+    return { until: '', code: 0 };
+  }
   const times = getUntilTimes(from, to);
   const code = getUntilCode(times);
   const until = getUntilText(times);
@@ -44,19 +45,76 @@ function getUntil(from, to) {
 }
 
 function getUntilTimes(from, to) {
-  //??? return years, months, weeks, days, hours (max of 2)
-  // if less than 1, don't include
-  // return until code
-  return {};
+  const oneMinute = 60 * 1000;
+  const oneHour = 60 * oneMinute;
+  const oneDay = 24 * oneHour;
+
+  let diff = to - from;
+  if (diff < 0) {
+    return null;
+  }
+
+  const longYear = 366 * oneDay;
+  let years = Math.floor(diff / longYear);
+  while (diff >= yearsFrom(years + 1, from)) {
+    years++;
+  }
+  diff -= yearsFrom(years, from);
+
+  const longMonth = 32 * oneDay;
+  let months = Math.floor(diff / longMonth);
+  while (diff >= monthsFrom(months + 1, from)) {
+    months++;
+  }
+  diff -= monthsFrom(months, from);
+
+  const oneWeek = 7 * oneDay;
+  const weeks = Math.floor(diff / oneWeek);
+  diff -= weeks * oneWeek;
+  const days = Math.floor(diff / oneDay);
+  diff -= days * oneDay;
+  const hours = Math.floor(diff / oneHour);
+  diff -= hours * oneHour;
+  const minutes = Math.floor(diff / oneMinute);
+  diff -= minutes * oneMinute;
+
+  return [years, months, weeks, days, hours, minutes];
 }
 
 function getUntilCode(times) {
-  //??? calculate color code based on times
-  return 0;
+  if (!times) {
+    return 0;
+  }
+  const i = times.findIndex((time) => time !== 0);
+  return 6 - i;
 }
 
 function getUntilText(times) {
-  return '2w 5d';
+  if (!times) {
+    return 'past';
+  }
+  const labels = ['y', 'm', 'w', 'd', 'h', 'm'];
+  const i = times.findIndex((time) => time !== 0);
+  if (i < 0) {
+    return 'now';
+  }
+  let text = `${times[i]}${labels[i]}`;
+  if (times[i + 1] > 0) {
+    text += ` ${times[i + 1]}${labels[i + 1]}`;
+  }
+  return text;
+}
+
+function yearsFrom(years, time) {
+  const date = new Date(time);
+  date.setFullYear(date.getFullYear() + years);
+  return date.getTime() - time;
+}
+
+function monthsFrom(months, time) {
+  const date = new Date(time);
+  date.setMonth(date.getMonth() + months);
+  return date.getTime() - time;
 }
 
 export function displayToEvent(display) {

@@ -2,7 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import { eventToDisplay } from '../utilities/events';
+import { nextMinute } from '../utilities/time';
 import styles from '../styles/Events.module.css';
+import EventEditor from './EventEditor';
 import Modal from './Modal';
 import ScrollBox from './ScrollBox';
 
@@ -14,6 +16,21 @@ function Events({
   closeModal,
 }) {
   const [activeEvent, setActiveEvent] = useState(createDefaultEvent());
+  const [now, setNow] = useState(Date.now());
+
+  useEffect(() => {
+    let timeout = null;
+    function update() {
+      setNow(Date.now());
+      timeout = setTimeout(update, nextMinute());
+    }
+    update();
+
+    return (() => {
+      clearTimeout(timeout);
+      timeout = null;
+    });
+  }, []);
 
   useEffect(() => {
     if (isModalShown && !activeEvent.start) {
@@ -23,15 +40,6 @@ function Events({
     }
   }, [isModalShown]);
 
-  /*
-  function handleTextChange(text) {
-    setActiveNote((note) => ({
-      ...note,
-      text,
-    }));
-  }
-
-*/
   function save() {
     const i = events.findIndex((event) => event.guid === activeEvent.guid);
     if (i >= 0) {
@@ -94,38 +102,22 @@ function Events({
       return null;
     }
 
-    const { date, start, end } = eventToDisplay(activeEvent);
-
     return (
       <Modal
         buttons={buildModalButtons()}
         close={cancel}
       >
-        <Fragment>
-          <div>
-            {'Event Controls Here'}
-            <div>
-              {date}
-            </div>
-            <div>
-              { start && end && (
-                <span>{start}</span>
-              )}
-              { end && (
-                <span> - {end}</span>
-              )}
-            </div>
-            <div>
-            </div>
-          </div>
-        </Fragment>
+        <EventEditor
+          activeEvent={activeEvent}
+          setActiveEvent={setActiveEvent}
+        />
       </Modal>
     );
   }
 
   function buildEvents() {
     return events.map((event) => {
-      const { date, start, end, until, code } = eventToDisplay(event);
+      const { date, start, end, until, code } = eventToDisplay(event, now);
       const eventStyles = `${styles.event} event${code}`;
 
       return (
@@ -147,20 +139,17 @@ function Events({
                 {date}
               </div>
               <div className={styles.timeText}>
-                { start && end && (
+                { start && (
                   <span>{start}</span>
                 )}
                 { end && (
                   <span> - {end}</span>
                 )}
-                { start && !end && (
-                  <div className={styles.temp}>{start} - {end}</div>
-                )}
               </div>
             </div>
             <div className={styles.textBox}>
               <span className={styles.text}>
-                {event.text}
+                {event.text + ' ' + code}
               </span>
             </div>
           </div>
@@ -186,6 +175,7 @@ function Events({
 }
 
 Events.propTypes = {
+  now: PropTypes.number,
   events: PropTypes.arrayOf(PropTypes.object),
   updateEvents: PropTypes.func,
   isModalShown: PropTypes.bool,

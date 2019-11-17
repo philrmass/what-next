@@ -64,7 +64,7 @@ function App() {
     showMessage('load');
   }
 
-  function update() {
+  function updateVersion() {
     showMessage('update');
   }
 
@@ -108,7 +108,7 @@ function App() {
         <Footer
           message={message}
           version={version}
-          update={update}
+          update={updateVersion}
         />
       </footer>
     </div>

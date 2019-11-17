@@ -73,5 +73,29 @@ body {
 }
 
 .event0 {
+  background: #8c8c8c;
+}
+
+.event1 {
+  background: #f7b0b2;
+}
+
+.event2 {
+  background: #f9d0a5;
+}
+
+.event3 {
   background: #9faec5;
+}
+
+.event4 {
+  background: #c0b2d3;
+}
+
+.event5 {
+  background: #d3c5dc;
+}
+
+.event6 {
+  background: #c9c5d0;
 }
