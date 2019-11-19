@@ -1,16 +1,17 @@
 # Tasks
 ## Bugs
 ## UI
-- select text on open edit
+- add date editing
 - add touch side swipe
 - select events or notes with side swipe
-- add better editing
+- change end editing to duration
 - make events now if between start and end times, past if after end
 - make note colors lighter
+- add note children of notes
 - create water strider logo
 - add three dots for menu button
-- transition on delete
-- transition on modal show/hide
+- add css transition on delete
+- add css transition on modal show/hide
 
 ## Data
 - if data missing ask whether to restore
