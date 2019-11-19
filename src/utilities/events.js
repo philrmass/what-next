@@ -1,9 +1,9 @@
 export function eventToDisplay(event, now = Date.now()) {
-  const date = getDate(event.start);
-  const start = getTime(event.start);
+  const date = getDisplayDate(event.start);
+  const start = getDisplayTime(event.start);
   let end = null;
   if (event.end && (event.end !== event.start)) {
-    end = getTime(event.end);
+    end = getDisplayTime(event.end);
   }
   const { until, code } = getUntil(now, event.start);
 
@@ -16,7 +16,7 @@ export function eventToDisplay(event, now = Date.now()) {
   };
 }
 
-function getDate(time) {
+function getDisplayDate(time) {
   const options = {
     month: 'short',
     day: 'numeric',
@@ -25,7 +25,7 @@ function getDate(time) {
   return new Date(time).toLocaleDateString(undefined, options);
 }
 
-function getTime(time) {
+function getDisplayTime(time) {
   const options = {
     hour: 'numeric',
     minute: '2-digit',
@@ -81,11 +81,26 @@ function getUntilTimes(from, to) {
   return [years, months, weeks, days, hours, minutes];
 }
 
+function yearsFrom(years, time) {
+  const date = new Date(time);
+  date.setFullYear(date.getFullYear() + years);
+  return date.getTime() - time;
+}
+
+function monthsFrom(months, time) {
+  const date = new Date(time);
+  date.setMonth(date.getMonth() + months);
+  return date.getTime() - time;
+}
+
 function getUntilCode(times) {
   if (!times) {
     return 0;
   }
   const i = times.findIndex((time) => time !== 0);
+  if (i < 0) {
+    return 1;
+  }
   return 6 - i;
 }
 
@@ -105,22 +120,25 @@ function getUntilText(times) {
   return text;
 }
 
-function yearsFrom(years, time) {
-  const date = new Date(time);
-  date.setFullYear(date.getFullYear() + years);
-  return date.getTime() - time;
-}
+export function timeToEdit(time) {
+  if (!time) {
+    return '';
+  }
 
-function monthsFrom(months, time) {
-  const date = new Date(time);
-  date.setMonth(date.getMonth() + months);
-  return date.getTime() - time;
-}
-
-export function displayToEvent(display) {
-  return {
-    text: '',
-    start: 0,
-    end: 0,
+  const options = {
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
   };
+  return new Date(time).toLocaleTimeString('en', options);
+}
+
+export function editToTime(text, lastTime) {
+  const [hoursText, minutesText] = text.split(':');
+  const hours = parseInt(hoursText);
+  const minutes = parseInt(minutesText);
+  const date = new Date(lastTime);
+
+  date.setHours(hours, minutes);
+  return date.getTime();
 }

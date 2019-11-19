@@ -1,19 +1,12 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { eventToDisplay } from '../utilities/events';
+import { editToTime, timeToEdit } from '../utilities/events';
+import styles from '../styles/EventEditor.module.css';
 
 function EventEditor({
   activeEvent,
+  setActiveEvent,
 }) {
-  const [text, setText] = useState('');
-
-  useEffect(() => {
-    const { date, start, end } = eventToDisplay(activeEvent);
-    console.log('NEW-ACTIVE', date, start, end, activeEvent.text);
-    //??? set stuff
-  }, [activeEvent]);
-
-  /*
   function handleTextChange(text) {
     setActiveEvent((event) => ({
       ...event,
@@ -21,28 +14,53 @@ function EventEditor({
     }));
   }
 
-*/
+  function handleStartChange(text) {
+    setActiveEvent((event) => ({
+      ...event,
+      start: editToTime(text, event.start),
+    }));
+  }
+
+  function handleEndChange(text) {
+    setActiveEvent((event) => ({
+      ...event,
+      end: editToTime(text, event.start),
+    }));
+  }
+
   return (
-    <Fragment>
+    <section className={styles.main}>
+      <textarea
+        rows='2'
+        cols='24'
+        autoFocus={true}
+        className={styles.textInput}
+        value={activeEvent.text}
+        onChange={(e) => handleTextChange(e.target.value)}
+      />
       <div>
-        {'Event Controls Here'}
-        {/*
         <div>
-          {date}
+          <label htmlFor='start'>Start</label>
         </div>
+        <input
+          type='time'
+          id='start'
+          value={timeToEdit(activeEvent.start)}
+          onChange={(e) => handleStartChange(e.target.value)}
+          className={styles.test}
+        />
         <div>
-          { start && end && (
-            <span>{start}</span>
-          )}
-          { end && (
-            <span> - {end}</span>
-          )}
+          <label htmlFor='end'>End</label>
         </div>
-        <div>
-        </div>
-        */}
+        <input
+          type='time'
+          id='end'
+          value={timeToEdit(activeEvent.end)}
+          onChange={(e) => handleEndChange(e.target.value)}
+          className={styles.test}
+        />
       </div>
-    </Fragment>
+    </section>
   );
 }
 

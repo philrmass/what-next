@@ -41,17 +41,13 @@ function Events({
   }, [isModalShown]);
 
   function save() {
-    const i = events.findIndex((event) => event.guid === activeEvent.guid);
+    const filtered = events.filter((event) => event.guid !== activeEvent.guid);
+    const i = filtered.findIndex((event) => event.start > activeEvent.start);
+    const event = { ...activeEvent, guid: uuidv4() };
     if (i >= 0) {
-      updateEvents([...events.slice(0, i), activeEvent, ...events.slice(i + 1)]);
+      updateEvents([...filtered.slice(0, i), event, ...filtered.slice(i)]);
     } else {
-      const i = events.findIndex((event) => event.start > activeEvent.start);
-      const event = { ...activeEvent, guid: uuidv4() };
-      if (i >= 0) {
-        updateEvents([...events.slice(0, i), event, ...events.slice(i)]);
-      } else {
-        updateEvents([...events, event]);
-      }
+      updateEvents([...filtered, event]);
     }
     setActiveEvent(createDefaultEvent());
     closeModal();
@@ -89,10 +85,10 @@ function Events({
     const isEditing = Boolean(activeEvent.guid);
     return (
       <Fragment>
+        <button onClick={save}>Save</button>
         { isEditing && (
           <button onClick={remove}>Delete</button>
         )}
-        <button onClick={save}>Save</button>
       </Fragment>
     );
   }
@@ -149,7 +145,7 @@ function Events({
             </div>
             <div className={styles.textBox}>
               <span className={styles.text}>
-                {event.text + ' ' + code}
+                {event.text}
               </span>
             </div>
           </div>

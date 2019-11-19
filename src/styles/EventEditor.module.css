@@ -1,0 +1,24 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.textInput {
+  height: calc(3em + 8px);
+  padding: 4px;
+  border: 1px solid #e0e0e0;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  font-size: 1.3rem;
+  background: #f0f0f0;
+}
+
+.textInput:focus {
+  border: 1px solid #1090ff;
+  outline: none;
+}
+
+.test {
+  background: #c0ffd8;
+}
