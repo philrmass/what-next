@@ -1,11 +1,14 @@
 export function eventToDisplay(event, now = Date.now()) {
-  const date = getDisplayDate(event.start);
-  const start = getDisplayTime(event.start);
+  const date = getDisplayDate(event.date);
+  let start = null;
   let end = null;
-  if (event.end && (event.end !== event.start)) {
+  if (event.start) {
+    start = getDisplayTime(event.start);
+  }
+  if (event.end) {
     end = getDisplayTime(event.end);
   }
-  const { until, code } = getUntil(now, event.start);
+  const { until, code } = getUntil(now, event.start || event.date);
 
   return {
     date,
@@ -133,12 +136,15 @@ export function timeToEdit(time) {
   return new Date(time).toLocaleTimeString('en', options);
 }
 
-export function editToTime(text, lastTime) {
+export function editToTime(text, baseTime) {
+  if (!text) {
+    return null;
+  }
+
   const [hoursText, minutesText] = text.split(':');
   const hours = parseInt(hoursText);
   const minutes = parseInt(minutesText);
-  const date = new Date(lastTime);
-
-  date.setHours(hours, minutes);
-  return date.getTime();
+  const value = new Date(baseTime);
+  value.setHours(hours, minutes, 0, 0);
+  return value.getTime();
 }

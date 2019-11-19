@@ -5,3 +5,16 @@ export function nextMinute(now = Date.now()) {
   nextMinute.setMilliseconds(0);
   return nextMinute.getTime() - now;
 }
+
+export function timeToDate(time) {
+  const date = new Date(time);
+  date.setHours(0, 0, 0, 0);
+  return date.getTime();
+}
+
+export function expDaysTime(max) {
+  const mult = Math.log(max + 1);
+  const days = Math.exp(mult * Math.random()) - 1;
+  const oneDay = 1000 * 60 * 60 * 24;
+  return Math.round(days * oneDay);
+}

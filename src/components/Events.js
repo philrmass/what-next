@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import { eventToDisplay } from '../utilities/events';
-import { nextMinute } from '../utilities/time';
+import { nextMinute, timeToDate } from '../utilities/time';
 import styles from '../styles/Events.module.css';
 import EventEditor from './EventEditor';
 import Modal from './Modal';
@@ -36,13 +36,18 @@ function Events({
     if (isModalShown && !activeEvent.start) {
       const oneWeek = 1000 * 60 * 60 * 24 * 7;
       const start = Date.now() + oneWeek;
-      setActiveEvent({ ...activeEvent, start });
+      const date = timeToDate(start);
+      setActiveEvent({ ...activeEvent, date, start });
     }
   }, [isModalShown]);
 
   function save() {
     const filtered = events.filter((event) => event.guid !== activeEvent.guid);
-    const i = filtered.findIndex((event) => event.start > activeEvent.start);
+    const i = filtered.findIndex((event) => {
+      const eventTime = event.start || event.date;
+      const activeEventTime = activeEvent.start || activeEvent.date;
+      return eventTime > activeEventTime;
+    });
     const event = { ...activeEvent, guid: uuidv4() };
     if (i >= 0) {
       updateEvents([...filtered.slice(0, i), event, ...filtered.slice(i)]);
@@ -75,7 +80,8 @@ function Events({
 
   function createDefaultEvent() {
     return {
-      text: 'yo',
+      text: 'starting text',
+      date: null,
       start: null,
       end: null,
     };

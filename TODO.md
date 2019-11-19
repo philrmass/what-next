@@ -1,10 +1,11 @@
 # Tasks
 ## Bugs
 ## UI
-- add event editing
+- select text on open edit
 - add touch side swipe
 - select events or notes with side swipe
-- make now events red
+- add better editing
+- make events now if between start and end times, past if after end
 - make note colors lighter
 - create water strider logo
 - add three dots for menu button

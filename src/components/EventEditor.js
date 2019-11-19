@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { editToTime, timeToEdit } from '../utilities/events';
 import styles from '../styles/EventEditor.module.css';
@@ -17,14 +17,14 @@ function EventEditor({
   function handleStartChange(text) {
     setActiveEvent((event) => ({
       ...event,
-      start: editToTime(text, event.start),
+      start: editToTime(text, event.date),
     }));
   }
 
   function handleEndChange(text) {
     setActiveEvent((event) => ({
       ...event,
-      end: editToTime(text, event.start),
+      end: editToTime(text, event.date),
     }));
   }
 
@@ -49,16 +49,20 @@ function EventEditor({
           onChange={(e) => handleStartChange(e.target.value)}
           className={styles.test}
         />
-        <div>
-          <label htmlFor='end'>End</label>
-        </div>
-        <input
-          type='time'
-          id='end'
-          value={timeToEdit(activeEvent.end)}
-          onChange={(e) => handleEndChange(e.target.value)}
-          className={styles.test}
-        />
+        { activeEvent.start && (
+          <Fragment>
+            <div>
+              <label htmlFor='end'>End</label>
+            </div>
+            <input
+              type='time'
+              id='end'
+              value={timeToEdit(activeEvent.end)}
+              onChange={(e) => handleEndChange(e.target.value)}
+              className={styles.test}
+            />
+          </Fragment>
+        )}
       </div>
     </section>
   );
