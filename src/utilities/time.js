@@ -18,3 +18,11 @@ export function expDaysTime(max) {
   const oneDay = 1000 * 60 * 60 * 24;
   return Math.round(days * oneDay);
 }
+
+export function moveTimeToDate(time, date) {
+  const times = new Date(time);
+  const value = new Date(date);
+  value.setHours(times.getHours(), times.getMinutes());
+  return value.getTime();
+}
+

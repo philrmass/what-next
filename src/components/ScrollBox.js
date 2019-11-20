@@ -44,6 +44,7 @@ function ScrollBox({
   }
 
   function handleEnd() {
+    event.preventDefault();
     if (isDragging) {
       onDragStop();
       setIsDragging(false);

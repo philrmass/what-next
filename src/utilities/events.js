@@ -8,7 +8,12 @@ export function eventToDisplay(event, now = Date.now()) {
   if (event.end) {
     end = getDisplayTime(event.end);
   }
-  const { until, code } = getUntil(now, event.start || event.date);
+
+  let { until, code } = getUntil(now, event.start || event.date);
+  if (isDuring(event, now)) {
+    until = 'now';
+    code = 1;
+  }
 
   return {
     date,
@@ -114,13 +119,25 @@ function getUntilText(times) {
   const labels = ['y', 'm', 'w', 'd', 'h', 'm'];
   const i = times.findIndex((time) => time !== 0);
   if (i < 0) {
-    return 'now';
+    return '< 1m';
   }
   let text = `${times[i]}${labels[i]}`;
   if (times[i + 1] > 0) {
     text += ` ${times[i + 1]}${labels[i + 1]}`;
   }
   return text;
+}
+
+export function dateToEdit(date) {
+  if (!date) {
+    return '';
+  }
+
+  const value = new Date(date);
+  const year = `${value.getFullYear()}`.padStart(4, '0');
+  const month = `${value.getMonth() + 1}`.padStart(2, '0');
+  const day = value.getDate().toString();
+  return `${year}-${month}-${day.padStart(2, '0')}`;
 }
 
 export function timeToEdit(time) {
@@ -136,6 +153,20 @@ export function timeToEdit(time) {
   return new Date(time).toLocaleTimeString('en', options);
 }
 
+export function editToDate(text, lastDate) {
+  if (!text) {
+    return lastDate;
+  }
+
+  const [yearText, monthText, dayText] = text.split('-');
+  const year = parseInt(yearText);
+  const month = parseInt(monthText) - 1;
+  const day = parseInt(dayText);
+  if (Number.isInteger(year) && Number.isInteger(month) && Number.isInteger(day)) {
+    return (new Date(year, month, day)).getTime();
+  }
+}
+
 export function editToTime(text, baseTime) {
   if (!text) {
     return null;
@@ -147,4 +178,8 @@ export function editToTime(text, baseTime) {
   const value = new Date(baseTime);
   value.setHours(hours, minutes, 0, 0);
   return value.getTime();
+}
+
+function isDuring(event, now) {
+  return (now > event.start && now <= event.end);
 }

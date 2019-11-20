@@ -19,6 +19,27 @@
   outline: none;
 }
 
-.test {
-  background: #c0ffd8;
+.dateInput {
+  border: 1px solid #e0e0e0;
+  background: #f0f0f0;
+}
+
+.dateInput:focus {
+  border: 1px solid #1090ff;
+  outline: none;
+}
+
+.times {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.timeInput {
+  border: 1px solid #e0e0e0;
+  background: #f0f0f0;
+}
+
+.timeInput:focus {
+  border: 1px solid #1090ff;
+  outline: none;
 }

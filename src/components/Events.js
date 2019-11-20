@@ -49,6 +49,7 @@ function Events({
       return eventTime > activeEventTime;
     });
     const event = { ...activeEvent, guid: uuidv4() };
+
     if (i >= 0) {
       updateEvents([...filtered.slice(0, i), event, ...filtered.slice(i)]);
     } else {
