@@ -1,11 +1,14 @@
 # Tasks
-## Bugs
-## UI
-- add date editing
-- add touch side swipe
-- select events or notes with side swipe
+- event grid layout
+  - fixed width layout, fitting largest date and time
+- fix 4pm null bug
+  - end time can be set to 4pm when setting date if it is null
+- improve the event colors
+  - copy colors from old events
+  - make left side until are darker
+
+- add touch side swipe to switch between notes and events
 - change end editing to duration
-- make events now if between start and end times, past if after end
 - make note colors lighter
 - add note children of notes
 - create water strider logo

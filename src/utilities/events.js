@@ -26,6 +26,7 @@ export function eventToDisplay(event, now = Date.now()) {
 
 function getDisplayDate(time) {
   const options = {
+    weekday: 'short',
     month: 'short',
     day: 'numeric',
     year: 'numeric',

@@ -81,7 +81,7 @@ function Events({
 
   function createDefaultEvent() {
     return {
-      text: 'starting text',
+      text: '',
       date: null,
       start: null,
       end: null,
