@@ -1,5 +1,4 @@
 # Bugs
-- fix event layout, until text fixed
 - null times set to 4pm on date change
 
 # Features
@@ -8,18 +7,19 @@
 - event colors
   - copy colors from old events, make lighter
   - make until area darker
+- redesign note color picker
 - add note children to notes
-- create water strider logo
-- three dots for menu button
-- css transitions for delete and modal show/hide
 - actually update with update button, only show when update available
-- cache all fetched files, test offline behavior
-- push notifications for events
+- create water strider logo
 - add header text background: 'Fira Sans Extra Condensed'
-- implement data load, select file
+- cache all fetched files, test offline behavior
 - add mocha
 - add instanbul
 - write utility tests
 - write component tests
+- push notifications for events
+- implement data load, select file
+- three dots for menu button
+- css transitions for delete and modal show/hide
 - get terminal shortcuts working
 - create logger utility, with console controls
