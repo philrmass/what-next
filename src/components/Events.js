@@ -132,28 +132,28 @@ function Events({
           <div className={styles.until}>
           </div>
           <div className={styles.untilText}>
-            <div>
-              {until}
-            </div>
+            {until}
           </div>
           <div className={styles.eventContent}>
-            <div className={styles.dateTime}>
-              <div className={styles.dateText}>
-                {date}
-              </div>
-              <div className={styles.timeText}>
-                { start && (
-                  <span>{start}</span>
-                )}
-                { end && (
-                  <span> - {end}</span>
-                )}
+            <div className={styles.dateTimeBox}>
+              <div className={styles.dateTime}>
+                <div className={styles.dateText}>
+                  {date}
+                </div>
+                <div className={styles.timeText}>
+                  { start && (
+                    <span>{start}</span>
+                  )}
+                  { end && (
+                    <span> - {end}</span>
+                  )}
+                </div>
               </div>
             </div>
             <div className={styles.textBox}>
-              <span className={styles.text}>
+              <div className={styles.text}>
                 {event.text}
-              </span>
+              </div>
             </div>
           </div>
         </li>

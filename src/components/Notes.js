@@ -165,20 +165,20 @@ function Notes({
         buttons={buildModalButtons()}
         close={cancel}
       >
-        <Fragment>
+        <div className={styles.noteEditor}>
           <ColorSelector
             color={activeNote.colorCode}
             setColor={(code) => handleColorChange(code)}
           />
           <textarea
-            rows='3'
-            cols='24'
+            rows='2'
+            cols='28'
             autoFocus={true}
             className={`${styles.textInput} color${activeNote.colorCode}`}
             value={activeNote.text}
             onChange={(e) => handleTextChange(e.target.value)}
           />
-        </Fragment>
+        </div>
       </Modal>
     );
   }

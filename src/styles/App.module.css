@@ -9,8 +9,7 @@
 .main {
   position: relative;
   height: var(--main-height);
-  background: #f8f8f8;
-  color: #282828;
+  color: var(--text-darker);
 }
 
 .footer {

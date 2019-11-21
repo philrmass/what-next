@@ -1,36 +1,25 @@
-# Tasks
-- event grid layout
-  - fixed width layout, fitting largest date and time
-- fix 4pm null bug
-  - end time can be set to 4pm when setting date if it is null
-- improve the event colors
-  - copy colors from old events
-  - make left side until are darker
+# Bugs
+- fix event layout, until text fixed
+- null times set to 4pm on date change
 
+# Features
 - add touch side swipe to switch between notes and events
 - change end editing to duration
-- make note colors lighter
-- add note children of notes
+- event colors
+  - copy colors from old events, make lighter
+  - make until area darker
+- add note children to notes
 - create water strider logo
-- add three dots for menu button
-- add css transition on delete
-- add css transition on modal show/hide
-
-## Data
-- if data missing ask whether to restore
-- implement load (select file)
-
-## General
-- get terminal shortcuts working
-- create logger utility, with console controls
-- figure out how to disable timer when component unmounts
-
-## Testing
+- three dots for menu button
+- css transitions for delete and modal show/hide
+- actually update with update button, only show when update available
+- cache all fetched files, test offline behavior
+- push notifications for events
+- add header text background: 'Fira Sans Extra Condensed'
+- implement data load, select file
 - add mocha
 - add instanbul
-
-## Service Worker
-- enable push notification
-- cache all fetched files
-- show update button only when real
-- actually update with update button
+- write utility tests
+- write component tests
+- get terminal shortcuts working
+- create logger utility, with console controls

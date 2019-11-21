@@ -2,20 +2,8 @@
   position: relative;
   height: inherit;
   padding: 8px;
-  background: #484848;
-  color: #e8e8e8;
-  font-family: 'Fira Sans Extra Condensed', sans-serif;
-  overflow: hidden;
-}
-
-.title {
-  position: absolute;
-  top: -10px;
-  left: 70px;
-  color: #ffffff18;
-  font-size: 4.5em;
-  white-space: nowrap;
-  user-select: none;
+  background: var(--bg-dark);
+  color: var(--text-light);
 }
 
 .controls {
@@ -34,19 +22,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 3em;
-  width: 3em;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
   margin: 0 8px;
-  background: #1090ff;
-  font-size: 0.8em;
+  background: var(--accent);
+  font-size: 14px;
   user-select: none;
 }
 
 .link {
-  font-size: 1.5em;
+  font-size: 22px;
   margin: 0 8px;
-  text-shadow: #0080ff80 0 0 8px;
   user-select: none;
 }
 
@@ -55,8 +42,8 @@
   width: 1.1em;
   border-radius: 50%;
   margin: 4px;
-  background: #ffffffc0;
-  color: #484848;
-  font-size: 1.8em;
+  background: var(--text-light);
+  color: var(--bg-dark);
+  font-size: 30px;
   user-select: none;
 }

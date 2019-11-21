@@ -1,11 +1,13 @@
 .main {
   height: inherit;
-  background: #e0e0e0;
+  background: var(--bg-light);
+  font-size: 16px;
 }
 
 .event {
+  position: relative;
   --event-height: calc(4.5em + 8px);
-  --until-width: 1.5em;
+  --until-width: 22px;
   display: flex;
   height: var(--event-height);
   margin-bottom: 2px;
@@ -13,52 +15,61 @@
 }
 
 .until {
-  background: #ffffff64;
+  position: absolute;
+  left: 0;
   width: var(--until-width);
+  height: 100%;
+  background: var(--bg-until);
 }
 
 .untilText {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
   height: var(--until-width);
   width: var(--event-height);
   transform-origin: 100% 0%;
   transform: translateX(-100%) rotate(-90deg);
-  color: #404040;
+  color: var(--text-until);
+  font-size: 14px;
 }
 
 .eventContent {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
+  display: grid;
+  grid-template-columns: 3fr 4fr;
+  grid-gap: 8px;
+  width: 100%;
+  padding: 8px;
+  margin-left: var(--until-width);
 }
 
-.dateTime {
-  flex-grow: 1;
-}
-
-.dateText {
-  font-size: 1.2rem;
-  color: #303030;
-}
-
-.timeText {
-  margin-top: 0.2em;
-  color: #181818;
-}
-
-.textBox {
-  flex-grow: 5;
+.dateTimeBox {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+.dateTime {
+  color: var(--text-dark);
+}
+
+.dateText {
+  font-size: 14px;
+}
+
+.timeText {
+  margin-top: 0.2em;
+  font-size: 13px;
+}
+
+.textBox {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
 .text {
-  color: #101010;
-  font-size: 1.3rem;
-  white-space: pre;
+  color: var(--text-darker);
+  white-space: pre-wrap;
 }

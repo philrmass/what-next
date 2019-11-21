@@ -7,25 +7,25 @@
 .textInput {
   height: calc(3em + 8px);
   padding: 4px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border);
   margin-top: 8px;
   margin-bottom: 8px;
-  font-size: 1.3rem;
-  background: #f0f0f0;
+  background: var(--bg-lighter);
 }
 
 .textInput:focus {
-  border: 1px solid #1090ff;
+  border: 1px solid var(--accent);
   outline: none;
 }
 
 .dateInput {
-  border: 1px solid #e0e0e0;
-  background: #f0f0f0;
+  border: 1px solid var(--border);
+  background: var(--bg-lighter);
+  font-size: 14px;
 }
 
 .dateInput:focus {
-  border: 1px solid #1090ff;
+  border: 1px solid var(--accent);
   outline: none;
 }
 
@@ -35,11 +35,12 @@
 }
 
 .timeInput {
-  border: 1px solid #e0e0e0;
-  background: #f0f0f0;
+  border: 1px solid var(--border);
+  background: var(--bg-lighter);
+  font-size: 14px;
 }
 
 .timeInput:focus {
-  border: 1px solid #1090ff;
+  border: 1px solid var(--accent);
   outline: none;
 }

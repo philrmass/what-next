@@ -5,10 +5,10 @@
   right: 0;
   padding: 16px;
   background: white;
-  color: #282828;
-  border-left: 1px solid #989898;
-  border-bottom: 1px solid #989898;
-  border-right: 1px solid #989898;
+  color: var(--text-darker);
+  border-left: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
   border-radius: 0 0 2px 2px;
 }
 
@@ -17,7 +17,6 @@
 
 .link {
   margin: 4px 8px;
-  text-shadow: #0080ff80 0 0 8px;
 }
 
 .buttonContainer {
@@ -26,11 +25,11 @@
 }
 
 .button {
-  height: 1.2em;
-  width: 1.2em;
-  color: #ffffffc0;
+  height: 1.1em;
+  width: 1.1em;
+  color: var(--text-light);
   border-radius: 50%;
-  background: #484848;
-  font-size: 1.5em;
+  background: var(--bg-dark);
+  font-size: 22px;
   transform: rotate(45deg);
 }

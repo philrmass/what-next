@@ -1,41 +1,49 @@
 .main {
   height: inherit;
-  background: #e0e0e0;
+  background: var(--bg-light);
+  font-size: 16px;
+}
+
+.noteEditor {
+  font-size: 16px;
 }
 
 .textInput {
   height: calc(3em + 8px);
   padding: 4px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border);
   margin-top: 16px;
   margin-bottom: 8px;
-  font-size: 1.3rem;
 }
 
 .textInput:focus {
-  border: 1px solid #1090ff;
+  border: 1px solid var(--accent);
   outline: none;
 }
 
 .note {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: calc(3em + 8px);
+  height: calc(3.5em + 8px);
   padding: 8px 16px;
   margin-bottom: 2px;
-  font-size: 1.3rem;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow: hidden;
 }
 
 .text {
+  color: var(--text-darker);
 }
 
 .touch {
+  position: absolute;
+  right: 0px;
   height: 90%;
   width: 30px;
   margin-right: 12px;
-  background: #ffffff30;
+  background: var(--bg-touch);
 }
 
 .start {

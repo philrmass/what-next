@@ -4,8 +4,9 @@
   align-items: center;
   height: inherit;
   padding: 8px;
-  background: #484848;
-  color: #e8e8e8;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  font-size: 14px;
 }
 
 .updateButton {
@@ -14,10 +15,8 @@
   width: .8em;
   border-radius: 50%;
   margin: 0 .3em;
-  background: #ff4810;
-  font-size: .8em;
+  background: var(--alert);
 }
 
 .version {
-  color: #a8a8a8;
 }
