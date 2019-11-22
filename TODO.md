@@ -1,6 +1,4 @@
 # Bugs
-- null times set to 4pm on date change
-
 # Features
 - add touch side swipe to switch between notes and events
 - change end editing to duration

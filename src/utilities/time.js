@@ -20,6 +20,10 @@ export function expDaysTime(max) {
 }
 
 export function moveTimeToDate(time, date) {
+  if (!time) {
+    return time;
+  }
+
   const times = new Date(time);
   const value = new Date(date);
   value.setHours(times.getHours(), times.getMinutes());
