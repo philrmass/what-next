@@ -51,6 +51,14 @@ function App() {
     setEvents(events);
   }
 
+  function handleSwipe(direction) {
+    if (notesShown && direction > 0) {
+      setNotesShown(false);
+    } else if (!notesShown && direction < 0) {
+      setNotesShown(true);
+    }
+  }
+
   function updateNotes(notes) {
     setNotes(notes);
   }
@@ -85,6 +93,7 @@ function App() {
             isModalShown={overlayShown === 'eventModal'}
             showModal={() => setOverlayShown('eventModal')}
             closeModal={() => clearOverlayShown('eventModal')}
+            onSwipe={handleSwipe}
           />
         }
         { notesShown &&
@@ -94,6 +103,7 @@ function App() {
             isModalShown={overlayShown === 'noteModal'}
             showModal={() => setOverlayShown('noteModal')}
             closeModal={() => clearOverlayShown('noteModal')}
+            onSwipe={handleSwipe}
           />
         }
         { overlayShown === 'menu' &&

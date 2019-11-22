@@ -1,6 +1,5 @@
 # Bugs
 # Features
-- add touch side swipe to switch between notes and events
 - change end editing to duration
 - event colors
   - copy colors from old events, make lighter

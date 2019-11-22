@@ -13,6 +13,7 @@ function Notes({
   isModalShown,
   showModal,
   closeModal,
+  onSwipe,
 }) {
   const container = useRef(null);
   const [lastColor, setLastColor] = useLocalStorage('whatNextLastColor', 0);
@@ -212,6 +213,7 @@ function Notes({
       <section className={styles.main}>
         <ScrollBox
           selectElement={edit}
+          onSwipe={onSwipe}
           onDragStart={handleDragStart}
           onDragOver={handleDragOver}
           onDragStop={handleDragStop}
@@ -232,6 +234,7 @@ Notes.propTypes = {
   isModalShown: PropTypes.bool,
   showModal: PropTypes.func,
   closeModal: PropTypes.func,
+  onSwipe: PropTypes.func,
 };
 
 export default Notes;
