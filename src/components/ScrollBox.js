@@ -4,6 +4,7 @@ import styles from '../styles/ScrollBox.module.css';
 
 function ScrollBox({
   selectElement,
+  onSwipe,
   onDragStart,
   onDragOver,
   onDragStop,
@@ -11,6 +12,7 @@ function ScrollBox({
 }) {
   const container = useRef(null);
   const [top, setTop] = useState(0);
+  const [startX, setStartX] = useState(null);
   const [startY, setStartY] = useState(null);
   const [startT, setStartT] = useState(null);
   const [lastY, setLastY] = useState(null);
@@ -26,8 +28,10 @@ function ScrollBox({
   }, [children]);
 
   function handleStart(event) {
+    const x = getX(event);
     const y = getY(event);
     const t = Date.now();
+    setStartX(x);
     setStartY(y);
     setStartT(t);
     setLastY(y);
@@ -66,12 +70,16 @@ function ScrollBox({
       const touch = event.touches[0];
       onDragOver(touch.clientX, touch.clientY);
     } else {
+      const x = getX(event);
       const y = getY(event);
       const t = Date.now();
       const deltaY = getDeltaY(y);
+      const totalX = getTotalX(x);
+
+      detectSwipe(x, totalX);
 
       setOffsetY(deltaY);
-      clearTimer(getTotalY(y));
+      clearTimer(totalX, getTotalY(y));
       setLastY(y);
       setLastT(t);
     }
@@ -92,13 +100,18 @@ function ScrollBox({
     };
   }
 
+  function getX(event) {
+    return event.touches[0].clientX;
+  }
+
   function getY(event) {
     return event.touches[0].clientY;
   }
 
-  function clearTimer(totalY = Infinity) {
+  function clearTimer(totalX = Infinity, totalY = Infinity) {
     const totalMax = 10;
-    if (pressTimer && Math.abs(totalY) > totalMax) {
+    const hasMoved = Math.abs(totalX) > totalMax || Math.abs(totalY) > totalMax;
+    if (pressTimer && hasMoved) {
       clearTimeout(pressTimer);
       setPressTimer(null);
     }
@@ -151,6 +164,13 @@ function ScrollBox({
     return 0;
   }
 
+  function getTotalX(x) {
+    if (startX) {
+      return x - startX;
+    }
+    return 0;
+  }
+
   function getTotalY(y) {
     if (startY) {
       return y - startY;
@@ -179,6 +199,14 @@ function ScrollBox({
     });
   }
 
+  function detectSwipe(x, totalX) {
+    const swipeX = 150;
+    if (Math.abs(totalX) >= swipeX) {
+      onSwipe(Math.sign(totalX));
+      setStartX(x);
+    }
+  }
+
   return (
     <section
       className={styles.container}
@@ -199,6 +227,7 @@ function ScrollBox({
 
 ScrollBox.propTypes = {
   selectElement: PropTypes.func,
+  onSwipe: PropTypes.func,
   onDragStart: PropTypes.func,
   onDragOver: PropTypes.func,
   onDragStop: PropTypes.func,

@@ -14,6 +14,7 @@ function Events({
   isModalShown,
   showModal,
   closeModal,
+  onSwipe,
 }) {
   const [activeEvent, setActiveEvent] = useState(createDefaultEvent());
   const [now, setNow] = useState(Date.now());
@@ -166,6 +167,7 @@ function Events({
       <section className={styles.main}>
         <ScrollBox
           selectElement={edit}
+          onSwipe={onSwipe}
         >
           <ul>
             {buildEvents()}
@@ -184,6 +186,7 @@ Events.propTypes = {
   isModalShown: PropTypes.bool,
   showModal: PropTypes.func,
   closeModal: PropTypes.func,
+  onSwipe: PropTypes.func,
 };
 
 export default Events;
