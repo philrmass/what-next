@@ -1,15 +1,16 @@
-# Bugs
-# Features
-- change end editing to duration
-- event colors
-  - copy colors from old events, make lighter
-  - make until area darker
-- redesign note color picker
+# What Next Tasks
+- Improve all colors (events and notes)
+  - Copy colors from old events, make lighter
+  - Make the `until` area darker
+- Redesign note color picker, fewer colors
+- Cache all fetched files, test offline behavior
+- Add notifications for upcoming events
+- Add water strider logo
+
 - add note children to notes
 - actually update with update button, only show when update available
-- create water strider logo
+- change end editing to duration
 - add header text background: 'Fira Sans Extra Condensed'
-- cache all fetched files, test offline behavior
 - add mocha
 - add instanbul
 - write utility tests
