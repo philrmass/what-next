@@ -69,7 +69,7 @@ function Notes({
 
   function findElementId(parent, id, x, y) {
     const children = [...parent.childNodes];
-    let index = children.findIndex((child) => child.id === id);
+    const index = children.findIndex((child) => child.id === id);
     const child = children[index];
     const last = children[index - 1];
     const next = children[index + 1];

@@ -1,3 +1,8 @@
+@import './colors.css';
+@import './fonts.css';
+@import './reset.css';
+@import './sizes.css';
+
 :root {
   --header-height: 56px;
   --footer-height: 32px;
@@ -5,7 +10,6 @@
   --accent: #1090ff;
   --accent-light: #80d0ff;
   --alert: #ff4810;
-  --border: #e0e0e0;
   --border-dark: #707070;
   --bg-lighter: #f0f0f0;
   --bg-light: #e0e0e0;
@@ -18,6 +22,17 @@
   --text-until: #404040;
   --bg-overlay: #00000090;
 }
+
+/*
+body {
+  --handleWidth: 50px;
+  --noteHeight: calc(3.6em + 2 * var(--size1));
+
+  font-family: var(--fontRegular);
+  font-size: var(--fontSize);
+  line-height: 1.2em;
+}
+*/
 
 html {
   box-sizing: border-box;

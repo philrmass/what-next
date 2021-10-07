@@ -1,23 +1,17 @@
-const webpack = require('webpack');
-
 module.exports = {
   entry: './src/index.js',
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader'],
+        use: ['babel-loader'],
       },
       {
-        test: /\.(png|gif|jp(e*)g|svg)$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 8000,
-            name: 'images/[hash]-[name].[ext]',
-          },
-        },
+        test: /\.(js)$/,
+        enforce: 'pre',
+        exclude: /node_modules/,
+        use: ['eslint-loader'],
       },
       {
         test: /\.css$/,
@@ -37,23 +31,30 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
         exclude: /\.module\.css$/,
       },
+      { 
+        test: /\.(ttf)$/, 
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js'],
   },
   output: {
     path: __dirname + '/dist',
     publicPath: '/',
     filename: 'bundle.js',
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-  ],
   devServer: {
+    clientLogLevel: 'none',
     contentBase: './dist',
-    clientLogLevel: 'silent',
-    port: 3000,
-    hot: true,
+    watchContentBase: true,
   },
 };
