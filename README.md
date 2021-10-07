@@ -1,9 +1,19 @@
 # What Next
-### By Phil Mass
 
-A calendar-replacement progressive web app (PWA) with notes and upcoming events. You can see all of your upcoming events at a glance without needing to look a specific month or day. The notes allow you to create single text notes or checklists. All of your data is stored in local storage and can be saved and reloaded.
+## Author
+Phil Mass
 
-You can find the deployed version at [https://philrmass.github.io/what-next/](https://philrmass.github.io/what-next/). If you open it up on mobile, you should be given the option to install it and then use it like an app (only tested on Android).
+## Description
+A calendar-replacement PWA that shows upcoming events and the time remaining until they occur. The events are ordered and color-coded by time remaining. All data is in local storage, but can be imported and exported.
 
-## Legal
-Copyright 2019 Phil Mass  
+Deployed at [https://philrmass.github.io/what-next/](https://philrmass.github.io/what-next/)
+
+As a PWA, it can be installed as an app from a mobile browser
+
+## Run Locally
+1. Clone the repo at [https://github.com/philrmass/what-next](https://github.com/philrmass/what-next)
+2. `npm install`
+3. `npm start`
+
+## License
+MIT
