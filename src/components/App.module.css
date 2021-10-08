@@ -21,4 +21,5 @@
   bottom: var(--size1);
   right: var(--size1);
   font-size: var(--fontSizeSmall);
+  text-shadow: 1px 1px 1px #ffffff, 1px -1px 1px #ffffff, -1px 1px 1px #ffffff, -1px -1px 1px #ffffff;
 }

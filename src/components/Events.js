@@ -3,7 +3,7 @@ import uuidv4 from 'uuid/v4';
 import { eventToDisplay } from '../utilities/events';
 import { nextMinute, timeToDate } from '../utilities/time';
 import styles from './Events.module.css';
-import EventEditor from './EventEditor';
+import Editor from './Editor';
 import Modal from './Modal';
 import ScrollBox from './ScrollBox';
 
@@ -111,7 +111,7 @@ export default function Events({
         buttons={buildModalButtons()}
         close={cancel}
       >
-        <EventEditor
+        <Editor
           activeEvent={activeEvent}
           setActiveEvent={setActiveEvent}
         />

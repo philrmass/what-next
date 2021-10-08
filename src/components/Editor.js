@@ -1,10 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { dateToEdit, editToDate, editToTime, timeToEdit } from '../utilities/events';
 import { moveTimeToDate } from '../utilities/time';
-import styles from '../styles/EventEditor.module.css';
+import styles from './Editor.module.css';
 
-function EventEditor({
+export default function Editor({
   activeEvent,
   setActiveEvent,
 }) {
@@ -88,10 +87,3 @@ function EventEditor({
     </section>
   );
 }
-
-EventEditor.propTypes = {
-  activeEvent: PropTypes.object,
-  setActiveEvent: PropTypes.func,
-};
-
-export default EventEditor;
