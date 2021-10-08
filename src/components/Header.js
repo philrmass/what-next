@@ -1,6 +1,6 @@
 import styles from '../styles/Header.module.css';
 
-export default function Header({ addEvent, showMenu }) {
+export default function Header({ addEvent }) {
   return (
     <main className={styles.main}>
       <div className={styles.controls}>
@@ -10,12 +10,6 @@ export default function Header({ addEvent, showMenu }) {
             onClick={addEvent}
           >
             +
-          </button>
-          <button
-            className={styles.infoButton}
-            onClick={showMenu}
-          >
-            ?
           </button>
         </div>
       </div>

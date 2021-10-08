@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { saveData } from '../utilities/file';
+import { copyData } from '../utilities/file';
 import { useLocalStorage } from '../utilities/storage';
 import Footer from './Footer';
 import Events from './Events';
@@ -8,7 +8,7 @@ import Menu from './Menu';
 import styles from '../styles/App.module.css';
 import { version } from '../version';
 
-function App() {
+export default function App() {
   const statusMs = 30000;
   const [events, setEvents] = useLocalStorage('whatNextEvents', []);
   const [overlayShown, setOverlayShown] = useState('');
@@ -59,19 +59,16 @@ function App() {
   };
 
   const copy = () => {
-    // copyData(events);
-    console.log('COPY');
-    setStatus('copy');
+    copyData(events);
+
+    setStatus(getSummary('Copied', events));
     setTimeout(() => setStatus(''), statusMs);
   };
 
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <Header
-          addEvent={addEvent}
-          showMenu={() => toggleOverlayShown('menu')}
-        />
+        <Header addEvent={addEvent} />
       </header>
       <section className={styles.main}>
         <Events
@@ -92,4 +89,6 @@ function App() {
   );
 }
 
-export default App;
+function getSummary(verb, events) {
+  return `${verb} ${events.length} events`;
+}
