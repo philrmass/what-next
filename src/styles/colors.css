@@ -1,3 +1,8 @@
 :root {
-  --border: #e0e0e0;
+  --border: #808080;
+  --button: #c00000;
+  --dialog: #ffffff;
+  --light: #e8e8e8;
+  --shaded: #00000058;
+  --textButton: #f8f8f8;
 }

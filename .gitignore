@@ -9,6 +9,8 @@ dist/*
 !dist/favicon.ico
 !dist/serviceWorker.js
 
+.DS_Store
+
 # vim
 *.swp
 

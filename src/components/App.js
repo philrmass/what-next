@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { saveData } from '../utilities/file';
 import { useLocalStorage } from '../utilities/storage';
 import Footer from './Footer';
@@ -9,8 +9,10 @@ import styles from '../styles/App.module.css';
 import { version } from '../version';
 
 function App() {
+  const statusMs = 30000;
   const [events, setEvents] = useLocalStorage('whatNextEvents', []);
   const [overlayShown, setOverlayShown] = useState('');
+  const [status, setStatus] = useState('');
 
   function toggleOverlayShown(name) {
     setOverlayShown((shown) => {
@@ -38,13 +40,30 @@ function App() {
     setEvents(events);
   }
 
-  function saveBackup() {
-    const fileName = `whatNextData_${Date.now()}.json`;
-    saveData(fileName, events);
-  }
+  const save = () => {
+    // events.getFileName(at);
+    //const fileName = `whatNextData_${Date.now()}.json`;
+    //saveData(fileName, events);
+    console.log('SAVE');
+    setStatus('save');
+    setTimeout(() => setStatus(''), statusMs);
+  };
 
-  function loadBackup() {
-  }
+  const load = () => {
+    // get data from file
+    // events.parseEvents(data)
+    // setEvents(parsed);
+    console.log('LOAD');
+    setStatus('load');
+    setTimeout(() => setStatus(''), statusMs);
+  };
+
+  const copy = () => {
+    // copyData(events);
+    console.log('COPY');
+    setStatus('copy');
+    setTimeout(() => setStatus(''), statusMs);
+  };
 
   return (
     <div className={styles.page}>
@@ -62,19 +81,13 @@ function App() {
           showModal={() => setOverlayShown('eventModal')}
           closeModal={() => clearOverlayShown('eventModal')}
         />
-        { overlayShown === 'menu' &&
-          <Menu
-            saveBackup={saveBackup}
-            loadBackup={loadBackup}
-            close={() => clearOverlayShown('menu')}
-          />
-        }
       </section>
       <footer className={styles.footer}>
         <Footer
           version={version}
         />
       </footer>
+      <Menu save={save} load={load} copy={copy} status={status} />
     </div>
   );
 }

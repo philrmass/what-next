@@ -1,50 +1,40 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from '../styles/Menu.module.css';
+import { useState } from 'react';
 
-function Menu({ saveBackup, loadBackup, close }) {
+import styles from './Menu.module.css';
+
+function Menu({ save, load, copy, status }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const buildMenu = () => {
+    if (!isOpen) {
+      return null;
+    }
+
+    return (
+      <div className={styles.page}>
+        <div className={styles.dialog}>
+          <div className={styles.content}>
+            <div className={styles.buttons}>
+              <button className={styles.button} onClick={save}>Save</button>
+              <button className={styles.button} onClick={load}>Load</button>
+              <button className={styles.button} onClick={copy}>Copy</button>
+              <div className={styles.status}>{status}</div>
+            </div>
+            <button className={styles.button} onClick={() => setIsOpen(false)}>Close</button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  //??? make Dialog
+  //??? use big buttons (save, load, copy, close)
   return (
-    <main className={styles.main}>
-      <div className={styles.linkContainer}>
-        <div>
-          <button
-            className={styles.link}
-            onClick={() => {
-              close();
-              saveBackup();
-            }}
-          >
-            Save Backup
-          </button>
-        </div>
-        <div>
-          <button
-            className={styles.link}
-            onClick={() => {
-              close();
-              loadBackup();
-            }}
-          >
-            Load Backup
-          </button>
-        </div>
-      </div>
-      <div className={styles.buttonContainer}>
-        <button
-          className={styles.button}
-          onClick={close}
-        >
-          +
-        </button>
-      </div>
-    </main>
+    <>
+      {buildMenu()}
+      <button className={styles.menuButton} onClick={() => setIsOpen(true)} >? </button>
+    </>
   );
 }
-
-Menu.propTypes = {
-  saveBackup: PropTypes.func,
-  loadBackup: PropTypes.func,
-  close: PropTypes.func,
-};
 
 export default Menu;

@@ -1,6 +1,8 @@
 :root {
   --fontSize: 1rem;
   --fontSizeSmall: 0.8rem;
+  --radius: 4px;
+  --radiusLarge: 8px;
   --size0: 4px;
   --size1: 8px;
   --size2: 16px;

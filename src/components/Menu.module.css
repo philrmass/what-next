@@ -1,0 +1,61 @@
+.page {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--shaded);
+  z-index: 1;
+}
+
+.dialog {
+  background: var(--dialog);
+  border-radius: var(--radiusLarge);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: var(--size1);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  padding: var(--size1);
+  border-radius: var(--radius);
+  background: var(--button);
+  color: var(--textButton);
+  font-size: 4em;
+}
+
+.button + .button {
+  margin-top: var(--size1);
+}
+
+.status {
+  min-height: 3em;
+  padding: var(--size1);
+  margin: var(--size1) 0;
+  background: var(--light);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.menuButton {
+  position: fixed;
+  top: var(--size1);
+  right: var(--size1);
+  width: var(--size5);
+  height: var(--size5);
+  border-radius: 50%;
+  background: var(--button);
+  color: var(--textButton);
+  font-size: var(--size4);
+}
