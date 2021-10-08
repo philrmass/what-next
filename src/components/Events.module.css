@@ -73,3 +73,15 @@
   color: var(--text-darker);
   white-space: pre-wrap;
 }
+
+.addButton {
+  position: fixed;
+  bottom: var(--size1);
+  left: var(--size1);
+  width: var(--size5);
+  height: var(--size5);
+  border-radius: 50%;
+  background: var(--button);
+  color: var(--textButton);
+  font-size: var(--size4);
+}

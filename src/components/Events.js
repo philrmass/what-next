@@ -1,21 +1,21 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import uuidv4 from 'uuid/v4';
 import { eventToDisplay } from '../utilities/events';
 import { nextMinute, timeToDate } from '../utilities/time';
-import styles from '../styles/Events.module.css';
+import styles from './Events.module.css';
 import EventEditor from './EventEditor';
 import Modal from './Modal';
 import ScrollBox from './ScrollBox';
 
-function Events({
+export default function Events({
   events,
-  updateEvents,
-  isModalShown,
-  showModal,
-  closeModal,
-  onSwipe,
+  order,
+  updateEvent,
 }) {
+  const isModalShown = false;
+  const showModal = () => {};
+  const closeModal = () => {};
+  const onSwipe = () => {};
   const [activeEvent, setActiveEvent] = useState(createDefaultEvent());
   const [now, setNow] = useState(Date.now());
 
@@ -174,19 +174,13 @@ function Events({
           </ul>
         </ScrollBox>
       </section>
+      <button
+        className={styles.addButton}
+        onClick={() => console.log('addEvent')}
+      >
+        +
+      </button>
       { buildModal() }
     </Fragment>
   );
 }
-
-Events.propTypes = {
-  now: PropTypes.number,
-  events: PropTypes.arrayOf(PropTypes.object),
-  updateEvents: PropTypes.func,
-  isModalShown: PropTypes.bool,
-  showModal: PropTypes.func,
-  closeModal: PropTypes.func,
-  onSwipe: PropTypes.func,
-};
-
-export default Events;

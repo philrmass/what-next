@@ -184,3 +184,7 @@ export function editToTime(text, baseTime) {
 function isDuring(event, now) {
   return (now > event.start && now <= event.end);
 }
+
+export function getEventOrder(events) {
+  return Object.keys(events);
+}

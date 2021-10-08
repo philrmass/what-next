@@ -1,94 +1,59 @@
 import { useState } from 'react';
+
+import { version } from '../version';
+import { getEventOrder } from '../utilities/events';
 import { copyData } from '../utilities/file';
 import { useLocalStorage } from '../utilities/storage';
-import Footer from './Footer';
+import styles from './App.module.css';
+
 import Events from './Events';
-import Header from './Header';
 import Menu from './Menu';
-import styles from '../styles/App.module.css';
-import { version } from '../version';
 
 export default function App() {
-  const statusMs = 30000;
   const [events, setEvents] = useLocalStorage('whatNextEvents', []);
-  const [overlayShown, setOverlayShown] = useState('');
+  const [order, setOrder] = useLocalStorage('whatNextOrder', []);
   const [status, setStatus] = useState('');
 
-  function toggleOverlayShown(name) {
-    setOverlayShown((shown) => {
-      if (name === shown) {
-        return '';
-      }
-      return name;
-    });
-  }
-
-  function clearOverlayShown(name) {
-    setOverlayShown((shown) => {
-      if (name === shown) {
-        return '';
-      }
-      return shown;
-    });
-  }
-
-  function addEvent() {
-    setOverlayShown('eventModal');
-  }
-
-  function updateEvents(events) {
-    setEvents(events);
+  function updateEvent(event) {
+    setEvents(events => ({
+      ...events,
+      [event.id]: event,
+    }));
+    setOrder(getEventOrder(events));
   }
 
   const save = () => {
     // events.getFileName(at);
     //const fileName = `whatNextData_${Date.now()}.json`;
     //saveData(fileName, events);
-    console.log('SAVE');
-    setStatus('save');
-    setTimeout(() => setStatus(''), statusMs);
+    setSummary('Saved');
   };
 
   const load = () => {
     // get data from file
     // events.parseEvents(data)
     // setEvents(parsed);
-    console.log('LOAD');
-    setStatus('load');
-    setTimeout(() => setStatus(''), statusMs);
+    setSummary('Loaded');
   };
 
   const copy = () => {
     copyData(events);
+    setSummary('Copied');
+  };
 
-    setStatus(getSummary('Copied', events));
+  const setSummary = (verb) => {
+    const statusMs = 30000;
+    const message = `${verb} ${events.length} events`;
+
+    setStatus(message);
     setTimeout(() => setStatus(''), statusMs);
   };
 
   return (
     <div className={styles.page}>
-      <header className={styles.header}>
-        <Header addEvent={addEvent} />
-      </header>
-      <section className={styles.main}>
-        <Events
-          events={events}
-          updateEvents={updateEvents}
-          isModalShown={overlayShown === 'eventModal'}
-          showModal={() => setOverlayShown('eventModal')}
-          closeModal={() => clearOverlayShown('eventModal')}
-        />
-      </section>
-      <footer className={styles.footer}>
-        <Footer
-          version={version}
-        />
-      </footer>
+      <Events events={events} order={order} updateEvent={updateEvent} />
       <Menu save={save} load={load} copy={copy} status={status} />
+      <div className={styles.version}>{version}</div>
     </div>
   );
-}
-
-function getSummary(verb, events) {
-  return `${verb} ${events.length} events`;
 }
