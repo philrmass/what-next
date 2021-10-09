@@ -42,6 +42,24 @@ export default function App() {
     setSummary('Copied');
   };
 
+  const redo = () => {
+    console.log('REDO');
+    if (Array.isArray(events)) {
+      console.log('do it', events.length);
+      const obj = events.reduce((obj, event) => ({
+        ...obj,
+        [event.guid]: {
+          id: event.guid,
+          at: event.start,
+          duration: 0,
+          text: event.text,
+        },
+      }), {});
+      setEvents(obj);
+      setOrder(getEventOrder(obj));
+    }
+  };
+
   const setSummary = (verb) => {
     const statusMs = 30000;
     const message = `${verb} ${events.length} events`;
@@ -52,6 +70,9 @@ export default function App() {
 
   return (
     <div className={styles.page}>
+      <div className={styles.redo}>
+        <button onClick={() => redo()}>REDO</button>
+      </div>
       <Eventz events={events} order={order} updateEvent={updateEvent} />
       <Events events={events} order={order} updateEvent={updateEvent} />
       <Menu save={save} load={load} copy={copy} status={status} />

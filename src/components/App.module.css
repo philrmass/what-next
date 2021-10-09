@@ -1,3 +1,10 @@
+.redo {
+  position: fixed;
+  bottom: var(--size1);
+  right: var(--size8);
+  background: orange;
+}
+
 .page {
   height: 100vh;
   background: #484848;

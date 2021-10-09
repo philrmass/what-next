@@ -7,6 +7,7 @@ export default function Eventz({
   updateEvent,
 }) {
   const all = getAll(events, order);
+  console.log('ALL', all);
 
   return (
     <>
@@ -15,16 +16,15 @@ export default function Eventz({
       </div>
       <ul>
         {all.map(event => {
-          const text = JSON.stringify(event, null, 2);
-          //const { date, start, end, until, code } = eventToDisplay(event, now);
-          const date = getDisplayDate(event.date);
-          const start = getDisplayTime(event.start);
-          const end = getDisplayTime(event.end);
+          console.log('TEXT', event.text);
+          const date = getDisplayDate(event.at);
+          const start = getDisplayTime(event.at);
+          const end = getDisplayTime(0);
           const background = '#fdb';
           const style = { background };
 
           return (
-            <li key={event.guid} className={styles.event} style={style}>
+            <li key={event.id} className={styles.event} style={style}>
               <div className={styles.until}>
                 <div className={styles.untilText}>until</div>
               </div>
