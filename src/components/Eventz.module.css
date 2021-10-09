@@ -1,0 +1,60 @@
+.appName {
+  background: #8cf;
+  padding: var(--size2);
+}
+
+.event {
+  height: var(--eventHeight);
+  margin-top: var(--size0);
+}
+
+.until {
+  position: relative;
+  width: var(--untilWidth);
+  height: var(--eventHeight);
+  background: var(--lightened);
+}
+
+.untilText {
+  position: absolute;
+  width: var(--eventHeight);
+  height: var(--untilWidth);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-origin: 100% 0%;
+  transform: translateX(-100%) rotate(-90deg);
+  color: var(--textLight);
+  font-size: var(--fontSizeSmall);
+}
+
+.content {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 3fr 4fr;
+  grid-gap: var(--size1);
+  margin-left: var(--untilWidth);
+  padding: var(--size1);
+}
+
+.time {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: var(--fontSizeSmall);
+}
+
+.date {
+}
+
+.start {
+}
+
+.end {
+}
+
+.text {
+  display: flex;
+  align-items: center;
+}

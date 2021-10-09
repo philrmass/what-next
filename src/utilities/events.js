@@ -24,24 +24,6 @@ export function eventToDisplay(event, now = Date.now()) {
   };
 }
 
-function getDisplayDate(time) {
-  const options = {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  };
-  return new Date(time).toLocaleDateString(undefined, options);
-}
-
-function getDisplayTime(time) {
-  const options = {
-    hour: 'numeric',
-    minute: '2-digit',
-  };
-  return new Date(time).toLocaleTimeString(undefined, options);
-}
-
 function getUntil(from, to) {
   if (!to) {
     return { until: '', code: 0 };
@@ -187,4 +169,22 @@ function isDuring(event, now) {
 
 export function getEventOrder(events) {
   return Object.keys(events);
+}
+
+export function getDisplayDate(time) {
+  const options = {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  };
+  return new Date(time).toLocaleDateString(undefined, options);
+}
+
+export function getDisplayTime(time) {
+  const options = {
+    hour: 'numeric',
+    minute: '2-digit',
+  };
+  return new Date(time).toLocaleTimeString(undefined, options);
 }

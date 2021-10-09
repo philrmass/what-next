@@ -30,3 +30,24 @@ export function moveTimeToDate(time, date) {
   return value.getTime();
 }
 
+export function getDisplayDate(at) {
+  const options = {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  };
+  return new Date(at).toLocaleDateString(undefined, options);
+}
+
+export function getDisplayTime(at) {
+  if (!at) {
+    return '';
+  }
+
+  const options = {
+    hour: 'numeric',
+    minute: '2-digit',
+  };
+  return new Date(at).toLocaleTimeString(undefined, options);
+}

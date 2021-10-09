@@ -12,6 +12,7 @@ export default function Events({
   order,
   updateEvent,
 }) {
+  const all = getAll(events, order);
   const isModalShown = false;
   const showModal = () => {};
   const closeModal = () => {};
@@ -43,6 +44,8 @@ export default function Events({
   }, [isModalShown]);
 
   function save() {
+    console.log('save');
+    /*
     const filtered = events.filter((event) => event.guid !== activeEvent.guid);
     const i = filtered.findIndex((event) => {
       const eventTime = event.start || event.date;
@@ -57,22 +60,29 @@ export default function Events({
       updateEvents([...filtered, event]);
     }
     setActiveEvent(createDefaultEvent());
+    */
     closeModal();
   }
 
   function edit(guid) {
+    console.log('edit');
+    /*
     const event = events.find((event) => event.guid === guid);
     setActiveEvent({ ...event });
     showModal();
+    */
   }
 
   function remove() {
+    console.log('remove');
+    /*
     const i = events.findIndex((event) => event.guid === activeEvent.guid);
     if (i >= 0) {
       updateEvents([...events.slice(0, i), ...events.slice(i + 1)]);
     }
     setActiveEvent(createDefaultEvent());
     closeModal();
+    */
   }
 
   function cancel() {
@@ -119,8 +129,12 @@ export default function Events({
     );
   }
 
+  const editEvent = (guid) => {
+    console.log('EDIT', guid);
+  };
+
   function buildEvents() {
-    return events.map((event) => {
+    return all.map((event) => {
       const { date, start, end, until, code } = eventToDisplay(event, now);
       const eventStyles = `${styles.event} event${code}`;
 
@@ -129,6 +143,7 @@ export default function Events({
           key={event.guid}
           id={event.guid}
           className={eventStyles}
+          onClick={() => editEvent(event.guid)}
         >
           <div className={styles.until}>
           </div>
@@ -164,15 +179,11 @@ export default function Events({
 
   return (
     <Fragment>
+      <div>{`ARRAY [${Array.isArray(events)}]`}</div>
       <section className={styles.main}>
-        <ScrollBox
-          selectElement={edit}
-          onSwipe={onSwipe}
-        >
-          <ul>
-            {buildEvents()}
-          </ul>
-        </ScrollBox>
+        <ul>
+          {buildEvents()}
+        </ul>
       </section>
       <button
         className={styles.addButton}
@@ -183,4 +194,12 @@ export default function Events({
       { buildModal() }
     </Fragment>
   );
+}
+
+function getAll(events, order) {
+  if (Array.isArray(events)) {
+    return events;
+  }
+
+  return order.map(guid => events[guid]);
 }

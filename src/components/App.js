@@ -7,6 +7,7 @@ import { useLocalStorage } from '../utilities/storage';
 import styles from './App.module.css';
 
 import Events from './Events';
+import Eventz from './Eventz';
 import Menu from './Menu';
 
 export default function App() {
@@ -17,7 +18,7 @@ export default function App() {
   function updateEvent(event) {
     setEvents(events => ({
       ...events,
-      [event.id]: event,
+      [event.guid]: event,
     }));
     setOrder(getEventOrder(events));
   }
@@ -51,6 +52,7 @@ export default function App() {
 
   return (
     <div className={styles.page}>
+      <Eventz events={events} order={order} updateEvent={updateEvent} />
       <Events events={events} order={order} updateEvent={updateEvent} />
       <Menu save={save} load={load} copy={copy} status={status} />
       <div className={styles.version}>{version}</div>
