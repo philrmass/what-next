@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { getDisplayDate, getDisplayTime } from '../utilities/time';
-import { getUntilz } from '../utilities/events';
+import { getDefaultEvent, getUntilz } from '../utilities/events';
 import styles from './Events.module.css';
 
 import Editor from './Editor';
@@ -15,8 +15,8 @@ export default function Events({
   const [editing, setEditing] = useState(null);
 
   const add = () => {
-    //??? create blank, open editor
     console.log('ADD');
+    setEditing(getDefaultEvent());
   };
 
   return (

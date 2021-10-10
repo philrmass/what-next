@@ -1,3 +1,14 @@
+import { v4 as uuidv4 } from 'uuid';
+
+export function getDefaultEvent() {
+  return {
+    id: uuidv4(),
+    at: Date.now(),
+    duration: 0,
+    text: '',
+  };
+}
+
 export function eventToDisplay(event, now = Date.now()) {
   const date = getDisplayDate(event.date);
   let start = null;
