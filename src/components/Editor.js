@@ -1,4 +1,5 @@
 //import { dateToEdit, editToDate, editToTime, timeToEdit } from '../utilities/events';
+import { dateToEdit, timeToEdit } from '../utilities/events';
 //import { moveTimeToDate } from '../utilities/time';
 import styles from './Editor.module.css';
 
@@ -18,7 +19,10 @@ export default function Editor({
     }));
   }
 
-  function handleDateChange(text) {
+*/
+  const handleDateChange = (text) => {
+    console.log('handleDateChange', text);
+    /*
     const date = editToDate(text, event.date);
     setActiveEvent((event) => ({
       ...event,
@@ -26,15 +30,20 @@ export default function Editor({
       start: moveTimeToDate(event.start, date),
       end: moveTimeToDate(event.end, date),
     }));
-  }
+    */
+  };
 
   function handleStartChange(text) {
+    console.log('handleStartChange', text);
+    /*
     setActiveEvent((event) => ({
       ...event,
       start: editToTime(text, event.date),
     }));
+    */
   }
 
+  /*
   function handleEndChange(text) {
     setActiveEvent((event) => ({
       ...event,
@@ -45,6 +54,26 @@ export default function Editor({
 
   return (
     <Dialog isOpen={Boolean(event)}>
+      <input
+        id='date'
+        type='date'
+        value={dateToEdit(event?.at)}
+        onChange={(e) => handleDateChange(e.target.value)}
+        className={styles.dateInput}
+      />
+      <div>
+        <label htmlFor='date'>Date</label>
+      </div>
+      <input
+        id='start'
+        type='time'
+        value={timeToEdit(event?.at)}
+        onChange={(e) => handleStartChange(e.target.value)}
+        className={styles.timeInput}
+      />
+      <div>
+        <label htmlFor='start'>Start</label>
+      </div>
       <div>{event?.text}</div>
       <button className={styles.button} onClick={close}>Close</button>
     </Dialog>
@@ -56,39 +85,31 @@ export default function Editor({
         cols='24'
         autoFocus={true}
         className={styles.textInput}
-        value={activeEvent.text}
+        value={event.text}
         onChange={(e) => handleTextChange(e.target.value)}
       />
-      <div>
-        <input
-          type='date'
-          value={dateToEdit(activeEvent.date)}
-          onChange={(e) => handleDateChange(e.target.value)}
-          className={styles.dateInput}
-        />
-      </div>
       <div className={styles.times}>
         <div>
           <label htmlFor='start'>Start</label>
         </div>
         <div>
-          { activeEvent.start &&
+          { event.start &&
             <label htmlFor='end'>End</label>
           }
         </div>
         <div>
           <input
             type='time'
-            value={timeToEdit(activeEvent.start)}
+            value={timeToEdit(event.start)}
             onChange={(e) => handleStartChange(e.target.value)}
             className={styles.timeInput}
           />
         </div>
         <div>
-          { activeEvent.start &&
+          { event.start &&
             <input
               type='time'
-              value={timeToEdit(activeEvent.end)}
+              value={timeToEdit(event.end)}
               onChange={(e) => handleEndChange(e.target.value)}
               className={styles.timeInput}
             />
