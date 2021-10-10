@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { getDisplayDate, getDisplayTime } from '../utilities/time';
 import { getUntilz } from '../utilities/events';
 import styles from './Events.module.css';
@@ -10,6 +12,8 @@ export default function Events({
   update,
   remove,
 }) {
+  const [editing, setEditing] = useState(null);
+
   const add = () => {
     //??? create blank, open editor
     console.log('ADD');
@@ -32,7 +36,12 @@ export default function Events({
           const style = { background };
 
           return (
-            <li key={event.id} className={styles.event} style={style}>
+            <li
+              key={event.id}
+              className={styles.event}
+              style={style}
+              onClick={() => setEditing({ ...event })}
+            >
               <div className={styles.untilText}>{until}</div>
               <div className={styles.layout}>
                 <div className={styles.until}></div>
@@ -57,9 +66,8 @@ export default function Events({
       </ul>
       <button className={styles.button} onClick={add}>+</button>
       <Editor
-        event={{}}
-        isOpen={false}
-        close={() => {}}
+        event={editing}
+        close={() => setEditing(null)}
         update={update}
         remove={remove}
       />

@@ -1,13 +1,12 @@
 //import { dateToEdit, editToDate, editToTime, timeToEdit } from '../utilities/events';
 //import { moveTimeToDate } from '../utilities/time';
-//import styles from './Editor.module.css';
+import styles from './Editor.module.css';
 
 import Dialog from './Dialog';
 
 export default function Editor({
-  //event,
-  isOpen,
-  //close,
+  event,
+  close,
   //update,
   //remove,
 }) {
@@ -45,8 +44,9 @@ export default function Editor({
   */
 
   return (
-    <Dialog isOpen={isOpen}>
-      EVENT-EDITOR
+    <Dialog isOpen={Boolean(event)}>
+      <div>{event?.text}</div>
+      <button className={styles.button} onClick={close}>Close</button>
     </Dialog>
   );
   /*

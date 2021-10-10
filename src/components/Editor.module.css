@@ -1,3 +1,16 @@
+.button {
+  padding: var(--size1);
+  border-radius: var(--radius);
+  background: var(--button);
+  color: var(--textButton);
+  font-size: 4em;
+}
+
+.button + .button {
+  margin-top: var(--size1);
+}
+
+/*
 .main {
   display: flex;
   flex-direction: column;
@@ -44,3 +57,4 @@
   border: 1px solid var(--accent);
   outline: none;
 }
+*/
