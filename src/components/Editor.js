@@ -59,11 +59,38 @@ export default function Editor({
   }
   */
   const editDate = () => {
+    //??? target.valueAsNumber
     console.log('EDIT');
+    /*
     if (dateRef.current) {
       console.log('CLICK');
       dateRef.current.click();
     }
+    */
+    const input = document.createElement('input');
+    input.type = 'date';
+    input.value = dateToEdit(event?.at);
+    input.onchange = (e) => handleDateChange(e.target.value);
+
+    input.click();
+    /*
+{
+    const input = document.createElement('input');
+    input.type = 'file';
+
+    input.onchange = () => {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onload = () => {
+        resolve(JSON.parse(reader.result));
+      };
+      reader.readAsText(file);
+    };
+
+    input.click();
+  }
+  */
   };
 
   return (
