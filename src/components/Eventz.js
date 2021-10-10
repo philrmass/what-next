@@ -8,6 +8,11 @@ export default function Eventz({
   update,
   remove,
 }) {
+  const add = () => {
+    //??? create blank, open editor
+    console.log('ADD');
+  };
+
   return (
     <>
       <div className={styles.appName}>
@@ -48,6 +53,7 @@ export default function Eventz({
           );
         })}
       </ul>
+      <button className={styles.button} onClick={add}>+</button>
     </>
   );
 }

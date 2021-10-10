@@ -18,14 +18,14 @@ export default function App() {
     // events.getFileName(at);
     //const fileName = `whatNextData_${Date.now()}.json`;
     //saveData(fileName, events);
-    setSummary('Saved');
+    setSummary('TODO: Saved');
   };
 
   const load = () => {
     // get data from file
     // events.parseEvents(data)
     // setEvents(parsed);
-    setSummary('Loaded');
+    setSummary('TODO: Loaded');
   };
 
   const copy = () => {
