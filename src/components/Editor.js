@@ -1,12 +1,17 @@
-import React from 'react';
-import { dateToEdit, editToDate, editToTime, timeToEdit } from '../utilities/events';
-import { moveTimeToDate } from '../utilities/time';
-import styles from './Editor.module.css';
+//import { dateToEdit, editToDate, editToTime, timeToEdit } from '../utilities/events';
+//import { moveTimeToDate } from '../utilities/time';
+//import styles from './Editor.module.css';
+
+import Dialog from './Dialog';
 
 export default function Editor({
-  activeEvent,
-  setActiveEvent,
+  //event,
+  isOpen,
+  //close,
+  //update,
+  //remove,
 }) {
+  /*
   function handleTextChange(text) {
     setActiveEvent((event) => ({
       ...event,
@@ -37,8 +42,14 @@ export default function Editor({
       end: editToTime(text, event.date),
     }));
   }
+  */
 
   return (
+    <Dialog isOpen={isOpen}>
+      EVENT-EDITOR
+    </Dialog>
+  );
+  /*
     <section className={styles.main}>
       <textarea
         rows='2'
@@ -85,5 +96,5 @@ export default function Editor({
         </div>
       </div>
     </section>
-  );
+  */
 }

@@ -1,44 +1,21 @@
-.main {
+.page {
   position: fixed;
   top: 0;
+  bottom: 0;
   left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background: var(--bg-overlay);
+  background: var(--shaded);
+  padding: var(--size4);
+  z-index: 1;
 }
 
-.modal {
-  padding: 8px;
-  margin: 8px;
-  background: white;
-  border-radius: 2px;
-}
-
-.content {
-  padding: 8px;
-}
-
-.buttonContainer {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.buttonContainer * {
-  padding: 2px 4px;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  margin-left: 4px;
-  background: var(--bg-dark);
-  color: var(--text-light);
-  font-size: 1.2em;
-  user-select: none;
-}
-
-.buttonContainer *:focus {
-  padding: 2px 4px;
-  border: 1px solid var(--accent);
-  color: var(--accent-light);
+.dialog {
+  max-width: 450px;
+  flex-grow: 1;
+  padding: var(--size2);
+  border-radius: var(--radiusLarge);
+  background: var(--dialog);
 }

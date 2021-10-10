@@ -1,8 +1,10 @@
 import { getDisplayDate, getDisplayTime } from '../utilities/time';
 import { getUntilz } from '../utilities/events';
-import styles from './Eventz.module.css';
+import styles from './Events.module.css';
 
-export default function Eventz({
+import Editor from './Editor';
+
+export default function Events({
   events,
   order,
   update,
@@ -54,6 +56,13 @@ export default function Eventz({
         })}
       </ul>
       <button className={styles.button} onClick={add}>+</button>
+      <Editor
+        event={{}}
+        isOpen={false}
+        close={() => {}}
+        update={update}
+        remove={remove}
+      />
     </>
   );
 }
