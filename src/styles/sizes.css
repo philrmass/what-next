@@ -16,5 +16,5 @@
   --size10: 80px;
 
   --untilWidth: var(--size3);
-  --eventHeight: calc(4.5em + 2 * var(--size1));
+  --eventHeight: calc(4.5rem + 2 * var(--size1));
 }

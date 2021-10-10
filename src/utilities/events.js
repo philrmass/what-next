@@ -24,6 +24,11 @@ export function eventToDisplay(event, now = Date.now()) {
   };
 }
 
+export function getUntilz(from, to) {
+  const times = getUntilTimes(from, to);
+  return getUntilText(times);
+}
+
 function getUntil(from, to) {
   if (!to) {
     return { until: '', code: 0 };
@@ -167,7 +172,7 @@ function isDuring(event, now) {
   return (now > event.start && now <= event.end);
 }
 
-export function getEventOrder(events) {
+export function getEventsOrder(events) {
   return Object.keys(events);
 }
 

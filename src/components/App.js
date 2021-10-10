@@ -1,12 +1,11 @@
 import { useState } from 'react';
 
 import { version } from '../version';
-import { getEventOrder } from '../utilities/events';
+import { getEventsOrder } from '../utilities/events';
 import { copyData } from '../utilities/file';
 import { useLocalStorage } from '../utilities/storage';
 import styles from './App.module.css';
 
-import Events from './Events';
 import Eventz from './Eventz';
 import Menu from './Menu';
 
@@ -14,14 +13,6 @@ export default function App() {
   const [events, setEvents] = useLocalStorage('whatNextEvents', []);
   const [order, setOrder] = useLocalStorage('whatNextOrder', []);
   const [status, setStatus] = useState('');
-
-  function updateEvent(event) {
-    setEvents(events => ({
-      ...events,
-      [event.guid]: event,
-    }));
-    setOrder(getEventOrder(events));
-  }
 
   const save = () => {
     // events.getFileName(at);
@@ -42,26 +33,24 @@ export default function App() {
     setSummary('Copied');
   };
 
-  const redo = () => {
-    console.log('REDO');
-    if (Array.isArray(events)) {
-      console.log('do it', events.length);
-      const obj = events.reduce((obj, event) => ({
-        ...obj,
-        [event.guid]: {
-          id: event.guid,
-          at: event.start,
-          duration: 0,
-          text: event.text,
-        },
-      }), {});
-      setEvents(obj);
-      setOrder(getEventOrder(obj));
-    }
+  const update = (event) => {
+    console.log('REMOVE', event);
+    /*
+    setEvents(events => ({
+      ...events,
+      [event.guid]: event,
+    }));
+    setOrder(getEventsOrder(events));
+    */
+  };
+
+  const remove = (id) => {
+    console.log('REMOVE', id);
+    //??? filter order
   };
 
   const setSummary = (verb) => {
-    const statusMs = 30000;
+    const statusMs = 5000;
     const message = `${verb} ${events.length} events`;
 
     setStatus(message);
@@ -70,11 +59,7 @@ export default function App() {
 
   return (
     <div className={styles.page}>
-      <div className={styles.redo}>
-        <button onClick={() => redo()}>REDO</button>
-      </div>
-      <Eventz events={events} order={order} updateEvent={updateEvent} />
-      <Events events={events} order={order} updateEvent={updateEvent} />
+      <Eventz events={events} order={order} update={update} remove={remove} />
       <Menu save={save} load={load} copy={copy} status={status} />
       <div className={styles.version}>{version}</div>
     </div>
