@@ -1,5 +1,10 @@
 //import { dateToEdit, editToDate, editToTime, timeToEdit } from '../utilities/events';
-import { dateToEdit, timeToEdit } from '../utilities/events';
+import {
+  dateToEdit,
+  getDisplayDate,
+  getDisplayTime,
+  timeToEdit,
+} from '../utilities/events';
 //import { moveTimeToDate } from '../utilities/time';
 import styles from './Editor.module.css';
 
@@ -54,28 +59,34 @@ export default function Editor({
 
   return (
     <Dialog isOpen={Boolean(event)}>
-      <input
-        id='date'
-        type='date'
-        value={dateToEdit(event?.at)}
-        onChange={(e) => handleDateChange(e.target.value)}
-        className={styles.dateInput}
-      />
-      <div>
-        <label htmlFor='date'>Date</label>
+      <div className={styles.content}>
+        <input
+          id='date'
+          type='date'
+          value={dateToEdit(event?.at)}
+          onChange={(e) => handleDateChange(e.target.value)}
+          className={styles.hidden}
+        />
+        <div>
+          <label htmlFor='date'>
+            {getDisplayDate(event?.at)}
+          </label>
+        </div>
+        <input
+          id='start'
+          type='time'
+          value={timeToEdit(event?.at)}
+          onChange={(e) => handleStartChange(e.target.value)}
+          className={styles.hidden}
+        />
+        <div>
+          <label htmlFor='start'>
+            {getDisplayTime(event?.at)}
+          </label>
+        </div>
+        <div>{event?.text}</div>
+        <button className={styles.button} onClick={close}>Close</button>
       </div>
-      <input
-        id='start'
-        type='time'
-        value={timeToEdit(event?.at)}
-        onChange={(e) => handleStartChange(e.target.value)}
-        className={styles.timeInput}
-      />
-      <div>
-        <label htmlFor='start'>Start</label>
-      </div>
-      <div>{event?.text}</div>
-      <button className={styles.button} onClick={close}>Close</button>
     </Dialog>
   );
   /*

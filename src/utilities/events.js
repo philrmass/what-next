@@ -9,6 +9,28 @@ export function getDefaultEvent() {
   };
 }
 
+export function getDisplayDate(at) {
+  const options = {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  };
+  return new Date(at).toLocaleDateString(undefined, options);
+}
+
+export function getDisplayTime(at) {
+  if (!at) {
+    return '';
+  }
+
+  const options = {
+    hour: 'numeric',
+    minute: '2-digit',
+  };
+  return new Date(at).toLocaleTimeString(undefined, options);
+}
+
 export function eventToDisplay(event, now = Date.now()) {
   const date = getDisplayDate(event.date);
   let start = null;
@@ -187,6 +209,7 @@ export function getEventsOrder(events) {
   return Object.keys(events);
 }
 
+/*
 export function getDisplayDate(time) {
   const options = {
     weekday: 'short',
@@ -204,3 +227,4 @@ export function getDisplayTime(time) {
   };
   return new Date(time).toLocaleTimeString(undefined, options);
 }
+*/

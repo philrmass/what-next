@@ -1,3 +1,10 @@
+.content {
+}
+
+.hidden {
+  display: none;
+}
+
 .button {
   padding: var(--size1);
   border-radius: var(--radius);

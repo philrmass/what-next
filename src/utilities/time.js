@@ -30,6 +30,7 @@ export function moveTimeToDate(time, date) {
   return value.getTime();
 }
 
+/*
 export function getDisplayDate(at) {
   const options = {
     weekday: 'short',
@@ -51,3 +52,4 @@ export function getDisplayTime(at) {
   };
   return new Date(at).toLocaleTimeString(undefined, options);
 }
+*/

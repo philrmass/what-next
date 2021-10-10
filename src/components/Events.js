@@ -1,7 +1,11 @@
 import { useState } from 'react';
 
-import { getDisplayDate, getDisplayTime } from '../utilities/time';
-import { getDefaultEvent, getUntilz } from '../utilities/events';
+import {
+  getDefaultEvent,
+  getDisplayDate,
+  getDisplayTime,
+  getUntilz,
+} from '../utilities/events';
 import styles from './Events.module.css';
 
 import Editor from './Editor';
