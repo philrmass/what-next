@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 //import { dateToEdit, editToDate, editToTime, timeToEdit } from '../utilities/events';
 import {
   dateToEdit,
@@ -16,6 +17,7 @@ export default function Editor({
   //update,
   //remove,
 }) {
+  const dateRef = useRef();
   /*
   function handleTextChange(text) {
     setActiveEvent((event) => ({
@@ -56,11 +58,19 @@ export default function Editor({
     }));
   }
   */
+  const editDate = () => {
+    console.log('EDIT');
+    if (dateRef.current) {
+      console.log('CLICK');
+      dateRef.current.click();
+    }
+  };
 
   return (
     <Dialog isOpen={Boolean(event)}>
       <div className={styles.content}>
         <input
+          ref={dateRef}
           id='date'
           type='date'
           value={dateToEdit(event?.at)}
@@ -68,7 +78,7 @@ export default function Editor({
           className={styles.hidden}
         />
         <div>
-          <label htmlFor='date'>
+          <label htmlFor='date' onClick={editDate}>
             {getDisplayDate(event?.at)}
           </label>
         </div>
