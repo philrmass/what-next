@@ -52,9 +52,7 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js',
   },
-  devServer: {
-    clientLogLevel: 'none',
-    contentBase: './dist',
-    watchContentBase: true,
+  infrastructureLogging: {
+    level: 'error',
   },
 };

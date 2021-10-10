@@ -9,7 +9,7 @@
     "deploy": "gh-pages -d dist",
     "lint": "eslint src",
     "predeploy": "npm run build",
-    "start": "webpack serve --config ./webpack.config.js --mode development",
+    "start": "webpack serve --config ./webpack.config.js --mode development --no-client-overlay-warnings",
     "test": "jest"
   },
   "author": "Phil Mass",
