@@ -52,6 +52,16 @@ export default function Editor({
     }));
   };
 
+  const handleDelete = () => {
+    remove(event.id);
+    close();
+  };
+
+  const handleSave = () => {
+    update(event);
+    close();
+  };
+
   const buildDuration = () => {
     const values = [0, 30, 60, 90];
 
@@ -106,8 +116,8 @@ export default function Editor({
             onChange={(e) => handleTextChange(e.target.value)}
           />
         </div>
-        <button className={styles.button} onClick={() => remove(event.id)}>Delete</button>
-        <button className={styles.button} onClick={() => update(event)}>Save</button>
+        <button className={styles.button} onClick={handleDelete}>Delete</button>
+        <button className={styles.button} onClick={handleSave}>Save</button>
         <button className={styles.button} onClick={close}>Cancel</button>
       </div>
     </Dialog>

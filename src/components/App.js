@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
 import { version } from '../version';
-//import { getEventsOrder } from '../utilities/events';
-import { copyData } from '../utilities/file';
+import { getEventsOrder, getSaveFilePath, parseEvents } from '../utilities/events';
+import { copyData, loadData, saveData } from '../utilities/file';
 import { useLocalStorage } from '../utilities/storage';
 import styles from './App.module.css';
 
@@ -10,48 +10,48 @@ import Events from './Events';
 import Menu from './Menu';
 
 export default function App() {
-  const [events, _setEvents] = useLocalStorage('whatNextEvents', []);
-  const [order, _setOrder] = useLocalStorage('whatNextOrder', []);
+  const [events, setEvents] = useLocalStorage('whatNextEvents', []);
+  const [order, setOrder] = useLocalStorage('whatNextOrder', []);
   const [status, setStatus] = useState('');
 
   const save = () => {
-    // events.getFileName(at);
-    //const fileName = `whatNextData_${Date.now()}.json`;
-    //saveData(fileName, events);
-    setSummary('TODO: Saved');
+    const fileName = getSaveFilePath();
+    saveData(fileName, events);
+    setSummary('Saved', events, fileName);
   };
 
-  const load = () => {
-    // get data from file
-    // events.parseEvents(data)
-    // setEvents(parsed);
-    setSummary('TODO: Loaded');
+  const load = async () => {
+    const data = await loadData();
+    const parsed = parseEvents(data);
+    setEvents(parsed);
+    setOrder(getEventsOrder(parsed));
+    setSummary('Loaded', parsed);
   };
 
   const copy = () => {
     copyData(events);
-    setSummary('Copied');
+    setSummary('Copied', events);
   };
 
   const update = (event) => {
-    console.log('UPDATE', event);
-    /*
-    setEvents(events => ({
+    const updated = {
       ...events,
-      [event.guid]: event,
-    }));
-    setOrder(getEventsOrder(events));
-    */
+      [event.id]: event,
+    };
+    setEvents(updated);
+    setOrder(getEventsOrder(updated));
   };
 
-  const remove = (id) => {
-    console.log('REMOVE', id);
-    //??? filter order
+  const remove = (removeId) => {
+    setEvents(events => removeProperty(removeId, events));
+    setOrder(order => order.filter(id => id !== removeId));
   };
 
-  const setSummary = (verb) => {
+  const setSummary = (verb, events, to) => {
     const statusMs = 5000;
-    const message = `${verb} ${events.length} events`;
+    const count = Object.keys(events).length;
+    const toText = to ? ` to ${to}` : '';
+    const message = `${verb} ${count} events${toText}`;
 
     setStatus(message);
     setTimeout(() => setStatus(''), statusMs);
@@ -64,4 +64,9 @@ export default function App() {
       <div className={styles.version}>{version}</div>
     </div>
   );
+}
+
+function removeProperty(key, obj) {
+  const { [key]: _, ...rest } = obj;
+  return rest;
 }

@@ -10,6 +10,7 @@
   position: relative;
   height: var(--eventHeight);
   margin-top: var(--size0);
+  overflow: hidden;
 }
 
 .untilText {

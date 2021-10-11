@@ -16,7 +16,7 @@ export default function Events({
   update,
   remove,
 }) {
-  const [editing, setEditing] = useState(getDefaultEvent());
+  const [editing, setEditing] = useState(null);
 
   const add = () => {
     setEditing(getDefaultEvent());

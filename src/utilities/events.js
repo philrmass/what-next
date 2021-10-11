@@ -214,7 +214,7 @@ function isDuring(event, now) {
 }
 
 export function getEventsOrder(events) {
-  return Object.keys(events);
+  return Object.keys(events).sort((a, b) => events[a].at - events[b].at);
 }
 
 /*
@@ -236,3 +236,27 @@ export function getDisplayTime(time) {
   return new Date(time).toLocaleTimeString(undefined, options);
 }
 */
+
+export function getSaveFilePath(at = Date.now()) {
+  const when = new Date(at);
+  const year = when.getFullYear();
+  const month = `${when.getMonth() + 1}`.padStart(2, '0');
+  const date = `${when.getDate()}`.padStart(2, '0');
+
+  return `whatNext_${year}_${month}_${date}.json`;
+}
+
+export function parseEvents(data) {
+  const now = Date.now();
+
+  return Object.values(data).reduce((events, item) => ({
+    ...events,
+    [item.id]: {
+      id: item.id,
+      at: item.at ?? now,
+      duration: item.duration ?? 0,
+      text: item.text ?? '',
+    },
+  }), {});
+}
+
