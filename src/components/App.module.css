@@ -28,5 +28,5 @@
   right: var(--size1);
   color: var(--textButton);
   font-size: var(--fontSizeSmall);
-  text-shadow: 1px 1px 1px #000000, 1px -1px 1px #000000, -1px 1px 1px #000000, -1px -1px 1px #000000;
+  text-shadow: 1px 1px 3px #404040, 1px -1px 3px #404040, -1px 1px 3px #404040, -1px -1px 3px #404040;
 }

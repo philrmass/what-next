@@ -1,10 +1,10 @@
 import cln from 'classnames';
 
 import {
-  dateToEdit,
-  editToDate,
-  editToTime,
-  timeToEdit,
+  getDateInput,
+  getInputDate,
+  getInputTime,
+  getTimeInput,
 } from '../utilities/events';
 import { moveTimeToDate } from '../utilities/time';
 import styles from './Editor.module.css';
@@ -28,7 +28,7 @@ export default function Editor({
   }
 
   const handleDateChange = (value) => {
-    const dateAt = editToDate(value, event.at);
+    const dateAt = getInputDate(value, event.at);
 
     setEvent(event => ({
       ...event,
@@ -39,7 +39,7 @@ export default function Editor({
   function handleStartChange(value) {
     setEvent(event => ({
       ...event,
-      at: editToTime(value, event.at),
+      at: getInputTime(value, event.at),
     }));
   }
 
@@ -94,7 +94,7 @@ export default function Editor({
           <input
             id='date'
             type='date'
-            value={dateToEdit(event?.at)}
+            value={getDateInput(event?.at)}
             onChange={(e) => handleDateChange(e.target.value)}
           />
         </div>
@@ -102,7 +102,7 @@ export default function Editor({
           <input
             id='start'
             type='time'
-            value={timeToEdit(event?.at)}
+            value={getTimeInput(event?.at)}
             onChange={(e) => handleStartChange(e.target.value)}
           />
         </div>

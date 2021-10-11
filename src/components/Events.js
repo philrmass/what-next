@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
 import {
+  getColor,
   getDefaultEvent,
   getDisplayDate,
   getDisplayTime,
-  getUntilz,
+  getUntil,
 } from '../utilities/events';
 import styles from './Events.module.css';
 
@@ -22,6 +23,8 @@ export default function Events({
     setEditing(getDefaultEvent());
   };
 
+  //??? fix app name, add app icon
+  //??? redo colors each minute
   return (
     <>
       <div className={styles.appName}>
@@ -31,11 +34,11 @@ export default function Events({
         {order.map(id => {
           const event = events[id];
           const now = Date.now();
-          const until = getUntilz(now, event.at);
+          const until = getUntil(now, event.at);
           const date = getDisplayDate(event.at);
           const start = getDisplayTime(event.at);
           const end = getEndTime(event);
-          const background = '#bdf';
+          const background = getColor(now, event.at);
           const style = { background };
 
           return (
@@ -80,7 +83,7 @@ export default function Events({
 }
 
 const getEndTime = (event) => {
-  if (event.duration >= 0) {
+  if (event.duration > 0) {
     return `- ${getDisplayTime(event.at + event.duration)}`;
   }
 };

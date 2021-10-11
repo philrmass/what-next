@@ -1,16 +1,51 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { toNextHalfHour } from './time';
+import { nextHalfHour } from './time';
+
+export function getColor(from, to) {
+  const oneHour = 1000 * 60 * 60;
+  const diff = (to - from) / oneHour;
+  const hours = Math.max(1, diff);
+  const log = Math.log2(hours);
+
+  if (diff < 0) {
+    return '#8c8c8c';
+  }
+
+  //??? interpolate between colors
+  if (log > 15.4) {
+    return '#c9c5d0';
+  } else if (log > 13.1) {
+    return '#d3c5dc';
+  } else if (log > 9.5) {
+    return '#c0b2d3';
+  } else if (log > 7.4) {
+    return '#9faec5';
+  } else if (log > 4.6) {
+    return '#f9d0a5';
+  }
+  return '#f7b0b2';
+}
+
+export function getDateInput(date) {
+  if (!date) {
+    return '';
+  }
+
+  const value = new Date(date);
+  const year = `${value.getFullYear()}`.padStart(4, '0');
+  const month = `${value.getMonth() + 1}`.padStart(2, '0');
+  const day = value.getDate().toString();
+  return `${year}-${month}-${day.padStart(2, '0')}`;
+}
 
 export function getDefaultEvent(now = Date.now()) {
   const oneDay = 1000 * 60 * 60 * 24;
   const target = now + oneDay;
-  //const dateAt = timeToDate(target); //??? remove
-  const at = toNextHalfHour(target);
+  const at = nextHalfHour(target);
 
   return {
     id: uuidv4(),
-    //dateAt,
     at,
     duration: 0,
     text: '',
@@ -39,46 +74,63 @@ export function getDisplayTime(at) {
   return new Date(at).toLocaleTimeString(undefined, options);
 }
 
-export function eventToDisplay(event, now = Date.now()) {
-  const date = getDisplayDate(event.date);
-  let start = null;
-  let end = null;
-  if (event.start) {
-    start = getDisplayTime(event.start);
-  }
-  if (event.end) {
-    end = getDisplayTime(event.end);
-  }
-
-  let { until, code } = getUntil(now, event.start || event.date);
-  if (isDuring(event, now)) {
-    until = 'now';
-    code = 1;
-  }
-
-  return {
-    date,
-    start,
-    end,
-    until,
-    code,
-  };
+export function getEventsOrder(events) {
+  return Object.keys(events).sort((a, b) => events[a].at - events[b].at);
 }
 
-export function getUntilz(from, to) {
+export function getInputDate(text, lastDate) {
+  if (!text) {
+    return lastDate;
+  }
+
+  const [yearText, monthText, dayText] = text.split('-');
+  const year = parseInt(yearText);
+  const month = parseInt(monthText) - 1;
+  const day = parseInt(dayText);
+  if (Number.isInteger(year) && Number.isInteger(month) && Number.isInteger(day)) {
+    return (new Date(year, month, day)).getTime();
+  }
+}
+
+export function getInputTime(text, baseTime) {
+  if (!text) {
+    return null;
+  }
+
+  const [hoursText, minutesText] = text.split(':');
+  const hours = parseInt(hoursText);
+  const minutes = parseInt(minutesText);
+  const value = new Date(baseTime);
+  value.setHours(hours, minutes, 0, 0);
+  return value.getTime();
+}
+
+export function getSaveFilePath(at = Date.now()) {
+  const when = new Date(at);
+  const year = when.getFullYear();
+  const month = `${when.getMonth() + 1}`.padStart(2, '0');
+  const date = `${when.getDate()}`.padStart(2, '0');
+
+  return `whatNext_${year}_${month}_${date}.json`;
+}
+
+export function getTimeInput(time) {
+  //??? fix midnight bugs
+  if (!time) {
+    return '';
+  }
+
+  const options = {
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+  };
+  return new Date(time).toLocaleTimeString('en', options);
+}
+
+export function getUntil(from, to) {
   const times = getUntilTimes(from, to);
   return getUntilText(times);
-}
-
-function getUntil(from, to) {
-  if (!to) {
-    return { until: '', code: 0 };
-  }
-  const times = getUntilTimes(from, to);
-  const code = getUntilCode(times);
-  const until = getUntilText(times);
-
-  return { until, code };
 }
 
 function getUntilTimes(from, to) {
@@ -130,17 +182,6 @@ function monthsFrom(months, time) {
   return date.getTime() - time;
 }
 
-function getUntilCode(times) {
-  if (!times) {
-    return 0;
-  }
-  const i = times.findIndex((time) => time !== 0);
-  if (i < 0) {
-    return 1;
-  }
-  return 6 - i;
-}
-
 function getUntilText(times) {
   if (!times) {
     return 'past';
@@ -157,95 +198,6 @@ function getUntilText(times) {
   return text;
 }
 
-export function dateToEdit(date) {
-  if (!date) {
-    return '';
-  }
-
-  const value = new Date(date);
-  const year = `${value.getFullYear()}`.padStart(4, '0');
-  const month = `${value.getMonth() + 1}`.padStart(2, '0');
-  const day = value.getDate().toString();
-  return `${year}-${month}-${day.padStart(2, '0')}`;
-}
-
-export function timeToEdit(time) {
-  if (!time) {
-    return '';
-  }
-
-  const options = {
-    hour12: false,
-    hour: '2-digit',
-    minute: '2-digit',
-  };
-  return new Date(time).toLocaleTimeString('en', options);
-}
-
-export function editToDate(text, lastDate) {
-  if (!text) {
-    return lastDate;
-  }
-
-  const [yearText, monthText, dayText] = text.split('-');
-  const year = parseInt(yearText);
-  const month = parseInt(monthText) - 1;
-  const day = parseInt(dayText);
-  if (Number.isInteger(year) && Number.isInteger(month) && Number.isInteger(day)) {
-    return (new Date(year, month, day)).getTime();
-  }
-}
-
-export function editToTime(text, baseTime) {
-  if (!text) {
-    return null;
-  }
-
-  const [hoursText, minutesText] = text.split(':');
-  const hours = parseInt(hoursText);
-  const minutes = parseInt(minutesText);
-  const value = new Date(baseTime);
-  value.setHours(hours, minutes, 0, 0);
-  return value.getTime();
-}
-
-function isDuring(event, now) {
-  return (now > event.start && now <= event.end);
-}
-
-export function getEventsOrder(events) {
-  return Object.keys(events).sort((a, b) => events[a].at - events[b].at);
-}
-
-/*
-export function getDisplayDate(time) {
-  const options = {
-    weekday: 'short',
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  };
-  return new Date(time).toLocaleDateString(undefined, options);
-}
-
-export function getDisplayTime(time) {
-  const options = {
-    hour: 'numeric',
-    minute: '2-digit',
-  };
-  return new Date(time).toLocaleTimeString(undefined, options);
-}
-*/
-
-export function getSaveFilePath(at = Date.now()) {
-  const when = new Date(at);
-  const year = when.getFullYear();
-  const month = `${when.getMonth() + 1}`.padStart(2, '0');
-  const date = `${when.getDate()}`.padStart(2, '0');
-
-  return `whatNext_${year}_${month}_${date}.json`;
-}
-
 export function parseEvents(data) {
   const now = Date.now();
 
@@ -259,4 +211,3 @@ export function parseEvents(data) {
     },
   }), {});
 }
-
