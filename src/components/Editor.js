@@ -110,14 +110,15 @@ export default function Editor({
         <div>
           <textarea
             rows='3'
-            autoFocus
             className={styles.text}
             value={event?.text}
             onChange={(e) => handleTextChange(e.target.value)}
           />
         </div>
-        <button className={styles.button} onClick={handleDelete}>Delete</button>
-        <button className={styles.button} onClick={handleSave}>Save</button>
+        <div className={styles.actionButtons}>
+          <button className={styles.button} onClick={handleDelete}>Delete</button>
+          <button className={styles.button} onClick={handleSave}>Save</button>
+        </div>
         <button className={styles.button} onClick={close}>Cancel</button>
       </div>
     </Dialog>

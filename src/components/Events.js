@@ -18,6 +18,7 @@ export default function Events({
   remove,
 }) {
   const [editing, setEditing] = useState(null);
+  const [showColors, setShowColors] = useState(false); //??? remove after testing
 
   const add = () => {
     setEditing(getDefaultEvent());
@@ -27,7 +28,7 @@ export default function Events({
   //??? redo colors each minute
   return (
     <>
-      <div className={styles.appName}>
+      <div className={styles.appName} onClick={() => setShowColors(true)}>
         {'WhatNext'}
       </div>
       <ul>
@@ -78,6 +79,9 @@ export default function Events({
         remove={remove}
         close={() => setEditing(null)}
       />
+      {showColors &&
+      <div className={styles.colors} onClick={() => setShowColors(false)}></div>
+      }
     </>
   );
 }

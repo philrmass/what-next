@@ -1,6 +1,7 @@
 .content {
   display: flex;
   flex-direction: column;
+  font-size: 1.5em;
 }
 
 .input {
@@ -10,7 +11,6 @@
   padding: var(--size1);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  font-size: 2em;
 }
 
 .input + .input {
@@ -28,7 +28,6 @@
   flex-grow: 1;
   padding: var(--size1);
   text-align: center;
-  font-size: 2em;
 }
 
 .duration + .duration {
@@ -47,9 +46,15 @@
   background: transparent;
   margin-top: var(--size2);
   font-family: var(--fontFamily);
-  font-size: 1.2em;
+  font-size: 1em;
   overflow-y: scroll;
   resize: none;
+}
+
+.actionButtons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: var(--size2);
 }
 
 .button {
@@ -58,5 +63,4 @@
   margin-top: var(--size2);
   background: var(--button);
   color: var(--textButton);
-  font-size: 3em;
 }

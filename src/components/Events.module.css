@@ -78,3 +78,15 @@
   color: var(--textButton);
   font-size: var(--size4);
 }
+
+.colors {
+  --hour: #f80;
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--hour);
+  z-index: 2;
+}

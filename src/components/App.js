@@ -10,7 +10,7 @@ import Events from './Events';
 import Menu from './Menu';
 
 export default function App() {
-  const [events, setEvents] = useLocalStorage('whatNextEvents', []);
+  const [events, setEvents] = useLocalStorage('whatNextEvents', {}); 
   const [order, setOrder] = useLocalStorage('whatNextOrder', []);
   const [status, setStatus] = useState('');
 
