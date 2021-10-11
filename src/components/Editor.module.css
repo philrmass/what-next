@@ -1,6 +1,11 @@
 .content {
 }
 
+.input {
+  padding: var(--size1);
+  background: #dfe;
+}
+
 .hidden {
   display: none;
 }

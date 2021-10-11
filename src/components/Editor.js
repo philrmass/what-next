@@ -96,26 +96,28 @@ export default function Editor({
   return (
     <Dialog isOpen={Boolean(event)}>
       <div className={styles.content}>
-        <input
-          ref={dateRef}
-          id='date'
-          type='date'
-          value={dateToEdit(event?.at)}
-          onChange={(e) => handleDateChange(e.target.value)}
-          className={styles.hidden}
-        />
+        <div className={styles.input}>
+          <input
+            ref={dateRef}
+            id='date'
+            type='date'
+            value={dateToEdit(event?.at)}
+            onChange={(e) => handleDateChange(e.target.value)}
+          />
+        </div>
         <div>
           <label htmlFor='date' onClick={editDate}>
             {getDisplayDate(event?.at)}
           </label>
         </div>
-        <input
-          id='start'
-          type='time'
-          value={timeToEdit(event?.at)}
-          onChange={(e) => handleStartChange(e.target.value)}
-          className={styles.hidden}
-        />
+        <div className={styles.input}>
+          <input
+            id='start'
+            type='time'
+            value={timeToEdit(event?.at)}
+            onChange={(e) => handleStartChange(e.target.value)}
+          />
+        </div>
         <div>
           <label htmlFor='start'>
             {getDisplayTime(event?.at)}
