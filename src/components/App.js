@@ -34,7 +34,7 @@ export default function App() {
   };
 
   const update = (event) => {
-    console.log('REMOVE', event);
+    console.log('UPDATE', event);
     /*
     setEvents(events => ({
       ...events,

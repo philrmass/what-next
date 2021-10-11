@@ -1,96 +1,80 @@
-import { useRef } from 'react';
-//import { dateToEdit, editToDate, editToTime, timeToEdit } from '../utilities/events';
+import cln from 'classnames';
+
 import {
   dateToEdit,
-  getDisplayDate,
-  getDisplayTime,
+  editToDate,
+  editToTime,
   timeToEdit,
 } from '../utilities/events';
-//import { moveTimeToDate } from '../utilities/time';
+import { moveTimeToDate } from '../utilities/time';
 import styles from './Editor.module.css';
 
 import Dialog from './Dialog';
 
 export default function Editor({
   event,
+  setEvent,
+  update,
+  remove,
   close,
-  //update,
-  //remove,
 }) {
-  const dateRef = useRef();
-  /*
+  const oneMinute = 1000 * 60;
+
   function handleTextChange(text) {
-    setActiveEvent((event) => ({
+    setEvent(event => ({
       ...event,
       text,
     }));
   }
 
-*/
-  const handleDateChange = (text) => {
-    console.log('handleDateChange', text);
-    /*
-    const date = editToDate(text, event.date);
-    setActiveEvent((event) => ({
+  const handleDateChange = (value) => {
+    const dateAt = editToDate(value, event.at);
+
+    setEvent(event => ({
       ...event,
-      date,
-      start: moveTimeToDate(event.start, date),
-      end: moveTimeToDate(event.end, date),
+      at: moveTimeToDate(event.at, dateAt),
     }));
-    */
   };
 
-  function handleStartChange(text) {
-    console.log('handleStartChange', text);
-    /*
-    setActiveEvent((event) => ({
+  function handleStartChange(value) {
+    setEvent(event => ({
       ...event,
-      start: editToTime(text, event.date),
-    }));
-    */
-  }
-
-  /*
-  function handleEndChange(text) {
-    setActiveEvent((event) => ({
-      ...event,
-      end: editToTime(text, event.date),
+      at: editToTime(value, event.at),
     }));
   }
-  */
-  const editDate = () => {
-    //??? target.valueAsNumber
-    console.log('EDIT');
-    /*
-    if (dateRef.current) {
-      console.log('CLICK');
-      dateRef.current.click();
-    }
-    */
-    const input = document.createElement('input');
-    input.type = 'date';
-    input.value = dateToEdit(event?.at);
-    input.onchange = (e) => handleDateChange(e.target.value);
 
-    input.click();
-    /*
-{
-    const input = document.createElement('input');
-    input.type = 'file';
+  const handleDurationChange = (value) => {
+    const duration = oneMinute * value;
 
-    input.onchange = () => {
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onerror = reject;
-      reader.onload = () => {
-        resolve(JSON.parse(reader.result));
-      };
-      reader.readAsText(file);
-    };
+    setEvent(event => ({
+      ...event,
+      duration,
+    }));
+  };
 
-    input.click();
-  }
-  */
+  const buildDuration = () => {
+    const values = [0, 30, 60, 90];
+
+    return (
+      <ul className={styles.durations}>
+        {values.map(value => {
+          const classes = cln({
+            [styles.duration]: true,
+            [styles.selected]: (oneMinute * value) === event?.duration,
+          });
+
+          return (
+            <li
+              key={value}
+              className={classes}
+              onClick={() => handleDurationChange(value)}
+            >
+              {value ? value : 'None'}
+            </li>
+          );
+        })}
+      </ul>
+    );
   };
 
   return (
@@ -98,17 +82,11 @@ export default function Editor({
       <div className={styles.content}>
         <div className={styles.input}>
           <input
-            ref={dateRef}
             id='date'
             type='date'
             value={dateToEdit(event?.at)}
             onChange={(e) => handleDateChange(e.target.value)}
           />
-        </div>
-        <div>
-          <label htmlFor='date' onClick={editDate}>
-            {getDisplayDate(event?.at)}
-          </label>
         </div>
         <div className={styles.input}>
           <input
@@ -118,54 +96,20 @@ export default function Editor({
             onChange={(e) => handleStartChange(e.target.value)}
           />
         </div>
+        {buildDuration()}
         <div>
-          <label htmlFor='start'>
-            {getDisplayTime(event?.at)}
-          </label>
+          <textarea
+            rows='3'
+            autoFocus
+            className={styles.text}
+            value={event?.text}
+            onChange={(e) => handleTextChange(e.target.value)}
+          />
         </div>
-        <div>{event?.text}</div>
-        <button className={styles.button} onClick={close}>Close</button>
+        <button className={styles.button} onClick={() => remove(event.id)}>Delete</button>
+        <button className={styles.button} onClick={() => update(event)}>Save</button>
+        <button className={styles.button} onClick={close}>Cancel</button>
       </div>
     </Dialog>
   );
-  /*
-    <section className={styles.main}>
-      <textarea
-        rows='2'
-        cols='24'
-        autoFocus={true}
-        className={styles.textInput}
-        value={event.text}
-        onChange={(e) => handleTextChange(e.target.value)}
-      />
-      <div className={styles.times}>
-        <div>
-          <label htmlFor='start'>Start</label>
-        </div>
-        <div>
-          { event.start &&
-            <label htmlFor='end'>End</label>
-          }
-        </div>
-        <div>
-          <input
-            type='time'
-            value={timeToEdit(event.start)}
-            onChange={(e) => handleStartChange(e.target.value)}
-            className={styles.timeInput}
-          />
-        </div>
-        <div>
-          { event.start &&
-            <input
-              type='time'
-              value={timeToEdit(event.end)}
-              onChange={(e) => handleEndChange(e.target.value)}
-              className={styles.timeInput}
-            />
-          }
-        </div>
-      </div>
-    </section>
-  */
 }

@@ -1,9 +1,17 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export function getDefaultEvent() {
+import { toNextHalfHour } from './time';
+
+export function getDefaultEvent(now = Date.now()) {
+  const oneDay = 1000 * 60 * 60 * 24;
+  const target = now + oneDay;
+  //const dateAt = timeToDate(target); //??? remove
+  const at = toNextHalfHour(target);
+
   return {
     id: uuidv4(),
-    at: Date.now(),
+    //dateAt,
+    at,
     duration: 0,
     text: '',
   };

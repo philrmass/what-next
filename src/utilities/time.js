@@ -12,6 +12,22 @@ export function timeToDate(time) {
   return date.getTime();
 }
 
+export function toNextHalfHour(time) {
+  const date = new Date(time);
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  
+  if (minutes > 30) {
+    hours = hours + 1;
+    minutes = 0;
+  } else if (minutes > 0) {
+    minutes = 30;
+  }
+
+  date.setHours(hours, minutes, 0, 0);
+  return date.getTime();
+}
+
 export function expDaysTime(max) {
   const mult = Math.log(max + 1);
   const days = Math.exp(mult * Math.random()) - 1;

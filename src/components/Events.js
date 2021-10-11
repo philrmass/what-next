@@ -16,10 +16,9 @@ export default function Events({
   update,
   remove,
 }) {
-  const [editing, setEditing] = useState(null);
+  const [editing, setEditing] = useState(getDefaultEvent());
 
   const add = () => {
-    console.log('ADD');
     setEditing(getDefaultEvent());
   };
 
@@ -71,9 +70,10 @@ export default function Events({
       <button className={styles.button} onClick={add}>+</button>
       <Editor
         event={editing}
-        close={() => setEditing(null)}
+        setEvent={setEditing}
         update={update}
         remove={remove}
+        close={() => setEditing(null)}
       />
     </>
   );
