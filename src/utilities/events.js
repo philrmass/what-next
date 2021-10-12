@@ -12,17 +12,22 @@ export function getColor(from, to) {
     return '#8c8c8c';
   }
 
-  //??? interpolate between colors
+  const hour = '#ffe0d2';
+  const day = '#f9d0a5';
+  const week = '#abc5d3';
+  const month = '#9faec5';
+  const year = '#b7a4b9';
+
   if (log > 15.4) {
-    return '#c9c5d0';
+    return year;
   } else if (log > 13.1) {
-    return '#d3c5dc';
+    return month;
   } else if (log > 9.5) {
-    return '#c0b2d3';
+    return week;
   } else if (log > 7.4) {
-    return '#9faec5';
+    return day;
   } else if (log > 4.6) {
-    return '#f9d0a5';
+    return hour;
   }
   return '#f7b0b2';
 }

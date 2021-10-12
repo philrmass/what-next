@@ -80,13 +80,33 @@
 }
 
 .colors {
-  --hour: #f80;
+  --hour: #ffe0d2;
+  --day: #f9d0a5;
+  --week: #abc5d3;
+  --month: #9faec5;
+  --year: #b7a4b9;
+  --fiveYears: #c9c5d0;
 
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--hour);
+  background: linear-gradient(
+  var(--hour),
+  var(--day) 20%,
+  var(--week) 40%,
+  var(--month) 60%,
+  var(--year) 80%,
+  var(--fiveYears));
+  /*
+  background: linear-gradient(
+  var(--hour) 9.1%,
+  var(--day) 18.2%, var(--day) 27.3%,
+  var(--week) 36.4%, var(--week) 45.5%,
+  var(--month) 54.6%, var(--month) 63.7%,
+  var(--year) 72.8%, var(--year) 81.9%,
+  var(--fiveYears) 91%, var(--fiveYears));
+  */
   z-index: 2;
 }

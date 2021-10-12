@@ -18,7 +18,7 @@ export default function Events({
   remove,
 }) {
   const [editing, setEditing] = useState(null);
-  const [showColors, setShowColors] = useState(false); //??? remove after testing
+  const [showColors, setShowColors] = useState(true); //??? remove after testing
 
   const add = () => {
     setEditing(getDefaultEvent());
@@ -80,7 +80,8 @@ export default function Events({
         close={() => setEditing(null)}
       />
       {showColors &&
-      <div className={styles.colors} onClick={() => setShowColors(false)}></div>
+      <div className={styles.colors} onClick={() => setShowColors(false)}>
+      </div>
       }
     </>
   );
