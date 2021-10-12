@@ -21,7 +21,13 @@ function Menu({ save, load, copy, status }) {
           <button className={styles.button} onClick={() => setIsOpen(false)}>Close</button>
         </div>
       </Dialog>
-      <button className={styles.menuButton} onClick={() => setIsOpen(true)} >? </button>
+      <button className={styles.menuButton} onClick={() => setIsOpen(true)} >
+        <svg id="menu" viewBox="0 0 100 100">
+          <path d="M25 31 h50 v6 h-50 v-6" />
+          <path d="M25 47 h50 v6 h-50 v-6" />
+          <path d="M25 63 h50 v6 h-50 v-6" />
+        </svg>
+      </button>
     </>
   );
 }

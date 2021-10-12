@@ -57,5 +57,5 @@
   border-radius: 50%;
   background: var(--button);
   color: var(--textButton);
-  font-size: var(--size4);
+  fill: white;
 }

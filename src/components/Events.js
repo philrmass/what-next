@@ -18,7 +18,6 @@ export default function Events({
   remove,
 }) {
   const [editing, setEditing] = useState(null);
-  const [showColors, setShowColors] = useState(true); //??? remove after testing
 
   const add = () => {
     setEditing(getDefaultEvent());
@@ -28,7 +27,7 @@ export default function Events({
   //??? redo colors each minute
   return (
     <>
-      <div className={styles.appName} onClick={() => setShowColors(true)}>
+      <div className={styles.appName}>
         {'WhatNext'}
       </div>
       <ul>
@@ -71,7 +70,11 @@ export default function Events({
           );
         })}
       </ul>
-      <button className={styles.button} onClick={add}>+</button>
+      <button className={styles.button} onClick={add}>
+        <svg id="plus" viewBox="0 0 100 100">
+          <path d="M53 53 v14 h-6 v-14 h-14 v-6 h14 v-14 h6 v14 h14 v6 h-14" />
+        </svg>
+      </button>
       <Editor
         event={editing}
         setEvent={setEditing}
@@ -79,10 +82,6 @@ export default function Events({
         remove={remove}
         close={() => setEditing(null)}
       />
-      {showColors &&
-      <div className={styles.colors} onClick={() => setShowColors(false)}>
-      </div>
-      }
     </>
   );
 }

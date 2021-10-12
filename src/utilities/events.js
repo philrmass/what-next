@@ -12,24 +12,43 @@ export function getColor(from, to) {
     return '#8c8c8c';
   }
 
-  const hour = '#ffe0d2';
-  const day = '#f9d0a5';
-  const week = '#abc5d3';
-  const month = '#9faec5';
-  const year = '#b7a4b9';
+  const points = [
+    { name: 'hour', value: 0, r: 255, g: 224, b: 210 },
+    { name: 'day', value: 4.585, r: 249, g: 208, b: 165 },
+    { name: 'week', value: 7.392, r: 171, g: 197, b: 211 },
+    { name: 'month', value: 9.511, r: 159, g: 174, b: 197 },
+    { name: 'year', value: 13.098, r: 183, g: 164, b: 185 },
+    { name: 'fiveYears', value: 15.420, r: 177, g: 173, b: 184 },
+  ];
 
-  if (log > 15.4) {
-    return year;
-  } else if (log > 13.1) {
-    return month;
-  } else if (log > 9.5) {
-    return week;
-  } else if (log > 7.4) {
-    return day;
-  } else if (log > 4.6) {
-    return hour;
+  const index = points.findIndex((point, index) => {
+    const next = points[index + 1];
+    if (log >= point.value && log < next?.value) {
+      return true;
+    }
+    return false;
+  });
+
+  const lastIndex = points.length - 1;
+  const minIndex = index >= 0 ? index : lastIndex;
+  const maxIndex = index >= 0 ? index + 1 : lastIndex;
+
+  if (minIndex === maxIndex) {
+    const point = points[minIndex];
+
+    return `rgb(${point.r}, ${point.g}, ${point.b})`;
   }
-  return '#f7b0b2';
+
+  const min = points[minIndex];
+  const max = points[maxIndex];
+  const maxRatio = (log - min.value) / (max.value - min.value);
+  const minRatio = 1 - maxRatio;
+
+  const r = minRatio * min.r + maxRatio * max.r;
+  const g = minRatio * min.g + maxRatio * max.g;
+  const b = minRatio * min.b + maxRatio * max.b;
+
+  return `rgb(${r}, ${g}, ${b})`;
 }
 
 export function getDateInput(date) {
