@@ -24,7 +24,7 @@ module.exports = {
     },
   },
   'rules': {
-    'arrow-body-style': ['error', 'as-needed'],
+    'arrow-body-style': ['warn', 'as-needed'],
     'arrow-spacing': ['error', { 'before': true, 'after': true }],
     'block-scoped-var': 'warn',
     'comma-dangle': ['warn', 'always-multiline'],

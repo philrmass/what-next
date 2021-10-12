@@ -67,13 +67,16 @@
   white-space: pre-wrap;
 }
 
-.button {
+.add {
   position: fixed;
   bottom: var(--size1);
   left: var(--size1);
-  width: var(--size5);
-  height: var(--size5);
+}
+
+.remove {
+  width: var(--size4);
+  height: var(--size4);
   border-radius: 50%;
-  background: var(--button);
-  fill: var(--textButton);
+  background: var(--lightened);
+  fill: var(--textLight);
 }

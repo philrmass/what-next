@@ -48,14 +48,8 @@
   border-radius: var(--radius);
 }
 
-.menuButton {
+.menu {
   position: fixed;
   top: var(--size1);
   right: var(--size1);
-  width: var(--size5);
-  height: var(--size5);
-  border-radius: 50%;
-  background: var(--button);
-  color: var(--textButton);
-  fill: white;
 }

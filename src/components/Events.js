@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import cln from 'classnames';
 
 import {
   getColor,
@@ -10,6 +11,7 @@ import {
 import styles from './Events.module.css';
 
 import Editor from './Editor';
+import Icon from './Icon';
 
 export default function Events({
   events,
@@ -17,10 +19,41 @@ export default function Events({
   update,
   remove,
 }) {
+  const now = Date.now();
   const [editing, setEditing] = useState(null);
 
   const add = () => {
     setEditing(getDefaultEvent());
+  };
+
+  const removeEvent = (e, id) => {
+    e.stopPropagation();
+    remove(id);
+  };
+
+  const buildWhen = (event) => {
+    const isPast = now > event.at;
+    const date = getDisplayDate(event.at);
+    const start = getDisplayTime(event.at);
+    const end = getEndTime(event);
+
+    if (isPast) {
+      return (
+        <button className={styles.remove} onClick={(e) => removeEvent(e, event.id)}>
+          <Icon name='cross' />
+        </button>
+      );
+    }
+
+    return (
+      <div>
+        <div>{date}</div>
+        <div className={styles.time}>
+          <div>{start}</div>
+          <div>{end}</div>
+        </div>
+      </div>
+    );
   };
 
   //??? fix app name, add app icon
@@ -33,11 +66,7 @@ export default function Events({
       <ul>
         {order.map(id => {
           const event = events[id];
-          const now = Date.now();
           const until = getUntil(now, event.at);
-          const date = getDisplayDate(event.at);
-          const start = getDisplayTime(event.at);
-          const end = getEndTime(event);
           const background = getColor(now, event.at);
           const style = { background };
 
@@ -53,13 +82,7 @@ export default function Events({
                 <div className={styles.until}></div>
                 <div className={styles.content}>
                   <div className={styles.when}>
-                    <div>
-                      <div>{date}</div>
-                      <div className={styles.time}>
-                        <div>{start}</div>
-                        <div>{end}</div>
-                      </div>
-                    </div>
+                    {buildWhen(event)}
                   </div>
                   <div className={styles.what}>
                     <div className={styles.text}>{event.text}</div>
@@ -70,10 +93,8 @@ export default function Events({
           );
         })}
       </ul>
-      <button className={styles.button} onClick={add}>
-        <svg id="plus" viewBox="0 0 100 100">
-          <path d="M53 53 v14 h-6 v-14 h-14 v-6 h14 v-14 h6 v14 h14 v6 h-14" />
-        </svg>
+      <button className={cln('iconButton', styles.add)} onClick={add}>
+        <Icon name='plus' />
       </button>
       <Editor
         event={editing}
