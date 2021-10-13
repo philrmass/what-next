@@ -12,6 +12,7 @@ import styles from './Events.module.css';
 
 import Editor from './Editor';
 import Icon from './Icon';
+import IconEditor from './IconEditor';
 
 export default function Events({
   events,
@@ -61,7 +62,9 @@ export default function Events({
   return (
     <>
       <div className={styles.appName}>
-        {'WhatNext'}
+        <IconEditor>
+          {'What Next'}
+        </IconEditor>
       </div>
       <ul>
         {order.map(id => {

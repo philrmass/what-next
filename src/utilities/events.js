@@ -14,7 +14,8 @@ export function getColor(from, to) {
 
   const points = [
     { name: 'hour', value: 0, r: 255, g: 224, b: 210 },
-    { name: 'day', value: 4.585, r: 249, g: 208, b: 165 },
+    { name: 'day', value: 4.585, r: 255, g: 208, b: 165 },
+    { name: 'twoDays', value: 5.585, r: 175, g: 220, b: 220 },
     { name: 'week', value: 7.392, r: 171, g: 197, b: 211 },
     { name: 'month', value: 9.511, r: 159, g: 174, b: 197 },
     { name: 'year', value: 13.098, r: 183, g: 164, b: 185 },
