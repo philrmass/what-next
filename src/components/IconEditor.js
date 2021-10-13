@@ -5,7 +5,6 @@ import styles from './IconEditor.module.css';
 export default function IconEditor({ children }) {
   const id = 0;
   const [isOpen, setIsOpen] = useState(true);
-  console.log('ie', isOpen);
 
   const buildEditor = () => {
     if (!isOpen) {
