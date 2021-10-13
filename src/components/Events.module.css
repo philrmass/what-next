@@ -2,8 +2,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--size2);
+  padding: var(--size1);
   color: var(--textButton);
+  font-size: var(--size3);
+  font-weight: bold;
+}
+
+.logo {
+  margin-right: var(--size1);
+  width: var(--size4);
+  height: var(--size4);
+  fill: var(--textButton);
 }
 
 .event {

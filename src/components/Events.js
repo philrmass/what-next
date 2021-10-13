@@ -12,7 +12,6 @@ import styles from './Events.module.css';
 
 import Editor from './Editor';
 import Icon from './Icon';
-import IconEditor from './IconEditor';
 
 export default function Events({
   events,
@@ -31,6 +30,20 @@ export default function Events({
     e.stopPropagation();
     remove(id);
   };
+
+  const buildLogo = () => (
+    <div className={styles.logo}>
+      <svg viewBox='0 0 100 100' xmlns="http://www.w3.org/2000/svg">
+        <path d="M17 7 h60 v20 h-60 v-20" />
+        <path d="M27 29 h60 v20 h-60 v-20" />
+        <path fill='rgb(128, 128, 128)' d="M31 33 h52 v12 h-52 v-12" />
+        <path d="M22 51 h60 v20 h-60 v-20" />
+        <path d="M17 73 h60 v20 h-60 v-20" />
+      </svg>
+      {/*
+      */}
+    </div>
+  );
 
   const buildWhen = (event) => {
     const isPast = now > event.at;
@@ -57,14 +70,12 @@ export default function Events({
     );
   };
 
-  //??? fix app name, add app icon
   //??? redo colors each minute
   return (
     <>
       <div className={styles.appName}>
-        <IconEditor>
-          {'What Next'}
-        </IconEditor>
+        {buildLogo()}
+        {'What Next'}
       </div>
       <ul>
         {order.map(id => {

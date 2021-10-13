@@ -4,7 +4,7 @@ import styles from './IconEditor.module.css';
 
 export default function IconEditor({ children }) {
   const id = 0;
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   console.log('ie', isOpen);
 
   const buildEditor = () => {
@@ -36,12 +36,12 @@ function getSvgSource(id) {
     case 0:
     default:
       return (
-        <svg fill='rgb(98, 98, 98)' viewBox="0 0 100 100">
-          <path d="M20 10 h60 v20 h-60 v-20" />
-          <path d="M30 32 h60 v20 h-60 v-20" />
-          <path fill='rgb(255, 208, 165)' d="M34 36 h52 v12 h-52 v-12" />
-          <path d="M25 54 h60 v20 h-60 v-20" />
-          <path d="M20 76 h60 v20 h-60 v-20" />
+        <svg fill='rgb(102, 99, 96)' viewBox="-20 -20 140 140">
+          <path d="M17 7 h60 v20 h-60 v-20" />
+          <path d="M27 29 h60 v20 h-60 v-20" />
+          <path fill='rgb(255, 208, 165)' d="M31 33 h52 v12 h-52 v-12" />
+          <path d="M22 51 h60 v20 h-60 v-20" />
+          <path d="M17 73 h60 v20 h-60 v-20" />
         </svg>
       );
   }
