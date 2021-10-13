@@ -8,6 +8,7 @@ import {
   getDisplayTime,
   getUntil,
 } from '../utilities/events';
+import { useInterval } from '../utilities/hooks';
 import styles from './Events.module.css';
 
 import Editor from './Editor';
@@ -19,8 +20,12 @@ export default function Events({
   update,
   remove,
 }) {
-  const now = Date.now();
+  const oneMinute = 60000;
+  //const now = Date.now();
+  const [now, setNow] = useState(Date.now());
   const [editing, setEditing] = useState(null);
+
+  useInterval(() => setNow(Date.now()), 60000);
 
   const add = () => {
     setEditing(getDefaultEvent());
@@ -70,7 +75,6 @@ export default function Events({
     );
   };
 
-  //??? redo colors each minute
   return (
     <>
       <div className={styles.appName}>
