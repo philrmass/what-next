@@ -19,14 +19,15 @@
 
 .durations {
   display: flex;
+  justify-content: space-around;
   padding: var(--size1);
   border: 1px solid var(--border);
   margin-top: var(--size2);
 }
 
 .duration {
-  flex-grow: 1;
-  padding: var(--size1);
+  padding: var(--size1) var(--size2);
+  border-radius: var(--radius);
   text-align: center;
 }
 
@@ -36,6 +37,7 @@
 
 .selected {
   font-weight: bold;
+  background: var(--shaded);
 }
 
 .text {
