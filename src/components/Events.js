@@ -21,11 +21,10 @@ export default function Events({
   remove,
 }) {
   const oneMinute = 60000;
-  //const now = Date.now();
   const [now, setNow] = useState(Date.now());
   const [editing, setEditing] = useState(null);
 
-  useInterval(() => setNow(Date.now()), 60000);
+  useInterval(() => setNow(Date.now()), oneMinute);
 
   const add = () => {
     setEditing(getDefaultEvent());

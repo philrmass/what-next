@@ -1,0 +1,9 @@
+.content {
+  background: #def;
+}
+
+.button {
+  position: fixed;
+  top: var(--size1);
+  left: var(--size1);
+}
