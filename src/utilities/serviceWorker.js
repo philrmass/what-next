@@ -34,5 +34,9 @@ export function registerServiceWorker() {
       };
     }).catch(() => {
     });
+
+    navigator.serviceWorker.onmessage = (event) => {
+      console.log('MSG', event.data);
+    };
   }
 }

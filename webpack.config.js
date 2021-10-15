@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   entry: './src/index.js',
   module: {
@@ -48,9 +50,14 @@ module.exports = {
     extensions: ['*', '.js'],
   },
   output: {
-    path: __dirname + '/dist',
+    path: path.join(__dirname, '/dist'),
     publicPath: '/',
     filename: 'bundle.js',
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist'),
+    },
   },
   infrastructureLogging: {
     level: 'error',
