@@ -13,6 +13,7 @@ import styles from './Events.module.css';
 
 import Editor from './Editor';
 import Icon from './Icon';
+import ServiceWorker from './ServiceWorker';
 
 export default function Events({
   events,
@@ -77,8 +78,10 @@ export default function Events({
   return (
     <>
       <div className={styles.appName}>
-        {buildLogo()}
-        {'What Next'}
+        <ServiceWorker>
+          {buildLogo()}
+          {'What Next'}
+        </ServiceWorker>
       </div>
       <ul>
         {order.map(id => {

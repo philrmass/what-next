@@ -1,9 +1,22 @@
 .content {
-  background: #def;
+  color: var(--text);
+  font-size: 1rem;
+  overflow-y: auto;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--size2);
 }
 
 .button {
-  position: fixed;
-  top: var(--size1);
-  left: var(--size1);
+  padding: var(--size1) var(--size2);
+  border-radius: var(--radius);
+  background: var(--button);
+  color: var(--textButton);
+}
+
+.button + .button {
+  margin-left: var(--size1);
 }

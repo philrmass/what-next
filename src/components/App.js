@@ -9,7 +9,6 @@ import styles from './App.module.css';
 
 import Events from './Events';
 import Menu from './Menu';
-import ServiceWorker from './ServiceWorker';
 
 export default function App() {
   const [events, setEvents] = useLocalStorage('whatNextEvents', {}); 
@@ -63,7 +62,6 @@ export default function App() {
     <div className={styles.page}>
       <Events events={events} order={order} update={update} remove={remove} />
       <Menu save={save} load={load} copy={copy} status={status} />
-      <ServiceWorker />
       <div className={styles.version}>{version}</div>
       {getIconSource()}
     </div>

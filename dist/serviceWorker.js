@@ -25,7 +25,8 @@ function getCacheFiles() {
 
 self.oninstall = (e) => {
   e.waitUntil((async () => {
-    await sendMessage({ msg: 'install' }, e.clientId);
+    await sendMessage('install', e.clientId);
+
     const cache = await caches.open(getCacheName());
     const files = getCacheFiles();
     return cache.addAll(files);
@@ -34,7 +35,9 @@ self.oninstall = (e) => {
 
 self.onfetch = (e) => {
   e.respondWith((async () => {
-    await sendMessage({ msg: 'fetch', url: e.request.url }, e.clientId);
+    const file = getUrlFile(e.request.url);
+    await sendMessage(`fetch: ${file}`, e.clientId);
+
     const cache = await caches.open(getCacheName());
     const cached = await cache.match(e.request);
     if (cached) {
@@ -45,8 +48,10 @@ self.onfetch = (e) => {
   })());
 };
 
-self.onmessage = () => {
-  //caches.delete(getCacheName());
+self.onmessage = (e) => {
+  e.waitUntil((async () => {
+    await sendMessage('message', e.data);
+  })());
 };
 
 async function sendMessage(data, id) {
@@ -61,4 +66,9 @@ async function sendMessage(data, id) {
   }
 
   client.postMessage(data);
+}
+
+function getUrlFile(url) {
+  const fileIndex = url.lastIndexOf('/');
+  return url.slice(fileIndex + 1);
 }

@@ -1,35 +1,85 @@
-import { useState } from 'react';
-import cln from 'classnames';
+import { useEffect, useState } from 'react';
 
 import styles from './ServiceWorker.module.css';
 
 import Dialog from './Dialog';
-import Icon from './Icon';
 
-export default function ServiceWorker() {
+export default function ServiceWorker({ children }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => navigator.serviceWorker.addEventListener('message', event => {
+    setMessages(msgs => [...msgs, event.data]);
+  }), []);
+
+  const checkNotificationPromise = () => {
+    try {
+      Notification.requestPermission().then();
+    } catch(e) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const check = () => {
+    // function to actually ask the permissions
+    function handlePermission(permission) {
+      // set the button to shown or hidden, depending on what the user answers
+      console.log('perm', permission);
+      if(Notification.permission === 'denied' || Notification.permission === 'default') {
+        //notificationBtn.style.display = 'block';
+        console.log('block');
+      } else {
+        //notificationBtn.style.display = 'none';
+        console.log('none');
+      }
+    }
+
+    // Let's check if the browser supports notifications
+    if (!('Notification' in window)) {
+      console.log('This browser does not support notifications.');
+    } else {
+      if(checkNotificationPromise()) {
+        Notification.requestPermission()
+          .then((permission) => {
+            handlePermission(permission);
+          });
+      } else {
+        Notification.requestPermission((permission) => {
+          handlePermission(permission);
+        });
+      }
+    }
+  };
+
+
+  const notify = () => {
+    //var img = '/to-do-notifications/img/icon-128.png';
+    var text = 'HEY! Your task "' + 'yo' + '" is now overdue.';
+    //var notification = new Notification('To do list', { body: text, icon: null });
+    var notification = new Notification('To do list', { body: text });
+    console.log('not', notification);
+  };
 
   return (
     <>
+      <div onClick={() => setIsOpen(true)}>
+        {children}
+      </div>
       <Dialog isOpen={isOpen}>
         <div className={styles.content} onClick={() => setIsOpen(false)}>
-          SERVICE WORKER
+          {messages.map((message, index) => (
+            <div key={index}>{message}</div>
+          ))}
         </div>
-        {/*
-        <div className={styles.content}>
-          <div className={styles.buttons}>
-            <button className={styles.button} onClick={save}>Save</button>
-            <button className={styles.button} onClick={load}>Load</button>
-            <button className={styles.button} onClick={copy}>Copy</button>
-            <div className={styles.status}>{status}</div>
-          </div>
+        <div className={styles.buttons}>
+          <button className={styles.button} onClick={() => check()}>Check</button>
+          <button className={styles.button} onClick={() => notify()}>Notify</button>
+          <button className={styles.button} onClick={() => setMessages([])}>Clear</button>
           <button className={styles.button} onClick={() => setIsOpen(false)}>Close</button>
         </div>
-        */}
       </Dialog>
-      <button className={cln('iconButton', styles.button)} onClick={() => setIsOpen(true)} >
-        <Icon name='blank' />
-      </button>
     </>
   );
 }
