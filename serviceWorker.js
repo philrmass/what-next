@@ -23,26 +23,52 @@ function getCacheFiles() {
   return filePaths(cacheFiles);
 }
 
-self.oninstall = (event) => {
-  event.waitUntil((async () => {
+self.oninstall = (e) => {
+  e.waitUntil((async () => {
+    await sendMessage('install', e.clientId);
+
     const cache = await caches.open(getCacheName());
     const files = getCacheFiles();
     return cache.addAll(files);
   })());
 };
 
-self.onfetch = (event) => {
-  event.respondWith((async () => {
+self.onfetch = (e) => {
+  e.respondWith((async () => {
+    const file = getUrlFile(e.request.url);
+    await sendMessage(`fetch: ${file}`, e.clientId);
+
     const cache = await caches.open(getCacheName());
-    const cached = await cache.match(event.request);
+    const cached = await cache.match(e.request);
     if (cached) {
       return cached;
     }
     //??? save fetched file to cache
-    return fetch(event.request);
+    return fetch(e.request);
   })());
 };
 
-self.onmessage = () => {
-  //caches.delete(getCacheName());
+self.onmessage = (e) => {
+  e.waitUntil((async () => {
+    await sendMessage('message', e.data);
+  })());
 };
+
+async function sendMessage(data, id) {
+  if (!id) {
+    return;
+  }
+
+  const client = await self.clients.get(id);
+
+  if (!client) {
+    return;
+  }
+
+  client.postMessage(data);
+}
+
+function getUrlFile(url) {
+  const fileIndex = url.lastIndexOf('/');
+  return url.slice(fileIndex + 1);
+}
