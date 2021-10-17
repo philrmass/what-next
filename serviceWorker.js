@@ -27,6 +27,7 @@ self.oninstall = (e) => {
   e.waitUntil((async () => {
     await sendMessage('install', e.clientId);
 
+    //??? to update self.skipWaiting();
     const cache = await caches.open(getCacheName());
     const files = getCacheFiles();
     return cache.addAll(files);
@@ -50,6 +51,7 @@ self.onfetch = (e) => {
 
 self.onmessage = (e) => {
   e.waitUntil((async () => {
+    self.skipWaiting();
     await sendMessage('message', e.data);
   })());
 };
