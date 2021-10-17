@@ -22,11 +22,28 @@ export default function ServiceWorker({ children }) {
     return true;
   };
 
+  const send = () => {
+    console.log('send', typeof navigator.serviceWorker.controller.postMessage);
+    navigator.serviceWorker.controller.postMessage('yo');
+  };
+
   const check = () => {
     // function to actually ask the permissions
     function handlePermission(permission) {
       // set the button to shown or hidden, depending on what the user answers
+      setMessages(msgs => [...msgs, `permission: ${permission}`]);
       console.log('perm', permission);
+      if(Notification.permission === 'granted') {
+        console.log('granted');
+        const notifTitle = 'hello there';
+        const notifBody = 'Created by me';
+        //const notifImg = `data/img/${games[randomItem].slug}.jpg`;
+        const options = {
+          body: notifBody,
+          //icon: notifImg,
+        };
+        new Notification(notifTitle, options);
+      }
       if(Notification.permission === 'denied' || Notification.permission === 'default') {
         //notificationBtn.style.display = 'block';
         console.log('block');
@@ -74,6 +91,7 @@ export default function ServiceWorker({ children }) {
           ))}
         </div>
         <div className={styles.buttons}>
+          <button className={styles.button} onClick={() => send()}>Send</button>
           <button className={styles.button} onClick={() => check()}>Check</button>
           <button className={styles.button} onClick={() => notify()}>Notify</button>
           <button className={styles.button} onClick={() => setMessages([])}>Clear</button>

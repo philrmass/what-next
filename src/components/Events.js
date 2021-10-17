@@ -79,8 +79,10 @@ export default function Events({
     <>
       <div className={styles.appName}>
         <ServiceWorker>
-          {buildLogo()}
-          {'What Next'}
+          <div className={styles.appName}>
+            {buildLogo()}
+            {'What Next'}
+          </div>
         </ServiceWorker>
       </div>
       <ul>

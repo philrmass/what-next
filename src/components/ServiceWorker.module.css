@@ -1,13 +1,16 @@
 .content {
   color: var(--text);
   font-size: 1rem;
+  white-space: pre-wrap;
   overflow-y: auto;
 }
 
 .buttons {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
   margin-top: var(--size2);
+  font-size: 1rem;
 }
 
 .button {
