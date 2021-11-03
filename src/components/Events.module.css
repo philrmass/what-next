@@ -20,6 +20,7 @@
   height: var(--eventHeight);
   margin-top: var(--size0);
   overflow: hidden;
+  user-select: none;
 }
 
 .untilText {
