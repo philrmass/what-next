@@ -8180,7 +8180,7 @@ postcss@^8.2.1, postcss@^8.2.15, postcss@^8.4.13:
     picocolors "^1.0.1"
     source-map-js "^1.2.0"
 
-preact-cli@^3.0.0:
+preact-cli@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/preact-cli/-/preact-cli-3.5.1.tgz#c0ab61e0004cbd74936c32c6bf50011f99bb58dc"
   integrity sha512-6sRewJOtPAWkIVc+cycU4cjk9294stdh4hyw2ENpJ5N5lWJ8Y3r9r5Ly6Hmo5rzvcUq4cnlshMwTTwGq7ip/1w==

@@ -16,7 +16,7 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "gh-pages": "^2.1.1",
-    "preact-cli": "^3.0.0",
+    "preact-cli": "^3.5.1",
     "sirv-cli": "^1.0.3"
   },
   "dependencies": {
