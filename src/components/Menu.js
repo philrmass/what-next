@@ -1,8 +1,6 @@
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 import cln from 'classnames';
-
 import styles from './Menu.module.css';
-
 import Dialog from './Dialog';
 import Icon from './Icon';
 

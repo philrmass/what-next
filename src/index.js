@@ -1,11 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-import { registerServiceWorker } from './utilities/serviceWorker';
+import App from './components/App';
 import './styles/index.css';
 
-import App from './components/App';
-
-ReactDOM.render(<App/>, document.getElementById('app'));
-
-registerServiceWorker();
+export default function Home() {
+  return <App />;
+}

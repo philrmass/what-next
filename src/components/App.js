@@ -1,12 +1,10 @@
-import { useState } from 'react';
-
+import { useState } from 'preact/hooks';
 import { version } from '../version';
 import { getEventsOrder, getSaveFilePath, parseEvents } from '../utilities/events';
 import { copyData, loadData, saveData } from '../utilities/file';
 import { useLocalStorage } from '../utilities/storage';
 import { getIconSource } from './Icon.js';
 import styles from './App.module.css';
-
 import Events from './Events';
 import Menu from './Menu';
 

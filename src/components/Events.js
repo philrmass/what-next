@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState } from 'preact/hooks';
 import cln from 'classnames';
-
 import {
   getColor,
   getDefaultEvent,
@@ -10,7 +9,6 @@ import {
 } from '../utilities/events';
 import { useInterval } from '../utilities/hooks';
 import styles from './Events.module.css';
-
 import Editor from './Editor';
 import Icon from './Icon';
 import ServiceWorker from './ServiceWorker';

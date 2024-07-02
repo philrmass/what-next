@@ -1,5 +1,4 @@
-import { useState } from 'react';
-
+import { useState } from 'preact/hooks';
 import styles from './IconEditor.module.css';
 
 export default function IconEditor({ children }) {
